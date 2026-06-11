@@ -10,7 +10,8 @@ This directory contains sprint planning and retrospective documents for the flow
 | [001](SPRINT-001-existing-system-map.md) | Existing System Map | ✅ Completed | Source-based system map, entrypoints, config map, risk register |
 | [001A](SPRINT-001A-english-surface-audit.md) | English Surface Audit | ✅ Completed | Audit of Chinese-language surfaces, translation plan (audit-only) |
 | [001B](SPRINT-001B-safe-readme-translation.md) | Safe README Translation | ✅ Completed | English README created, original Chinese preserved as README.zh-CN.md |
-| [001C](SPRINT-001C-safe-translation-allowlist.md) | Safe Translation Allowlist | 🔄 Active | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
+| [001C](SPRINT-001C-safe-translation-allowlist.md) | Safe Translation Allowlist | ✅ Completed | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
+| [002](SPRINT-002-api-surface-inventory.md) | API Surface Inventory | 🔄 Active | Documentation-only inventory of HTTP/WS API surface from source inspection |
 
 ## Sprint Conventions
 
