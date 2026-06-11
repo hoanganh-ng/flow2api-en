@@ -2,8 +2,9 @@
 
 **Original sprint:** 001A — English Surface Audit
 **Updated:** Sprint 001B — Safe README Translation
+**Updated:** Sprint 001C — Safe Translation Allowlist
 **Date:** 2025-06-11
-**Status:** README translation completed (Sprint 001B). Runtime strings, UI strings, source comments, logs, and errors remain untranslated.
+**Status:** README translation completed (Sprint 001B). Translation allowlist created (Sprint 001C). Runtime strings, UI strings, source comments, logs, and errors remain untranslated and restricted.
 
 ---
 
@@ -145,6 +146,7 @@ These surfaces are part of the runtime contract. Changing them could break API c
 | Sprint | Scope | Phase |
 |--------|-------|-------|
 | Sprint 001B | ✅ Completed | Translate `README.md` (root) — English README created, original preserved as `README.zh-CN.md` |
+| Sprint 001C | ✅ Completed | Translation allowlist created — classified all remaining Chinese surfaces into allowed, careful, and denied categories. See [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md). |
 | Sprint 002 | Translate Dockerfile/gitignore comments | Phase 1.4, 1.5 |
 | Sprint 003 | Translate `config/setting_example.toml` comments | Phase 1.6 |
 | Sprint 004 | Translate Python comments and docstrings (`src/`) | Phase 1.2, 1.3, 1.7 |
@@ -166,3 +168,5 @@ Each sprint should include verification steps confirming no runtime behavior cha
 5. **Test after every translation sprint** — run the full test suite and manually verify admin UI workflows.
 6. **Keep the fork clearly unofficial** — do not imply endorsement by the upstream author.
 7. **Preserve license and attribution** in all files.
+8. **Consult [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)** before translating any surface — it is the authoritative classification.
+9. **Runtime/source/UI/log/error translation remains pending and restricted** until an explicit contract decision sprint addresses the relevant denied surface.
