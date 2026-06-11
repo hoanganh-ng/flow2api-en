@@ -26,6 +26,7 @@ This is an **unofficial fork** and is not endorsed by the upstream author. The f
 - API key authentication protects generation endpoints
 - Admin UI uses username/password authentication with bcrypt hashing
 - Default credentials are `admin`/`admin` — must be changed on first login
+<<<<<<< HEAD
 - No rate limiting on authentication endpoints (potential brute-force vector)
 - No CSRF protection on admin forms (static HTML with embedded JS)
 
@@ -35,6 +36,17 @@ This is an **unofficial fork** and is not endorsed by the upstream author. The f
 - TLS is not terminated by the application — expected to be behind a reverse proxy
 - Proxy URLs (HTTP/SOCKS5) are stored in plain text in the database
 - `curl_cffi` uses `verify=False` for some upstream requests (TLS verification disabled)
+=======
+- Rate limiting on authentication endpoints: not observed from repository structure (to be confirmed during source analysis)
+- CSRF protection on admin forms: not observed from repository structure (to be confirmed during source analysis)
+
+### Network Security
+
+- CORS is configured to allow all origins (`allow_origins=["*"]`) — verified from `src/main.py`
+- TLS is not terminated by the application (observed from Dockerfile; deployment topology may vary)
+- Proxy URLs (HTTP/SOCKS5) are stored in plain text in the database
+- `curl_cffi` uses `verify=False` for some upstream requests — verified from `src/api/routes.py`
+>>>>>>> 171190e (docs(project): add extensive English documentation for flow2api fork baseline)
 
 ### Captcha Infrastructure
 
@@ -45,7 +57,11 @@ This is an **unofficial fork** and is not endorsed by the upstream author. The f
 ### Admin Interface
 
 - Management endpoints are protected by admin session cookies
+<<<<<<< HEAD
 - No RBAC — single admin role with full access
+=======
+- RBAC: not observed from repository structure; appears to be a single admin role (to be confirmed during source analysis)
+>>>>>>> 171190e (docs(project): add extensive English documentation for flow2api fork baseline)
 - Token import via browser extension WebSocket uses API key authentication
 - Debug mode can log full request/response bodies (including tokens if masking is disabled)
 

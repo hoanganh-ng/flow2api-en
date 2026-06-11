@@ -33,8 +33,13 @@
 | **Playwright** | Browser automation library used for headed captcha mode |
 | **429 ban** | Automatic token disabling after receiving HTTP 429 (rate limit) from upstream |
 | **Error ban** | Automatic token disabling after N consecutive errors (configurable threshold) |
+<<<<<<< HEAD
 | **Call logic** | Token selection strategy: `default` (random weighted) or `polling` (sequential) |
 | **Concurrency slot** | In-memory semaphore limiting simultaneous requests per token |
+=======
+| **Call logic** | Token selection strategy: `default` (load-aware sort with random tiebreaker) or `polling` (sequential round-robin) |
+| **Concurrency slot** | In-memory lock-protected counter limiting simultaneous requests per token |
+>>>>>>> 171190e (docs(project): add extensive English documentation for flow2api fork baseline)
 | **File cache** | Local storage of generated media with configurable TTL |
 | **New API / One API** | Third-party API gateway projects that can front this service |
 | **SSE** | Server-Sent Events — streaming format used for real-time generation progress |

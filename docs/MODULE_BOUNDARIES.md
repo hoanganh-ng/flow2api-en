@@ -159,9 +159,15 @@ These boundaries are based on initial inspection of the repository structure and
 **Responsibility**: Select which token handles a request and enforce per-token concurrency limits.
 
 **Boundary notes**:
+<<<<<<< HEAD
 - Two call logic modes: `default` (random weighted) and `polling` (sequential round-robin)
 - Per-token image and video concurrency limits (-1 = unlimited)
 - Concurrency slots tracked in-memory, not persisted
+=======
+- Two call logic modes observed from source: `default` (load-aware sort with random tiebreaker) and `polling` (sequential round-robin)
+- Per-token image and video concurrency limits (-1 = unlimited)
+- Concurrency tracked in-memory via lock-protected counters (observed from source); not persisted
+>>>>>>> 171190e (docs(project): add extensive English documentation for flow2api fork baseline)
 
 **Risk**: MEDIUM — load balancing logic affects token utilization and error distribution.
 
