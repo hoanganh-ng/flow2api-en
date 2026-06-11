@@ -1,5 +1,7 @@
 # Flow2API
 
+> **Unofficial English-friendly fork.** This is an unofficial fork of [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api). The original MIT license and attribution are preserved in [LICENSE](LICENSE). Runtime behavior is intended to remain unchanged from upstream unless a future sprint explicitly documents a change. See [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md) for details.
+
 <div align="center">
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
