@@ -9,324 +9,371 @@
 [![FastAPI](https://img.shields.io/badge/fastapi-0.119.0-green.svg)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-supported-blue.svg)](https://www.docker.com/)
 
-**一个功能完整的 OpenAI 兼容 API 服务，为 Flow 提供统一的接口**
+**A full-featured OpenAI-compatible API service providing a unified interface for Flow**
+
+[中文文档](README.zh-CN.md) | [Project State](docs/PROJECT_STATE.md)
 
 </div>
 
-## ✨ 核心特性
+---
 
-- 🎨 **文生图** / **图生图**
-- 🎬 **文生视频** / **图生视频**
-- 🎞️ **首尾帧视频**
-- 🔄 **AT/ST自动刷新** - AT 过期自动刷新，ST 过期时自动通过浏览器更新（personal 模式）
-- 📊 **余额显示** - 实时查询和显示 VideoFX Credits
-- 🚀 **负载均衡** - 多 Token 轮询和并发控制
-- 🌐 **代理支持** - 支持 HTTP/SOCKS5 代理
-- 📱 **Web 管理界面** - 直观的 Token 和配置管理
-- 🎨 **图片生成连续对话**
-- 🧩 **Gemini 官方请求体兼容** - 支持 `generateContent` / `streamGenerateContent`、`systemInstruction`、`contents.parts.text/inlineData/fileData`
-- ✅ **Gemini 官方格式已实测出图** - 已使用真实 Token 验证 `/models/{model}:generateContent` 可正常返回官方 `candidates[].content.parts[].inlineData`
+## Unofficial Fork Notice
 
-## 🚀 快速开始
+This repository is an **unofficial fork** of [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api). It is not endorsed by the upstream author. The fork adds English documentation and planning artifacts. No upstream source code has been modified. All original attribution and license terms are preserved.
 
-### 前置要求
+## Upstream Attribution
 
-- Docker 和 Docker Compose（推荐）
-- 或 Python 3.8+
+- **Upstream project:** [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api)
+- **Upstream author:** TheSmallHanCat
+- **Upstream license:** MIT (Copyright © 2025 TheSmallHanCat)
+- **Fork name:** flow2api-en
 
-- 由于Flow增加了额外的验证码，你可以自行选择使用浏览器打码或第三发打码：
-注册[YesCaptcha](https://yescaptcha.com/i/13Xd8K)并获取api key，将其填入系统配置页面```YesCaptcha API密钥```区域
-- YesCaptcha 支持在管理页切换 `type`：`RecaptchaV3TaskProxyless`、`RecaptchaV3TaskProxylessM1`、`RecaptchaV3TaskProxylessM1S7`、`RecaptchaV3TaskProxylessM1S9`；S7/S9 会强制提交 `minScore` 0.7/0.9。
-- 默认 `docker-compose.yml` 建议搭配第三方打码（yescaptcha/capmonster/ezcaptcha/capsolver）。
-如需 Docker 内有头打码（browser/personal），请使用下方 `docker-compose.headed.yml`。
+## License
 
-- 自动更新st浏览器拓展：[Flow2API-Token-Updater](https://github.com/TheSmallHanCat/Flow2API-Token-Updater)
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
 
-### 方式一：Docker 部署（推荐）
+---
 
-#### 标准模式（不使用代理）
+## Project Overview
+
+Based on the upstream README and current source-analysis documentation, flow2api is a self-hosted API gateway that wraps Google's Flow (VideoFX / AI Sandbox) media generation service behind OpenAI-compatible and Gemini-compatible HTTP endpoints. It allows downstream applications — chat UIs, agent frameworks, API gateways — to generate images and videos using Google's models without directly integrating with Google's internal Flow API.
+
+See [docs/PRODUCT_OVERVIEW.md](docs/PRODUCT_OVERVIEW.md) for a detailed overview.
+
+## Current Compatibility Intent
+
+This fork currently intends to preserve upstream runtime behavior unless a future sprint explicitly changes it. All runtime strings, UI text, source comments, config keys, endpoint paths, model names, and provider names remain unchanged from upstream. See [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md) for the current sprint status.
+
+---
+
+## Feature Overview
+
+Based on the upstream README and observed during source mapping:
+
+- **Text-to-Image (T2I)** / **Image-to-Image (I2I)** — via Gemini 3.0 Pro, Gemini 3.1 Flash, Imagen 4.0
+- **Text-to-Video (T2V)** / **Image-to-Video (I2V)** — via Veo 3.1 (standard, fast, lite, ultra variants)
+- **First/Last Frame Video (I2V)** — supports 1-2 reference images for frame-based video generation
+- **Reference-to-Video (R2V)** — up to 3 reference images with structured prompts
+- **Video Upsample** — upscale generated videos to 1080P or 4K
+- **AT/ST Auto-Refresh** — automatic Access Token refresh; automatic Session Token update via browser (personal mode)
+- **Balance Display** — real-time VideoFX Credits query and display
+- **Load Balancing** — multi-token polling and concurrency control
+- **Proxy Support** — HTTP/SOCKS5 proxy support
+- **Web Admin UI** — token and configuration management
+- **Image Generation Continuous Conversation**
+- **Gemini Official Request Body Compatibility** — supports `generateContent` / `streamGenerateContent`, `systemInstruction`, `contents.parts.text/inlineData/fileData`
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Docker and Docker Compose (recommended)
+- Or Python 3.8+
+
+- Due to additional captcha requirements on Flow, you can choose between browser-based captcha or third-party captcha services:
+  Register at [YesCaptcha](https://yescaptcha.com/i/13Xd8K) and obtain an API key, then enter it in the system config page under `YesCaptcha API密钥`.
+- YesCaptcha supports switching `type` in the admin page: `RecaptchaV3TaskProxyless`, `RecaptchaV3TaskProxylessM1`, `RecaptchaV3TaskProxylessM1S7`, `RecaptchaV3TaskProxylessM1S9`; S7/S9 will force submit `minScore` 0.7/0.9.
+- The default `docker-compose.yml` is intended for use with third-party captcha services (yescaptcha/capmonster/ezcaptcha/capsolver).
+  For in-Docker headed browser captcha (browser/personal), use `docker-compose.headed.yml` below.
+
+- Auto-update ST browser extension: [Flow2API-Token-Updater](https://github.com/TheSmallHanCat/Flow2API-Token-Updater)
+
+### Method 1: Docker Deployment (Recommended)
+
+#### Standard Mode (no proxy)
 
 ```bash
-# 克隆项目
+# Clone the project
 git clone https://github.com/TheSmallHanCat/flow2api.git
 cd flow2api
 
-# 启动服务
+# Start the service
 docker-compose up -d
 
-# 查看日志
+# View logs
 docker-compose logs -f
 ```
 
-> 说明：Compose 已默认挂载 `./tmp:/app/tmp`。如果把缓存超时设为 `0`，语义是“不自动过期删除”；若希望容器重建后仍保留缓存文件，也需要保留这个 `tmp` 挂载。
+> Note: Compose already mounts `./tmp:/app/tmp` by default. If cache timeout is set to `0`, the semantic is "no automatic expiration"; if you want cache files to persist across container rebuilds, keep this `tmp` mount.
 
-#### WARP 模式（使用代理）
+#### WARP Mode (with proxy)
 
 ```bash
-# 使用 WARP 代理启动
+# Start with WARP proxy
 docker-compose -f docker-compose.warp.yml up -d
 
-# 查看日志
+# View logs
 docker-compose -f docker-compose.warp.yml logs -f
 ```
 
-#### Docker 有头打码模式（browser / personal）
+#### Docker Headed Browser Captcha Mode (browser / personal)
 
-> 适用于你有虚拟化桌面需求、希望在容器里启用有头浏览器打码的场景。  
-> 该模式默认启动 `Xvfb + Fluxbox` 实现容器内部可视化，并设置 `ALLOW_DOCKER_HEADED_CAPTCHA=true`。  
-> 仅开放应用端口，不提供任何远程桌面连接端口。
-> `personal` 内置浏览器现在默认按有头模式启动；如需临时切回无头，可额外设置环境变量 `PERSONAL_BROWSER_HEADLESS=true`。
+> For scenarios where you need a virtualized desktop and want to enable headed browser captcha inside the container.
+> This mode starts `Xvfb + Fluxbox` by default for in-container visualization and sets `ALLOW_DOCKER_HEADED_CAPTCHA=true`.
+> Only the application port is exposed; no remote desktop connection ports are provided.
+> The `personal` built-in browser now defaults to headed mode; to temporarily switch back to headless, set the environment variable `PERSONAL_BROWSER_HEADLESS=true`.
 
 ```bash
-# 启动有头模式（首次建议带 --build）
+# Start headed mode (--build recommended on first run)
 docker compose -f docker-compose.headed.yml up -d --build
 
-# 查看日志
+# View logs
 docker compose -f docker-compose.headed.yml logs -f
 ```
 
-- API 端口：`8000`
-- 进入管理后台后，将验证码方式设为 `browser` 或 `personal`
+- API port: `8000`
+- After entering the admin console, set the captcha method to `browser` or `personal`
 
-### 方式二：本地部署
+### Method 2: Local Deployment
 
 ```bash
-# 克隆项目
+# Clone the project
 git clone https://github.com/TheSmallHanCat/flow2api.git
 cd flow2api
 
-# 创建虚拟环境
+# Create virtual environment
 python -m venv venv
 
-# 激活虚拟环境
+# Activate virtual environment
 # Windows
 venv\Scripts\activate
 # Linux/Mac
 source venv/bin/activate
 
-# 安装依赖
+# Install dependencies
 pip install -r requirements.txt
 
-# 启动服务
+# Start the service
 python main.py
 ```
 
-### 首次访问
+### First Access
 
-服务启动后,访问管理后台: **http://localhost:8000**,首次登录后请立即修改密码!
+After the service starts, access the admin console at: **http://localhost:8000**. Please change the default password on first login!
 
-- **用户名**: `admin`
-- **密码**: `admin`
+- **Username**: `admin`
+- **Password**: `admin`
 
-## 📈 监控接口
+---
 
-- `GET /health`：公开健康检查，返回服务是否存活、活跃 Token 数、即将过期 Token 数、已过期 Token 数、429 禁用数等摘要
-- `GET /metrics`：Prometheus 指标接口
-- `GET /api/tokens`：管理接口，返回 `at_expires`、`at_expired`、`at_expiring_within_1h`、`ban_reason`、`consecutive_error_count` 等 Token 状态
+## Monitoring Endpoints
 
-Prometheus 可直接抓 `/metrics`。如果部署到 Kubernetes，建议只在集群内抓取，并在 Ingress/Gateway 层单独限制 `/metrics` 的外部访问。
+- `GET /health` — public health check; returns service liveness, active token count, expiring token count, expired token count, 429-banned count, and other summary data
+- `GET /metrics` — Prometheus metrics endpoint
+- `GET /api/tokens` — admin endpoint; returns `at_expires`, `at_expired`, `at_expiring_within_1h`, `ban_reason`, `consecutive_error_count`, and other token status fields
 
-### 模型测试页面
+Prometheus can scrape `/metrics` directly. If deploying to Kubernetes, it is recommended to scrape only within the cluster and restrict external access to `/metrics` at the Ingress/Gateway layer.
 
-访问 **http://localhost:8000/test** 可打开内置的模型测试页面，支持：
+### Model Test Page
 
-- 按分类浏览所有可用模型（图片生成、文/图生视频、多图视频、视频放大等）
-- 输入提示词一键测试，流式显示生成进度
-- 图生图 / 图生视频场景支持上传图片
-- 生成完成后直接预览图片或视频
+Visit **http://localhost:8000/test** to open the built-in model test page, which supports:
 
-## 📋 支持的模型
+- Browse all available models by category (image generation, text/image-to-video, multi-image video, video upsample, etc.)
+- Enter prompts for one-click testing with streaming generation progress
+- Upload images for image-to-image / image-to-video scenarios
+- Preview generated images or videos after completion
 
-### 图片生成
+---
 
-| 模型名称 | 说明| 尺寸 |
+## Supported Models
+
+### Image Generation
+
+| Model Name | Description | Size |
 |---------|--------|--------|
-| `gemini-3.0-pro-image-landscape` | 图/文生图 | 横屏 |
-| `gemini-3.0-pro-image-portrait` | 图/文生图 | 竖屏 |
-| `gemini-3.0-pro-image-square` | 图/文生图 | 方图 |
-| `gemini-3.0-pro-image-four-three` | 图/文生图 | 横屏 4:3 |
-| `gemini-3.0-pro-image-three-four` | 图/文生图 | 竖屏 3:4 |
-| `gemini-3.0-pro-image-landscape-2k` | 图/文生图(2K) | 横屏 |
-| `gemini-3.0-pro-image-portrait-2k` | 图/文生图(2K) | 竖屏 |
-| `gemini-3.0-pro-image-square-2k` | 图/文生图(2K) | 方图 |
-| `gemini-3.0-pro-image-four-three-2k` | 图/文生图(2K) | 横屏 4:3 |
-| `gemini-3.0-pro-image-three-four-2k` | 图/文生图(2K) | 竖屏 3:4 |
-| `gemini-3.0-pro-image-landscape-4k` | 图/文生图(4K) | 横屏 |
-| `gemini-3.0-pro-image-portrait-4k` | 图/文生图(4K) | 竖屏 |
-| `gemini-3.0-pro-image-square-4k` | 图/文生图(4K) | 方图 |
-| `gemini-3.0-pro-image-four-three-4k` | 图/文生图(4K) | 横屏 4:3 |
-| `gemini-3.0-pro-image-three-four-4k` | 图/文生图(4K) | 竖屏 3:4 |
-| `imagen-4.0-generate-preview-landscape` | 图/文生图 | 横屏 |
-| `imagen-4.0-generate-preview-portrait` | 图/文生图 | 竖屏 |
-| `gemini-3.1-flash-image-landscape` | 图/文生图 | 横屏 |
-| `gemini-3.1-flash-image-portrait` | 图/文生图 | 竖屏 |
-| `gemini-3.1-flash-image-square` | 图/文生图 | 方图 |
-| `gemini-3.1-flash-image-four-three` | 图/文生图 | 横屏 4:3 |
-| `gemini-3.1-flash-image-three-four` | 图/文生图 | 竖屏 3:4 |
-| `gemini-3.1-flash-image-landscape-2k` | 图/文生图(2K) | 横屏 |
-| `gemini-3.1-flash-image-portrait-2k` | 图/文生图(2K) | 竖屏 |
-| `gemini-3.1-flash-image-square-2k` | 图/文生图(2K) | 方图 |
-| `gemini-3.1-flash-image-four-three-2k` | 图/文生图(2K) | 横屏 4:3 |
-| `gemini-3.1-flash-image-three-four-2k` | 图/文生图(2K) | 竖屏 3:4 |
-| `gemini-3.1-flash-image-landscape-4k` | 图/文生图(4K) | 横屏 |
-| `gemini-3.1-flash-image-portrait-4k` | 图/文生图(4K) | 竖屏 |
-| `gemini-3.1-flash-image-square-4k` | 图/文生图(4K) | 方图 |
-| `gemini-3.1-flash-image-four-three-4k` | 图/文生图(4K) | 横屏 4:3 |
-| `gemini-3.1-flash-image-three-four-4k` | 图/文生图(4K) | 竖屏 3:4 |
+| `gemini-3.0-pro-image-landscape` | I2I/T2I | Landscape |
+| `gemini-3.0-pro-image-portrait` | I2I/T2I | Portrait |
+| `gemini-3.0-pro-image-square` | I2I/T2I | Square |
+| `gemini-3.0-pro-image-four-three` | I2I/T2I | Landscape 4:3 |
+| `gemini-3.0-pro-image-three-four` | I2I/T2I | Portrait 3:4 |
+| `gemini-3.0-pro-image-landscape-2k` | I2I/T2I (2K) | Landscape |
+| `gemini-3.0-pro-image-portrait-2k` | I2I/T2I (2K) | Portrait |
+| `gemini-3.0-pro-image-square-2k` | I2I/T2I (2K) | Square |
+| `gemini-3.0-pro-image-four-three-2k` | I2I/T2I (2K) | Landscape 4:3 |
+| `gemini-3.0-pro-image-three-four-2k` | I2I/T2I (2K) | Portrait 3:4 |
+| `gemini-3.0-pro-image-landscape-4k` | I2I/T2I (4K) | Landscape |
+| `gemini-3.0-pro-image-portrait-4k` | I2I/T2I (4K) | Portrait |
+| `gemini-3.0-pro-image-square-4k` | I2I/T2I (4K) | Square |
+| `gemini-3.0-pro-image-four-three-4k` | I2I/T2I (4K) | Landscape 4:3 |
+| `gemini-3.0-pro-image-three-four-4k` | I2I/T2I (4K) | Portrait 3:4 |
+| `imagen-4.0-generate-preview-landscape` | I2I/T2I | Landscape |
+| `imagen-4.0-generate-preview-portrait` | I2I/T2I | Portrait |
+| `gemini-3.1-flash-image-landscape` | I2I/T2I | Landscape |
+| `gemini-3.1-flash-image-portrait` | I2I/T2I | Portrait |
+| `gemini-3.1-flash-image-square` | I2I/T2I | Square |
+| `gemini-3.1-flash-image-four-three` | I2I/T2I | Landscape 4:3 |
+| `gemini-3.1-flash-image-three-four` | I2I/T2I | Portrait 3:4 |
+| `gemini-3.1-flash-image-landscape-2k` | I2I/T2I (2K) | Landscape |
+| `gemini-3.1-flash-image-portrait-2k` | I2I/T2I (2K) | Portrait |
+| `gemini-3.1-flash-image-square-2k` | I2I/T2I (2K) | Square |
+| `gemini-3.1-flash-image-four-three-2k` | I2I/T2I (2K) | Landscape 4:3 |
+| `gemini-3.1-flash-image-three-four-2k` | I2I/T2I (2K) | Portrait 3:4 |
+| `gemini-3.1-flash-image-landscape-4k` | I2I/T2I (4K) | Landscape |
+| `gemini-3.1-flash-image-portrait-4k` | I2I/T2I (4K) | Portrait |
+| `gemini-3.1-flash-image-square-4k` | I2I/T2I (4K) | Square |
+| `gemini-3.1-flash-image-four-three-4k` | I2I/T2I (4K) | Landscape 4:3 |
+| `gemini-3.1-flash-image-three-four-4k` | I2I/T2I (4K) | Portrait 3:4 |
 
-### 视频生成
+### Video Generation
 
-#### 文生视频 (T2V - Text to Video)
-⚠️ **不支持上传图片**
+#### Text-to-Video (T2V)
 
-| 模型名称 | 说明| 尺寸 |
+> Does not support image upload.
+
+| Model Name | Description | Size |
 |---------|---------|--------|
-| `veo_3_1_t2v_fast_portrait` | 文生视频 | 竖屏 |
-| `veo_3_1_t2v_fast_landscape` | 文生视频 | 横屏 |
-| `veo_3_1_t2v_fast_portrait_ultra` | 文生视频 | 竖屏 |
-| `veo_3_1_t2v_fast_ultra` | 文生视频 | 横屏 |
-| `veo_3_1_t2v_fast_portrait_ultra_relaxed` | 文生视频 | 竖屏 |
-| `veo_3_1_t2v_fast_ultra_relaxed` | 文生视频 | 横屏 |
-| `veo_3_1_t2v_portrait` | 文生视频 | 竖屏 |
-| `veo_3_1_t2v_landscape` | 文生视频 | 横屏 |
-| `veo_3_1_t2v_landscape_4s` | 文生视频 4秒 | 横屏 |
-| `veo_3_1_t2v_portrait_4s` | 文生视频 4秒 | 竖屏 |
-| `veo_3_1_t2v_landscape_6s` | 文生视频 6秒 | 横屏 |
-| `veo_3_1_t2v_portrait_6s` | 文生视频 6秒 | 竖屏 |
-| `veo_3_1_t2v_fast_landscape_4s` | 文生视频 Fast 4秒 | 横屏 |
-| `veo_3_1_t2v_fast_portrait_4s` | 文生视频 Fast 4秒 | 竖屏 |
-| `veo_3_1_t2v_fast_landscape_6s` | 文生视频 Fast 6秒 | 横屏 |
-| `veo_3_1_t2v_fast_portrait_6s` | 文生视频 Fast 6秒 | 竖屏 |
-| `veo_3_1_t2v_lite_portrait` | 文生视频 Lite | 竖屏 |
-| `veo_3_1_t2v_lite_landscape` | 文生视频 Lite | 横屏 |
-| `veo_3_1_t2v_lite_4s_portrait` | 文生视频 Lite 4秒 | 竖屏 |
-| `veo_3_1_t2v_lite_4s_landscape` | 文生视频 Lite 4秒 | 横屏 |
-| `veo_3_1_t2v_lite_6s_portrait` | 文生视频 Lite 6秒 | 竖屏 |
-| `veo_3_1_t2v_lite_6s_landscape` | 文生视频 Lite 6秒 | 横屏 |
+| `veo_3_1_t2v_fast_portrait` | T2V | Portrait |
+| `veo_3_1_t2v_fast_landscape` | T2V | Landscape |
+| `veo_3_1_t2v_fast_portrait_ultra` | T2V | Portrait |
+| `veo_3_1_t2v_fast_ultra` | T2V | Landscape |
+| `veo_3_1_t2v_fast_portrait_ultra_relaxed` | T2V | Portrait |
+| `veo_3_1_t2v_fast_ultra_relaxed` | T2V | Landscape |
+| `veo_3_1_t2v_portrait` | T2V | Portrait |
+| `veo_3_1_t2v_landscape` | T2V | Landscape |
+| `veo_3_1_t2v_landscape_4s` | T2V 4s | Landscape |
+| `veo_3_1_t2v_portrait_4s` | T2V 4s | Portrait |
+| `veo_3_1_t2v_landscape_6s` | T2V 6s | Landscape |
+| `veo_3_1_t2v_portrait_6s` | T2V 6s | Portrait |
+| `veo_3_1_t2v_fast_landscape_4s` | T2V Fast 4s | Landscape |
+| `veo_3_1_t2v_fast_portrait_4s` | T2V Fast 4s | Portrait |
+| `veo_3_1_t2v_fast_landscape_6s` | T2V Fast 6s | Landscape |
+| `veo_3_1_t2v_fast_portrait_6s` | T2V Fast 6s | Portrait |
+| `veo_3_1_t2v_lite_portrait` | T2V Lite | Portrait |
+| `veo_3_1_t2v_lite_landscape` | T2V Lite | Landscape |
+| `veo_3_1_t2v_lite_4s_portrait` | T2V Lite 4s | Portrait |
+| `veo_3_1_t2v_lite_4s_landscape` | T2V Lite 4s | Landscape |
+| `veo_3_1_t2v_lite_6s_portrait` | T2V Lite 6s | Portrait |
+| `veo_3_1_t2v_lite_6s_landscape` | T2V Lite 6s | Landscape |
 
-#### 首尾帧模型 (I2V - Image to Video)
-📸 **支持1-2张图片：1张作为首帧，2张作为首尾帧**
+#### First/Last Frame Models (I2V - Image to Video)
 
-> 💡 **自动适配**：系统会根据图片数量自动选择对应的 model_key
-> - **单帧模式**（1张图）：使用首帧生成视频
-> - **双帧模式**（2张图）：使用首帧+尾帧生成过渡视频
-> - `veo_3_1_i2v_lite_*` 仅支持 **1 张** 首帧图片
-> - `veo_3_1_interpolation_lite_*` 仅支持 **2 张** 首尾帧图片
+> Supports 1-2 images: 1 image as the first frame, 2 images as first + last frame.
 
-| 模型名称 | 说明| 尺寸 |
+> **Auto-adaptation**: The system automatically selects the corresponding model_key based on image count.
+> - **Single-frame mode** (1 image): uses the first frame to generate video
+> - **Dual-frame mode** (2 images): uses first + last frame to generate a transition video
+> - `veo_3_1_i2v_lite_*` supports **1** first-frame image only
+> - `veo_3_1_interpolation_lite_*` supports **2** first+last-frame images only
+
+| Model Name | Description | Size |
 |---------|---------|--------|
-| `veo_3_1_i2v_s_fast_portrait_fl` | 图生视频 | 竖屏 |
-| `veo_3_1_i2v_s_fast_fl` | 图生视频 | 横屏 |
-| `veo_3_1_i2v_s_fast_portrait_ultra_fl` | 图生视频 | 竖屏 |
-| `veo_3_1_i2v_s_fast_ultra_fl` | 图生视频 | 横屏 |
-| `veo_3_1_i2v_s_fast_portrait_ultra_relaxed` | 图生视频 | 竖屏 |
-| `veo_3_1_i2v_s_fast_ultra_relaxed` | 图生视频 | 横屏 |
-| `veo_3_1_i2v_s_portrait` | 图生视频 | 竖屏 |
-| `veo_3_1_i2v_s_landscape` | 图生视频 | 横屏 |
-| `veo_3_1_i2v_s_landscape_4s` | 图生视频 4秒 | 横屏 |
-| `veo_3_1_i2v_s_portrait_4s` | 图生视频 4秒 | 竖屏 |
-| `veo_3_1_i2v_s_landscape_6s` | 图生视频 6秒 | 横屏 |
-| `veo_3_1_i2v_s_portrait_6s` | 图生视频 6秒 | 竖屏 |
-| `veo_3_1_i2v_s_fast_landscape_4s_fl` | 图生视频 Fast 4秒 | 横屏 |
-| `veo_3_1_i2v_s_fast_portrait_4s_fl` | 图生视频 Fast 4秒 | 竖屏 |
-| `veo_3_1_i2v_s_fast_landscape_6s_fl` | 图生视频 Fast 6秒 | 横屏 |
-| `veo_3_1_i2v_s_fast_portrait_6s_fl` | 图生视频 Fast 6秒 | 竖屏 |
-| `veo_3_1_i2v_lite_portrait` | 图生视频 Lite（仅首帧） | 竖屏 |
-| `veo_3_1_i2v_lite_landscape` | 图生视频 Lite（仅首帧） | 横屏 |
-| `veo_3_1_i2v_lite_4s_portrait` | 图生视频 Lite 4秒（仅首帧） | 竖屏 |
-| `veo_3_1_i2v_lite_4s_landscape` | 图生视频 Lite 4秒（仅首帧） | 横屏 |
-| `veo_3_1_i2v_lite_6s_portrait` | 图生视频 Lite 6秒（仅首帧） | 竖屏 |
-| `veo_3_1_i2v_lite_6s_landscape` | 图生视频 Lite 6秒（仅首帧） | 横屏 |
-| `veo_3_1_interpolation_lite_portrait` | 图生视频 Lite（首尾帧过渡） | 竖屏 |
-| `veo_3_1_interpolation_lite_landscape` | 图生视频 Lite（首尾帧过渡） | 横屏 |
-| `veo_3_1_interpolation_lite_4s_portrait` | 图生视频 Lite 4秒（首尾帧过渡） | 竖屏 |
-| `veo_3_1_interpolation_lite_4s_landscape` | 图生视频 Lite 4秒（首尾帧过渡） | 横屏 |
-| `veo_3_1_interpolation_lite_6s_portrait` | 图生视频 Lite 6秒（首尾帧过渡） | 竖屏 |
-| `veo_3_1_interpolation_lite_6s_landscape` | 图生视频 Lite 6秒（首尾帧过渡） | 横屏 |
+| `veo_3_1_i2v_s_fast_portrait_fl` | I2V | Portrait |
+| `veo_3_1_i2v_s_fast_fl` | I2V | Landscape |
+| `veo_3_1_i2v_s_fast_portrait_ultra_fl` | I2V | Portrait |
+| `veo_3_1_i2v_s_fast_ultra_fl` | I2V | Landscape |
+| `veo_3_1_i2v_s_fast_portrait_ultra_relaxed` | I2V | Portrait |
+| `veo_3_1_i2v_s_fast_ultra_relaxed` | I2V | Landscape |
+| `veo_3_1_i2v_s_portrait` | I2V | Portrait |
+| `veo_3_1_i2v_s_landscape` | I2V | Landscape |
+| `veo_3_1_i2v_s_landscape_4s` | I2V 4s | Landscape |
+| `veo_3_1_i2v_s_portrait_4s` | I2V 4s | Portrait |
+| `veo_3_1_i2v_s_landscape_6s` | I2V 6s | Landscape |
+| `veo_3_1_i2v_s_portrait_6s` | I2V 6s | Portrait |
+| `veo_3_1_i2v_s_fast_landscape_4s_fl` | I2V Fast 4s | Landscape |
+| `veo_3_1_i2v_s_fast_portrait_4s_fl` | I2V Fast 4s | Portrait |
+| `veo_3_1_i2v_s_fast_landscape_6s_fl` | I2V Fast 6s | Landscape |
+| `veo_3_1_i2v_s_fast_portrait_6s_fl` | I2V Fast 6s | Portrait |
+| `veo_3_1_i2v_lite_portrait` | I2V Lite (first frame only) | Portrait |
+| `veo_3_1_i2v_lite_landscape` | I2V Lite (first frame only) | Landscape |
+| `veo_3_1_i2v_lite_4s_portrait` | I2V Lite 4s (first frame only) | Portrait |
+| `veo_3_1_i2v_lite_4s_landscape` | I2V Lite 4s (first frame only) | Landscape |
+| `veo_3_1_i2v_lite_6s_portrait` | I2V Lite 6s (first frame only) | Portrait |
+| `veo_3_1_i2v_lite_6s_landscape` | I2V Lite 6s (first frame only) | Landscape |
+| `veo_3_1_interpolation_lite_portrait` | I2V Lite (first+last frame interpolation) | Portrait |
+| `veo_3_1_interpolation_lite_landscape` | I2V Lite (first+last frame interpolation) | Landscape |
+| `veo_3_1_interpolation_lite_4s_portrait` | I2V Lite 4s (first+last frame interpolation) | Portrait |
+| `veo_3_1_interpolation_lite_4s_landscape` | I2V Lite 4s (first+last frame interpolation) | Landscape |
+| `veo_3_1_interpolation_lite_6s_portrait` | I2V Lite 6s (first+last frame interpolation) | Portrait |
+| `veo_3_1_interpolation_lite_6s_landscape` | I2V Lite 6s (first+last frame interpolation) | Landscape |
 
-#### 多图生成 (R2V - Reference Images to Video)
-🖼️ **支持多张图片**
+#### Reference-to-Video (R2V)
 
-> **2026-03-06 更新**
+> Supports multiple reference images.
+
+> Based on upstream README, last synced 2026-03-06:
 >
-> - 已同步上游新版 `R2V` 视频请求体
-> - `textInput` 已切换为 `structuredPrompt.parts`
-> - 顶层新增 `mediaGenerationContext.batchId`
-> - 顶层新增 `useV2ModelConfig: true`
-> - 横屏 / 竖屏 `R2V` 模型共用同一套新版请求体
-> - 横屏 `R2V` 的上游 `videoModelKey` 已切换为 `*_landscape` 形式
-> - 根据当前上游协议，`referenceImages` 当前最多传 **3 张**
+> - Upstream new-version `R2V` video request body synced
+> - `textInput` switched to `structuredPrompt.parts`
+> - Top-level `mediaGenerationContext.batchId` added
+> - Top-level `useV2ModelConfig: true` added
+> - Landscape / portrait `R2V` models share the same new-version request body
+> - Landscape `R2V` upstream `videoModelKey` switched to `*_landscape` form
+> - Per current upstream protocol, `referenceImages` currently supports up to **3** images
 
-| 模型名称 | 说明| 尺寸 |
+| Model Name | Description | Size |
 |---------|---------|--------|
-| `veo_3_1_r2v_fast_portrait` | 图生视频 | 竖屏 |
-| `veo_3_1_r2v_fast_landscape` | 图生视频 | 横屏 |
-| `veo_3_1_r2v_fast_portrait_ultra` | 图生视频 | 竖屏 |
-| `veo_3_1_r2v_fast_landscape_ultra` | 图生视频 | 横屏 |
-| `veo_3_1_r2v_fast_portrait_ultra_relaxed` | 图生视频 | 竖屏 |
-| `veo_3_1_r2v_fast_landscape_ultra_relaxed` | 图生视频 | 横屏 |
+| `veo_3_1_r2v_fast_portrait` | R2V | Portrait |
+| `veo_3_1_r2v_fast_landscape` | R2V | Landscape |
+| `veo_3_1_r2v_fast_portrait_ultra` | R2V | Portrait |
+| `veo_3_1_r2v_fast_landscape_ultra` | R2V | Landscape |
+| `veo_3_1_r2v_fast_portrait_ultra_relaxed` | R2V | Portrait |
+| `veo_3_1_r2v_fast_landscape_ultra_relaxed` | R2V | Landscape |
 
-#### 视频放大模型 (Upsample)
+#### Video Upsample Models
 
-这些模型不是直接调用上游 upsampler key，而是先用对应的 Veo 3.1 普通模型生成视频，再提交 1080P/4K 放大请求。
+These models do not directly call the upstream upsampler key. Instead, they first generate a video using the corresponding Veo 3.1 base model, then submit a 1080P/4K upsample request.
 
-| 模型名称 | 说明 | 输出 |
+| Model Name | Description | Output |
 |---------|---------|--------|
-| `veo_3_1_t2v_landscape_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_portrait_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_landscape_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_t2v_portrait_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_t2v_landscape_4s_4k` | 文生视频 4秒放大 | 4K |
-| `veo_3_1_t2v_portrait_4s_4k` | 文生视频 4秒放大 | 4K |
-| `veo_3_1_t2v_landscape_4s_1080p` | 文生视频 4秒放大 | 1080P |
-| `veo_3_1_t2v_portrait_4s_1080p` | 文生视频 4秒放大 | 1080P |
-| `veo_3_1_t2v_landscape_6s_4k` | 文生视频 6秒放大 | 4K |
-| `veo_3_1_t2v_portrait_6s_4k` | 文生视频 6秒放大 | 4K |
-| `veo_3_1_t2v_landscape_6s_1080p` | 文生视频 6秒放大 | 1080P |
-| `veo_3_1_t2v_portrait_6s_1080p` | 文生视频 6秒放大 | 1080P |
-| `veo_3_1_t2v_fast_portrait_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_fast_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_fast_portrait_ultra_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_fast_ultra_4k` | 文生视频放大 | 4K |
-| `veo_3_1_t2v_fast_portrait_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_t2v_fast_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_t2v_fast_portrait_ultra_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_t2v_fast_ultra_1080p` | 文生视频放大 | 1080P |
-| `veo_3_1_i2v_s_fast_portrait_ultra_fl_4k` | 图生视频放大 | 4K |
-| `veo_3_1_i2v_s_fast_ultra_fl_4k` | 图生视频放大 | 4K |
-| `veo_3_1_i2v_s_fast_portrait_ultra_fl_1080p` | 图生视频放大 | 1080P |
-| `veo_3_1_i2v_s_fast_ultra_fl_1080p` | 图生视频放大 | 1080P |
-| `veo_3_1_i2v_s_landscape_4k` | 图生视频放大 | 4K |
-| `veo_3_1_i2v_s_portrait_4k` | 图生视频放大 | 4K |
-| `veo_3_1_i2v_s_landscape_1080p` | 图生视频放大 | 1080P |
-| `veo_3_1_i2v_s_portrait_1080p` | 图生视频放大 | 1080P |
-| `veo_3_1_i2v_s_landscape_4s_4k` | 图生视频 4秒放大 | 4K |
-| `veo_3_1_i2v_s_portrait_4s_4k` | 图生视频 4秒放大 | 4K |
-| `veo_3_1_i2v_s_landscape_4s_1080p` | 图生视频 4秒放大 | 1080P |
-| `veo_3_1_i2v_s_portrait_4s_1080p` | 图生视频 4秒放大 | 1080P |
-| `veo_3_1_i2v_s_landscape_6s_4k` | 图生视频 6秒放大 | 4K |
-| `veo_3_1_i2v_s_portrait_6s_4k` | 图生视频 6秒放大 | 4K |
-| `veo_3_1_i2v_s_landscape_6s_1080p` | 图生视频 6秒放大 | 1080P |
-| `veo_3_1_i2v_s_portrait_6s_1080p` | 图生视频 6秒放大 | 1080P |
-| `veo_3_1_r2v_fast_portrait_ultra_4k` | 多图视频放大 | 4K |
-| `veo_3_1_r2v_fast_landscape_ultra_4k` | 多图视频放大 | 4K |
-| `veo_3_1_r2v_fast_portrait_ultra_1080p` | 多图视频放大 | 1080P |
-| `veo_3_1_r2v_fast_landscape_ultra_1080p` | 多图视频放大 | 1080P |
+| `veo_3_1_t2v_landscape_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_portrait_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_landscape_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_t2v_portrait_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_t2v_landscape_4s_4k` | T2V 4s Upsample | 4K |
+| `veo_3_1_t2v_portrait_4s_4k` | T2V 4s Upsample | 4K |
+| `veo_3_1_t2v_landscape_4s_1080p` | T2V 4s Upsample | 1080P |
+| `veo_3_1_t2v_portrait_4s_1080p` | T2V 4s Upsample | 1080P |
+| `veo_3_1_t2v_landscape_6s_4k` | T2V 6s Upsample | 4K |
+| `veo_3_1_t2v_portrait_6s_4k` | T2V 6s Upsample | 4K |
+| `veo_3_1_t2v_landscape_6s_1080p` | T2V 6s Upsample | 1080P |
+| `veo_3_1_t2v_portrait_6s_1080p` | T2V 6s Upsample | 1080P |
+| `veo_3_1_t2v_fast_portrait_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_fast_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_fast_portrait_ultra_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_fast_ultra_4k` | T2V Upsample | 4K |
+| `veo_3_1_t2v_fast_portrait_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_t2v_fast_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_t2v_fast_portrait_ultra_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_t2v_fast_ultra_1080p` | T2V Upsample | 1080P |
+| `veo_3_1_i2v_s_fast_portrait_ultra_fl_4k` | I2V Upsample | 4K |
+| `veo_3_1_i2v_s_fast_ultra_fl_4k` | I2V Upsample | 4K |
+| `veo_3_1_i2v_s_fast_portrait_ultra_fl_1080p` | I2V Upsample | 1080P |
+| `veo_3_1_i2v_s_fast_ultra_fl_1080p` | I2V Upsample | 1080P |
+| `veo_3_1_i2v_s_landscape_4k` | I2V Upsample | 4K |
+| `veo_3_1_i2v_s_portrait_4k` | I2V Upsample | 4K |
+| `veo_3_1_i2v_s_landscape_1080p` | I2V Upsample | 1080P |
+| `veo_3_1_i2v_s_portrait_1080p` | I2V Upsample | 1080P |
+| `veo_3_1_i2v_s_landscape_4s_4k` | I2V 4s Upsample | 4K |
+| `veo_3_1_i2v_s_portrait_4s_4k` | I2V 4s Upsample | 4K |
+| `veo_3_1_i2v_s_landscape_4s_1080p` | I2V 4s Upsample | 1080P |
+| `veo_3_1_i2v_s_portrait_4s_1080p` | I2V 4s Upsample | 1080P |
+| `veo_3_1_i2v_s_landscape_6s_4k` | I2V 6s Upsample | 4K |
+| `veo_3_1_i2v_s_portrait_6s_4k` | I2V 6s Upsample | 4K |
+| `veo_3_1_i2v_s_landscape_6s_1080p` | I2V 6s Upsample | 1080P |
+| `veo_3_1_i2v_s_portrait_6s_1080p` | I2V 6s Upsample | 1080P |
+| `veo_3_1_r2v_fast_portrait_ultra_4k` | R2V Upsample | 4K |
+| `veo_3_1_r2v_fast_landscape_ultra_4k` | R2V Upsample | 4K |
+| `veo_3_1_r2v_fast_portrait_ultra_1080p` | R2V Upsample | 1080P |
+| `veo_3_1_r2v_fast_landscape_ultra_1080p` | R2V Upsample | 1080P |
 
-## 📡 API 使用示例（需要使用流式）
+---
 
-> 除了下方 `OpenAI-compatible` 示例，服务也支持 Gemini 官方格式：
+## API Usage Examples (Streaming Required)
+
+> In addition to the OpenAI-compatible examples below, the service also supports the official Gemini format:
 > - `POST /v1beta/models/{model}:generateContent`
 > - `POST /models/{model}:generateContent`
 > - `POST /v1beta/models/{model}:streamGenerateContent`
 > - `POST /models/{model}:streamGenerateContent`
 >
-> Gemini 官方格式支持以下认证方式：
+> The official Gemini format supports the following authentication methods:
 > - `Authorization: Bearer <api_key>`
 > - `x-goog-api-key: <api_key>`
 > - `?key=<api_key>`
 >
-> Gemini 官方图片请求体已兼容：
+> The official Gemini image request body is compatible with:
 > - `systemInstruction`
 > - `contents[].parts[].text`
 > - `contents[].parts[].inlineData`
@@ -335,10 +382,10 @@ Prometheus 可直接抓 `/metrics`。如果部署到 Kubernetes，建议只在�
 > - `generationConfig.imageConfig.aspectRatio`
 > - `generationConfig.imageConfig.imageSize`
 
-### Gemini 官方 generateContent（文生图）
+### Gemini Official generateContent (Text-to-Image)
 
-> 已使用真实 Token 实测通过。
-> 如需流式返回，可将路径替换为 `:streamGenerateContent?alt=sse`。
+> Verified with real tokens.
+> For streaming responses, replace the path with `:streamGenerateContent?alt=sse`.
 
 ```bash
 curl -X POST "http://localhost:8000/models/gemini-3.1-flash-image:generateContent" \
@@ -357,7 +404,7 @@ curl -X POST "http://localhost:8000/models/gemini-3.1-flash-image:generateConten
         "role": "user",
         "parts": [
           {
-            "text": "一颗放在木桌上的红苹果，棚拍光线，极简背景"
+            "text": "A red apple on a wooden table, studio lighting, minimalist background"
           }
         ]
       }
@@ -372,7 +419,7 @@ curl -X POST "http://localhost:8000/models/gemini-3.1-flash-image:generateConten
   }'
 ```
 
-### 文生图
+### Text-to-Image
 
 ```bash
 curl -X POST "http://localhost:8000/v1/chat/completions" \
@@ -383,14 +430,14 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
     "messages": [
       {
         "role": "user",
-        "content": "一只可爱的猫咪在花园里玩耍"
+        "content": "A cute cat playing in the garden"
       }
     ],
     "stream": true
   }'
 ```
 
-### 图生图
+### Image-to-Image
 
 ```bash
 curl -X POST "http://localhost:8000/v1/chat/completions" \
@@ -404,7 +451,7 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
         "content": [
           {
             "type": "text",
-            "text": "将这张图片变成水彩画风格"
+            "text": "Transform this image into a watercolor painting style"
           },
           {
             "type": "image_url",
@@ -419,7 +466,7 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
   }'
 ```
 
-### 文生视频
+### Text-to-Video
 
 ```bash
 curl -X POST "http://localhost:8000/v1/chat/completions" \
@@ -430,14 +477,14 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
     "messages": [
       {
         "role": "user",
-        "content": "一只小猫在草地上追逐蝴蝶"
+        "content": "A kitten chasing a butterfly on the grass"
       }
     ],
     "stream": true
   }'
 ```
 
-### 首尾帧生成视频
+### First/Last Frame Video Generation
 
 ```bash
 curl -X POST "http://localhost:8000/v1/chat/completions" \
@@ -451,18 +498,18 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
         "content": [
           {
             "type": "text",
-            "text": "从第一张图过渡到第二张图"
+            "text": "Transition from the first image to the second image"
           },
           {
             "type": "image_url",
             "image_url": {
-              "url": "data:image/jpeg;base64,<首帧base64>"
+              "url": "data:image/jpeg;base64,<first_frame_base64>"
             }
           },
           {
             "type": "image_url",
             "image_url": {
-              "url": "data:image/jpeg;base64,<尾帧base64>"
+              "url": "data:image/jpeg;base64,<last_frame_base64>"
             }
           }
         ]
@@ -472,11 +519,11 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
   }'
 ```
 
-### 多图生成视频
+### Reference-to-Video (Multi-Image)
 
-> `R2V` 会由服务端自动组装新版视频请求体，调用方仍然使用 OpenAI 兼容输入即可。
-> 服务端会将横屏 `R2V` 自动映射到最新的 `*_landscape` 上游模型键。
-> 当前最多传 **3 张参考图**。
+> `R2V` is assembled server-side using the new-version video request body. Callers can continue to use OpenAI-compatible input.
+> The server automatically maps landscape `R2V` to the latest `*_landscape` upstream model key.
+> Currently supports up to **3 reference images**.
 
 ```bash
 curl -X POST "http://localhost:8000/v1/chat/completions" \
@@ -490,24 +537,24 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
         "content": [
           {
             "type": "text",
-            "text": "以三张参考图的人物和场景为基础，生成一段镜头平滑推进的竖屏视频"
+            "text": "Based on three reference images, generate a portrait video with smooth camera movement"
           },
           {
             "type": "image_url",
             "image_url": {
-              "url": "data:image/jpeg;base64/<参考图1base64>"
+              "url": "data:image/jpeg;base64/<ref_image_1_base64>"
             }
           },
           {
             "type": "image_url",
             "image_url": {
-              "url": "data:image/jpeg;base64/<参考图2base64>"
+              "url": "data:image/jpeg;base64/<ref_image_2_base64>"
             }
           },
           {
             "type": "image_url",
             "image_url": {
-              "url": "data:image/jpeg;base64/<参考图3base64>"
+              "url": "data:image/jpeg;base64/<ref_image_3_base64>"
             }
           }
         ]
@@ -519,35 +566,122 @@ curl -X POST "http://localhost:8000/v1/chat/completions" \
 
 ---
 
-## 📄 许可证
+## Configuration Overview
 
-本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
+Configuration is TOML-based, loaded from `config/setting.toml` (falls back to `config/setting_example.toml`). At runtime, the database (`data/flow.db`) is the authoritative config store. All config keys below are preserved exactly as they appear in the source.
+
+See [docs/CONFIGURATION_MAP.md](docs/CONFIGURATION_MAP.md) for the full configuration reference.
+
+| Section | Key | Type | Default | Description |
+|---------|-----|------|---------|-------------|
+| `[global]` | `api_key` | string | `"han1234"` | API key for client authentication |
+| `[global]` | `admin_username` | string | `"admin"` | Admin login username |
+| `[global]` | `admin_password` | string | `"admin"` | Admin login password |
+| `[flow]` | `labs_base_url` | string | `"https://labs.google/fx/api"` | Google Labs base URL |
+| `[flow]` | `api_base_url` | string | `"https://aisandbox-pa.googleapis.com/v1"` | AI Sandbox API base URL |
+| `[flow]` | `timeout` | int | `120` | General upstream request timeout (seconds) |
+| `[flow]` | `max_retries` | int | `3` | Max retries per request |
+| `[server]` | `host` | string | `"0.0.0.0"` | Bind address |
+| `[server]` | `port` | int | `8000` | Bind port |
+| `[debug]` | `enabled` | bool | `false` | Enable debug logging to `logs.txt` |
+| `[debug]` | `mask_token` | bool | `true` | Mask tokens in logs |
+| `[proxy]` | `proxy_enabled` | bool | `false` | Enable request proxy |
+| `[proxy]` | `proxy_url` | string | `""` | Proxy URL for upstream requests |
+| `[generation]` | `image_timeout` | int | `300` | Image generation overall timeout (seconds) |
+| `[generation]` | `video_timeout` | int | `1500` | Video generation overall timeout (seconds) |
+| `[call_logic]` | `call_mode` | string | `"default"` | Token selection: `"default"` (load-aware) or `"polling"` (round-robin) |
+| `[admin]` | `error_ban_threshold` | int | `3` | Auto-disable token after N consecutive errors |
+| `[cache]` | `enabled` | bool | `false` | Enable media caching |
+| `[cache]` | `timeout` | int | `7200` | Cache TTL in seconds (0 = never expire) |
+| `[cache]` | `base_url` | string | `""` | Base URL for cached file access |
+| `[captcha]` | `captcha_method` | string | `"extension"` | Captcha method: `extension`/`yescaptcha`/`browser`/`personal`/`remote_browser` |
+| `[captcha]` | `yescaptcha_api_key` | string | `""` | YesCaptcha API key |
+| `[captcha]` | `yescaptcha_task_type` | string | `"RecaptchaV3TaskProxylessM1"` | YesCaptcha task type |
 
 ---
 
-## 🙏 致谢
+## Documentation Index
 
-- [PearNoDec](https://github.com/PearNoDec) 提供的YesCaptcha打码方案
-- [raomaiping](https://github.com/raomaiping) 提供的无头打码方案
-感谢所有贡献者和使用者的支持！
+| Document | Description |
+|----------|-------------|
+| [docs/PROJECT_STATE.md](docs/PROJECT_STATE.md) | Fork identity, principles, and sprint history |
+| [docs/PRODUCT_OVERVIEW.md](docs/PRODUCT_OVERVIEW.md) | Core capabilities and API compatibility |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | High-level architecture overview |
+| [docs/SYSTEM_MAP.md](docs/SYSTEM_MAP.md) | Source-based system map (Sprint 001) |
+| [docs/ENTRYPOINTS.md](docs/ENTRYPOINTS.md) | Application entrypoints (Sprint 001) |
+| [docs/CONFIGURATION_MAP.md](docs/CONFIGURATION_MAP.md) | Full configuration reference (Sprint 001) |
+| [docs/MODULE_BOUNDARIES.md](docs/MODULE_BOUNDARIES.md) | Module dependency boundaries |
+| [docs/GLOSSARY.md](docs/GLOSSARY.md) | Term definitions |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Migration roadmap |
+| [docs/RISK_REGISTER.md](docs/RISK_REGISTER.md) | Known risks and uncertainties |
+| [docs/SECURITY_AND_COMPLIANCE.md](docs/SECURITY_AND_COMPLIANCE.md) | Security considerations and compliance |
+| [docs/TRANSLATION_PLAN.md](docs/TRANSLATION_PLAN.md) | Phased translation plan |
+| [docs/ENGLISH_SURFACE_AUDIT.md](docs/ENGLISH_SURFACE_AUDIT.md) | Chinese-language surface audit (Sprint 001A) |
+| [docs/UPSTREAM_BASELINE.md](docs/UPSTREAM_BASELINE.md) | Upstream baseline reference |
+| [README.zh-CN.md](README.zh-CN.md) | Original Chinese README |
 
 ---
 
-## 📞 联系方式
+## Security and Compliance
 
-- 提交 Issue：[GitHub Issues](https://github.com/TheSmallHanCat/flow2api/issues)
+This section provides a high-level overview only. See [docs/SECURITY_AND_COMPLIANCE.md](docs/SECURITY_AND_COMPLIANCE.md) for full details.
+
+### Upstream Service Terms
+
+This project interfaces with Google's services. Users should be aware of Google's Terms of Service for Google Labs / VideoFX, Google's reCAPTCHA Terms of Service, and the rate limits and usage policies of the upstream service.
+
+### Token Lifecycle
+
+Session tokens (ST) and access tokens (AT) for Google accounts are stored in SQLite (`data/flow.db`). Tokens are sensitive credentials — the database file should be protected with filesystem permissions. The `debug.mask_token` config option controls whether tokens are masked in logs (default: `true`).
+
+### Captcha Workflows
+
+Multiple captcha modes are supported: third-party API services (YesCaptcha, CapMonster, EzCaptcha, CapSolver), browser-based captcha (Playwright headed browser), personal browser captcha (nodriver-based resident tab pool), and Chrome extension bridge. Third-party captcha services receive the site key and page URL. Browser-based captcha modes launch real browser instances. Captcha tokens are short-lived and not persisted.
+
+### Proxy Behavior
+
+HTTP/SOCKS5 proxy support is available for upstream requests, media downloads, and browser captcha. Proxy URLs are stored in the database. Separate request and media proxy paths are supported.
+
+### Account/Session Handling
+
+Per-token settings include concurrency limits, account tier, image/video capability flags, and ban state. The system manages project pools per token for upstream API project rotation. Automatic 429 rate-limit banning and unban-after-12-hours behavior is observed during source mapping.
 
 ---
 
-**⭐ 如果这个项目对你有帮助，请给个 Star！**
+## Project Status
 
-## 最近更新
+| Sprint | Status | Description |
+|--------|--------|-------------|
+| Sprint 000 — Fork Baseline & English Project Brain | Completed | Documentation baseline created |
+| Sprint 001 — Existing System Map | Completed | Source-based system map, entrypoints, config map, risk register |
+| Sprint 001A — English Surface Audit | Completed | Audit of Chinese-language surfaces, translation plan |
+| Sprint 001B — Safe README Translation | Active | English README, original Chinese preserved as README.zh-CN.md |
 
-- `9f1d712` 同步 personal 打码逻辑，包含清理、浏览器参数和打码方式配置。
-- `da2ad06` 合并 PR #133。
-- `abd0c00` 修复 PR #133 合并后的集成问题。
-- `55431c9` 将 origin/main 同步到 PR #133。
-- `4b7a0ad` 新增 Prometheus 服务指标和 Token 健康监控。
+The project is now English-documented at the README and project-brain level. Runtime source code, UI surfaces, logs, error strings, and config comments have not yet been translated. See [docs/TRANSLATION_PLAN.md](docs/TRANSLATION_PLAN.md) for the phased translation approach and [docs/ROADMAP.md](docs/ROADMAP.md) for the full migration roadmap.
+
+---
+
+## Acknowledgments
+
+- [PearNoDec](https://github.com/PearNoDec) for the YesCaptcha integration approach
+- [raomaiping](https://github.com/raomaiping) for the headless captcha approach
+- Thanks to all contributors and users of the upstream project!
+
+---
+
+## Contact
+
+- Upstream issues: [GitHub Issues](https://github.com/TheSmallHanCat/flow2api/issues)
+
+---
+
+## Recent Upstream Updates
+
+- `9f1d712` Synced personal captcha logic, including cleanup, browser parameters, and captcha method configuration.
+- `da2ad06` Merged PR #133.
+- `abd0c00` Fixed integration issues after PR #133 merge.
+- `55431c9` Synced origin/main to PR #133.
+- `4b7a0ad` Added Prometheus service metrics and token health monitoring.
 
 ## Star History
 

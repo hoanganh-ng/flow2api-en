@@ -1,8 +1,9 @@
 # Translation Plan
 
-**Sprint:** 001A — English Surface Audit
+**Original sprint:** 001A — English Surface Audit
+**Updated:** Sprint 001B — Safe README Translation
 **Date:** 2025-06-11
-**Status:** Planning document — no translations have been applied yet.
+**Status:** README translation completed (Sprint 001B). Runtime strings, UI strings, source comments, logs, and errors remain untranslated.
 
 ---
 
@@ -16,11 +17,12 @@ This document classifies every Chinese-language surface identified in the [Engli
 
 These surfaces are documentation-only or developer-facing. Translating them carries negligible runtime risk.
 
-### 1.1 README.md (root)
+### 1.1 README.md (root) — ✅ Completed in Sprint 001B
 
 - **Content:** Full project README — features, usage instructions, configuration, deployment guide.
 - **Risk:** None. Pure documentation consumed by humans.
 - **Approach:** Replace with an English README. Preserve the original Chinese README as `README.zh-CN.md` for upstream compatibility if desired.
+- **Status:** Completed. The root `README.md` is now English-first. The original Chinese content is preserved in `README.zh-CN.md`.
 
 ### 1.2 Inline comments in Python source (`src/`)
 
@@ -142,7 +144,8 @@ These surfaces are part of the runtime contract. Changing them could break API c
 
 | Sprint | Scope | Phase |
 |--------|-------|-------|
-| Sprint 002 | Translate `README.md` + Dockerfile/gitignore comments | Phase 1.1, 1.4, 1.5 |
+| Sprint 001B | ✅ Completed | Translate `README.md` (root) — English README created, original preserved as `README.zh-CN.md` |
+| Sprint 002 | Translate Dockerfile/gitignore comments | Phase 1.4, 1.5 |
 | Sprint 003 | Translate `config/setting_example.toml` comments | Phase 1.6 |
 | Sprint 004 | Translate Python comments and docstrings (`src/`) | Phase 1.2, 1.3, 1.7 |
 | Sprint 005 | Translate admin UI (`static/`) and extension UI (`extension/`) | Phase 2.1, 2.2 |

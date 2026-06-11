@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 001A — English Surface Audit |
+| **Current sprint** | Sprint 001B — Safe README Translation |
 
 ## Purpose
 
@@ -24,7 +24,7 @@ This fork exists to:
 - **Upstream compatibility** is preserved unless a future sprint explicitly documents a deviation.
 - **Original license and attribution** are retained.
 - **Chinese source comments and docs** are left in place; English documentation is additive.
-- **Translation status:** The project is English-documented (project brain, system map, sprint plans) but source code, UI, logs, and config comments have not yet been translated. See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased approach.
+- **Translation status:** The project is English-documented (project brain, system map, sprint plans, root README). Source code, UI, logs, and config comments have not yet been translated. See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased approach.
 
 ## What Is Documented So Far
 
@@ -48,8 +48,11 @@ This fork exists to:
 | docs/RISK_REGISTER.md | Created (Sprint 001) |
 | docs/SPRINTS/SPRINT-001-existing-system-map.md | Created (Sprint 001) |
 | docs/ENGLISH_SURFACE_AUDIT.md | Created (Sprint 001A) |
-| docs/TRANSLATION_PLAN.md | Created (Sprint 001A) |
+| docs/TRANSLATION_PLAN.md | Created (Sprint 001A), updated (Sprint 001B) |
 | docs/SPRINTS/SPRINT-001A-english-surface-audit.md | Created (Sprint 001A) |
+| README.zh-CN.md | Created (Sprint 001B) — original Chinese README preserved |
+| README.md | Replaced (Sprint 001B) — English-first README |
+| docs/SPRINTS/SPRINT-001B-safe-readme-translation.md | Created (Sprint 001B) |
 
 ## What Is Not Yet Done
 
@@ -57,6 +60,7 @@ This fork exists to:
 - API contract specification with request/response schemas
 - Test harness / compatibility fixtures
 - Rewrite scaffolding
+- Runtime strings, UI text, log messages, error strings — not yet translated (see [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md))
 
 ## Sprint History
 
@@ -64,12 +68,14 @@ This fork exists to:
 |--------|--------|-------------|
 | Sprint 000 — Fork baseline and English project brain | ✅ Completed | Documentation baseline and English project brain created |
 | Sprint 001 — Existing System Map | ✅ Completed | Source-based system map, entrypoints, config map, risk register |
-| Sprint 001A — English Surface Audit | 🔄 Active | Audit of Chinese-language surfaces, translation plan |
+| Sprint 001A — English Surface Audit | ✅ Completed | Audit of Chinese-language surfaces, translation plan (audit-only) |
+| Sprint 001B — Safe README Translation | 🔄 Active | English README created, original Chinese preserved as README.zh-CN.md |
 
 ## Next Steps
 
 See [ROADMAP.md](ROADMAP.md) for the full migration roadmap.
 See [SPRINT-000](SPRINTS/SPRINT-000-fork-baseline-english-project-brain.md) for the baseline sprint.
 See [SPRINT-001](SPRINTS/SPRINT-001-existing-system-map.md) for the completed system map sprint.
-See [SPRINT-001A](SPRINTS/SPRINT-001A-english-surface-audit.md) for the current audit sprint.
+See [SPRINT-001A](SPRINTS/SPRINT-001A-english-surface-audit.md) for the completed audit sprint.
+See [SPRINT-001B](SPRINTS/SPRINT-001B-safe-readme-translation.md) for the current README translation sprint.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
