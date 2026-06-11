@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 001 — Existing System Map |
+| **Current sprint** | Sprint 001A — English Surface Audit |
 
 ## Purpose
 
@@ -24,6 +24,7 @@ This fork exists to:
 - **Upstream compatibility** is preserved unless a future sprint explicitly documents a deviation.
 - **Original license and attribution** are retained.
 - **Chinese source comments and docs** are left in place; English documentation is additive.
+- **Translation status:** The project is English-documented (project brain, system map, sprint plans) but source code, UI, logs, and config comments have not yet been translated. See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased approach.
 
 ## What Is Documented So Far
 
@@ -46,6 +47,9 @@ This fork exists to:
 | docs/CONFIGURATION_MAP.md | Created (Sprint 001) |
 | docs/RISK_REGISTER.md | Created (Sprint 001) |
 | docs/SPRINTS/SPRINT-001-existing-system-map.md | Created (Sprint 001) |
+| docs/ENGLISH_SURFACE_AUDIT.md | Created (Sprint 001A) |
+| docs/TRANSLATION_PLAN.md | Created (Sprint 001A) |
+| docs/SPRINTS/SPRINT-001A-english-surface-audit.md | Created (Sprint 001A) |
 
 ## What Is Not Yet Done
 
@@ -59,10 +63,13 @@ This fork exists to:
 | Sprint | Status | Description |
 |--------|--------|-------------|
 | Sprint 000 — Fork baseline and English project brain | ✅ Completed | Documentation baseline and English project brain created |
-| Sprint 001 — Existing System Map | 🔄 Active | Source-based system map, entrypoints, config map, risk register |
+| Sprint 001 — Existing System Map | ✅ Completed | Source-based system map, entrypoints, config map, risk register |
+| Sprint 001A — English Surface Audit | 🔄 Active | Audit of Chinese-language surfaces, translation plan |
 
 ## Next Steps
 
 See [ROADMAP.md](ROADMAP.md) for the full migration roadmap.
 See [SPRINT-000](SPRINTS/SPRINT-000-fork-baseline-english-project-brain.md) for the baseline sprint.
-See [SPRINT-001](SPRINTS/SPRINT-001-existing-system-map.md) for the current sprint.
+See [SPRINT-001](SPRINTS/SPRINT-001-existing-system-map.md) for the completed system map sprint.
+See [SPRINT-001A](SPRINTS/SPRINT-001A-english-surface-audit.md) for the current audit sprint.
+See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
