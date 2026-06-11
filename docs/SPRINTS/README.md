@@ -6,7 +6,8 @@ This directory contains sprint planning and retrospective documents for the flow
 
 | Sprint | Name | Status | Description |
 |--------|------|--------|-------------|
-| [000](SPRINT-000-fork-baseline-english-project-brain.md) | Fork Baseline & English Project Brain | In Progress | Documentation-only fork baseline, no runtime changes |
+| [000](SPRINT-000-fork-baseline-english-project-brain.md) | Fork Baseline & English Project Brain | ✅ Completed | Documentation-only fork baseline, no runtime changes |
+| [001](SPRINT-001-existing-system-map.md) | Existing System Map | 🔄 Active | Source-based system map, entrypoints, config map, risk register |
 
 ## Sprint Conventions
 
