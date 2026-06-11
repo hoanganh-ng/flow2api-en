@@ -102,11 +102,7 @@ flow2api/
 
 6. **TLS impersonation** — `curl_cffi` is used to impersonate Chrome's TLS fingerprint. Upstream fingerprint detection changes could break requests.
 
-<<<<<<< HEAD
 7. **Concurrency model** — In-memory semaphores for concurrency control. Not distributed; single-process only.
-=======
-7. **Concurrency model** — Uses `asyncio.Lock` with counter-based slot tracking (observed from source). Whether this is sufficient for all deployment topologies is to be confirmed during source analysis.
->>>>>>> 171190e (docs(project): add extensive English documentation for flow2api fork baseline)
 
 ## Explicit Unknowns (Require Source Analysis in Later Sprints)
 
