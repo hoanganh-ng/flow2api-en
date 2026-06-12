@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 004 — Generation Fixture Plan |
+| **Current sprint** | Sprint 005A — Static Generation Fixture Skeleton |
 
 ## Purpose
 
@@ -68,12 +68,19 @@ This fork exists to:
 | docs/GENERATION_FIXTURE_MATRIX.md | Created (Sprint 004) — 19 planned fixtures with per-fixture detail |
 | docs/TEST_HARNESS_PLAN.md | Created (Sprint 004) — future test harness approach and strategy |
 | docs/SPRINTS/SPRINT-004-generation-fixture-plan.md | Created (Sprint 004) |
+| tests/fixtures/README.md | Created (Sprint 005A) — fixture directory purpose and sanitization policy |
+| tests/fixtures/generation/README.md | Created (Sprint 005A) — generation fixture scope and per-fixture docs |
+| tests/fixtures/generation/model-list/openai-model-list.json | Created (Sprint 005A) — FX-ML-001 skeleton |
+| tests/fixtures/generation/openai-non-streaming/text-basic-request.json | Created (Sprint 005A) — FX-ON-001 request skeleton |
+| tests/fixtures/generation/openai-non-streaming/text-basic-response.json | Created (Sprint 005A) — FX-ON-001 response skeleton |
+| tests/fixtures/generation/openai-streaming/done-termination.sse.txt | Created (Sprint 005A) — FX-OS-003 skeleton |
+| docs/SPRINTS/SPRINT-005A-static-generation-fixture-skeleton.md | Created (Sprint 005A) |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Test harness / compatibility fixtures
+- Executable test harness / fixture loader / assertion utilities (fixture skeleton started in Sprint 005A)
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -88,7 +95,8 @@ This fork exists to:
 | Sprint 001C — Safe Translation Allowlist | ✅ Completed | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
 | Sprint 002 — API Surface Inventory | ✅ Completed | Documentation-only inventory of HTTP/WS API surface from source inspection |
 | Sprint 003 — Generation Contract Deep Dive | ✅ Completed | Documentation-only deep dive of generation contract from source inspection |
-| Sprint 004 — Generation Fixture Plan | 🔄 Active | Documentation-only fixture plan for future generation compatibility tests |
+| Sprint 004 — Generation Fixture Plan | ✅ Completed | Documentation-only fixture plan for future generation compatibility tests |
+| Sprint 005A — Static Generation Fixture Skeleton | 🔄 Active | First sanitized static fixture skeleton (FX-ML-001, FX-ON-001, FX-OS-003) |
 
 ## Next Steps
 
@@ -100,7 +108,8 @@ See [SPRINT-001B](SPRINTS/SPRINT-001B-safe-readme-translation.md) for the comple
 See [SPRINT-001C](SPRINTS/SPRINT-001C-safe-translation-allowlist.md) for the completed translation allowlist sprint.
 See [SPRINT-002](SPRINTS/SPRINT-002-api-surface-inventory.md) for the completed API surface inventory sprint.
 See [SPRINT-003](SPRINTS/SPRINT-003-generation-contract-deep-dive.md) for the completed generation contract deep dive sprint.
-See [SPRINT-004](SPRINTS/SPRINT-004-generation-fixture-plan.md) for the current generation fixture plan sprint.
+See [SPRINT-004](SPRINTS/SPRINT-004-generation-fixture-plan.md) for the completed generation fixture plan sprint.
+See [SPRINT-005A](SPRINTS/SPRINT-005A-static-generation-fixture-skeleton.md) for the current static generation fixture skeleton sprint.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
 See [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md) for the authoritative translation classification.
 See [API_SURFACE_INVENTORY.md](API_SURFACE_INVENTORY.md) for the detailed API surface inventory.
@@ -111,5 +120,5 @@ See [STREAMING_CONTRACT_NOTES.md](STREAMING_CONTRACT_NOTES.md) for streaming beh
 See [MODEL_COMPATIBILITY_MAP.md](MODEL_COMPATIBILITY_MAP.md) for model naming and resolution details.
 See [REQUEST_RESPONSE_CONVERSION_MAP.md](REQUEST_RESPONSE_CONVERSION_MAP.md) for OpenAI/Gemini conversion boundaries.
 See [GENERATION_FIXTURE_PLAN.md](GENERATION_FIXTURE_PLAN.md) for the fixture design and prioritization plan.
-See [GENERATION_FIXTURE_MATRIX.md](GENERATION_FIXTURE_MATRIX.md) for the per-fixture detail matrix.
+See [GENERATION_FIXTURE_MATRIX.md](GENERATION_FIXTURE_MATRIX.md) for the per-fixture detail matrix (3 skeletons created in Sprint 005A).
 See [TEST_HARNESS_PLAN.md](TEST_HARNESS_PLAN.md) for the planned test harness approach.

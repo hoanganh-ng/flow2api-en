@@ -1,0 +1,10 @@
+{
+  "model": "gemini-3.0-pro-image-landscape",
+  "messages": [
+    {
+      "role": "user",
+      "content": "test prompt placeholder"
+    }
+  ],
+  "stream": false
+}

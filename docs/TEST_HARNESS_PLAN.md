@@ -1,8 +1,8 @@
 # Test Harness Plan
 
-> **Sprint 004 — Generation Fixture Plan**
-> Documentation-only planning document. No runtime behavior changes.
-> No test harness code, test files, or fixture directories have been created.
+> **Sprint 005A — Static Generation Fixture Skeleton**
+> Fixture skeleton step. No test harness code, test files, or assertion utilities have been created.
+> Static fixture files for FX-ML-001, FX-ON-001, and FX-OS-003 now exist in `tests/fixtures/generation/`.
 
 ---
 
@@ -13,15 +13,17 @@ compatibility testing in flow2api-en. It covers fixture directory layout, naming
 conventions, secret avoidance, mocking strategy, streaming comparison techniques,
 and the recommended first implementation slice.
 
-All recommendations here are planning-level. Implementation is deferred to a
-future sprint that will create the actual test harness and fixture files.
+Sprint 005A created the first static fixture skeleton (fixture files only).
+Test harness utilities, assertion helpers, and executable tests remain deferred
+to a future sprint.
 
 ---
 
 ## Recommended Fixture Directory Layout
 
-The following structure is planned for a future sprint. Directories and files
-listed below do not yet exist.
+The following structure is planned for a future sprint. Sprint 005A created the
+first fixture files under `tests/fixtures/generation/`. The full layout below
+is not yet complete.
 
 ```
 tests/
