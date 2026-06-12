@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 002 — API Surface Inventory |
+| **Current sprint** | Sprint 003 — Generation Contract Deep Dive |
 
 ## Purpose
 
@@ -59,6 +59,11 @@ This fork exists to:
 | docs/API_ENDPOINT_INDEX.md | Created (Sprint 002) — endpoint table with categories, auth, risk |
 | docs/API_COMPATIBILITY_NOTES.md | Created (Sprint 002) — compatibility-sensitive behavior observations |
 | docs/SPRINTS/SPRINT-002-api-surface-inventory.md | Created (Sprint 002) |
+| docs/GENERATION_CONTRACT.md | Created (Sprint 003) — generation route contract deep dive |
+| docs/STREAMING_CONTRACT_NOTES.md | Created (Sprint 003) — streaming behavior observations |
+| docs/MODEL_COMPATIBILITY_MAP.md | Created (Sprint 003) — model naming, aliases, and resolution |
+| docs/REQUEST_RESPONSE_CONVERSION_MAP.md | Created (Sprint 003) — OpenAI/Gemini conversion boundaries |
+| docs/SPRINTS/SPRINT-003-generation-contract-deep-dive.md | Created (Sprint 003) |
 
 ## What Is Not Yet Done
 
@@ -77,7 +82,8 @@ This fork exists to:
 | Sprint 001A — English Surface Audit | ✅ Completed | Audit of Chinese-language surfaces, translation plan (audit-only) |
 | Sprint 001B — Safe README Translation | ✅ Completed | English README created, original Chinese preserved as README.zh-CN.md |
 | Sprint 001C — Safe Translation Allowlist | ✅ Completed | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
-| Sprint 002 — API Surface Inventory | 🔄 Active | Documentation-only inventory of HTTP/WS API surface from source inspection |
+| Sprint 002 — API Surface Inventory | ✅ Completed | Documentation-only inventory of HTTP/WS API surface from source inspection |
+| Sprint 003 — Generation Contract Deep Dive | 🔄 Active | Documentation-only deep dive of generation contract from source inspection |
 
 ## Next Steps
 
@@ -87,9 +93,14 @@ See [SPRINT-001](SPRINTS/SPRINT-001-existing-system-map.md) for the completed sy
 See [SPRINT-001A](SPRINTS/SPRINT-001A-english-surface-audit.md) for the completed audit sprint.
 See [SPRINT-001B](SPRINTS/SPRINT-001B-safe-readme-translation.md) for the completed README translation sprint.
 See [SPRINT-001C](SPRINTS/SPRINT-001C-safe-translation-allowlist.md) for the completed translation allowlist sprint.
-See [SPRINT-002](SPRINTS/SPRINT-002-api-surface-inventory.md) for the current API surface inventory sprint.
+See [SPRINT-002](SPRINTS/SPRINT-002-api-surface-inventory.md) for the completed API surface inventory sprint.
+See [SPRINT-003](SPRINTS/SPRINT-003-generation-contract-deep-dive.md) for the current generation contract deep dive sprint.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
 See [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md) for the authoritative translation classification.
 See [API_SURFACE_INVENTORY.md](API_SURFACE_INVENTORY.md) for the detailed API surface inventory.
 See [API_ENDPOINT_INDEX.md](API_ENDPOINT_INDEX.md) for the concise endpoint table.
 See [API_COMPATIBILITY_NOTES.md](API_COMPATIBILITY_NOTES.md) for compatibility-sensitive behavior observations.
+See [GENERATION_CONTRACT.md](GENERATION_CONTRACT.md) for the generation contract deep dive.
+See [STREAMING_CONTRACT_NOTES.md](STREAMING_CONTRACT_NOTES.md) for streaming behavior observations.
+See [MODEL_COMPATIBILITY_MAP.md](MODEL_COMPATIBILITY_MAP.md) for model naming and resolution details.
+See [REQUEST_RESPONSE_CONVERSION_MAP.md](REQUEST_RESPONSE_CONVERSION_MAP.md) for OpenAI/Gemini conversion boundaries.
