@@ -1,9 +1,10 @@
 # Generation Fixture Matrix
 
-> **Sprint 005A — Static Generation Fixture Skeleton**
-> Three skeleton fixtures created: FX-ML-001, FX-ON-001, FX-OS-003.
-> No executable tests or test harness utilities have been created yet.
-> Remaining fixtures are planned but not yet implemented.
+> **Sprint 005B — Fixture Loader & Shape Assertions**
+> Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
+> Sprint 005B adds offline static shape assertions for all three fixtures
+> (see `tests/compatibility/test_static_generation_fixtures.py`).
+> Route-level behavior is not yet tested. Remaining fixtures are planned but not yet implemented.
 
 ---
 
@@ -50,7 +51,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | model listing |
 | **Fixture mode** | static-doc-example |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/model-list/openai-model-list.json`) |
-| **Tested status** | ❌ Not yet tested (no executable test harness) |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
 | **Input shape to preserve** | None (no request body); API key in auth header |
 | **Output shape to verify** | `{ "object": "list", "data": [{ "id": "<str>", "object": "model", "owned_by": "flow2api", "description": "<str>" }] }` |
 | **Compatibility risk** | high |
@@ -106,7 +107,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI non-streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/openai-non-streaming/text-basic-request.json`, `text-basic-response.json`) |
-| **Tested status** | ❌ Not yet tested (no executable test harness) |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
 | **Input shape to preserve** | `{ "model": "<model-id>", "messages": [{"role": "user", "content": "<text>"}], "stream": false }` |
 | **Output shape to verify** | `{ "id": "chatcmpl-<ts>", "object": "chat.completion", "created": <int>, "model": "flow2api", "choices": [{ "index": 0, "message": {"role": "assistant", "content": "<text>"}, "finish_reason": "stop" }] }` |
 | **Compatibility risk** | high |
@@ -198,7 +199,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/openai-streaming/done-termination.sse.txt`) |
-| **Tested status** | ❌ Not yet tested (no executable test harness) |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
 | **Input shape to preserve** | Same as `FX-OS-001` |
 | **Output shape to verify** | After all content chunks, the stream yields exactly `data: [DONE]\n\n` as the final SSE frame. No further data follows. |
 | **Compatibility risk** | high |
@@ -414,7 +415,9 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 
 **Total planned fixtures:** 19
 
-**Sprint 005A progress:** 3 skeleton fixtures created (FX-ML-001, FX-ON-001, FX-OS-003). No executable tests yet.
+**Sprint 005A progress:** 3 skeleton fixtures created (FX-ML-001, FX-ON-001, FX-OS-003).
+
+**Sprint 005B progress:** Static shape assertions added for all 3 skeleton fixtures. Route-level behavior is not yet tested.
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures

@@ -14,7 +14,8 @@ This directory contains sprint planning and retrospective documents for the flow
 | [002](SPRINT-002-api-surface-inventory.md) | API Surface Inventory | ✅ Completed | Documentation-only inventory of HTTP/WS API surface from source inspection |
 | [003](SPRINT-003-generation-contract-deep-dive.md) | Generation Contract Deep Dive | ✅ Completed | Documentation-only deep dive of generation contract from source inspection |
 | [004](SPRINT-004-generation-fixture-plan.md) | Generation Fixture Plan | ✅ Completed | Documentation-only fixture plan for future generation compatibility tests |
-| [005A](SPRINT-005A-static-generation-fixture-skeleton.md) | Static Generation Fixture Skeleton | 🔄 Active | First sanitized static fixture skeleton (FX-ML-001, FX-ON-001, FX-OS-003) |
+| [005A](SPRINT-005A-static-generation-fixture-skeleton.md) | Static Generation Fixture Skeleton | ✅ Completed | First sanitized static fixture skeleton (FX-ML-001, FX-ON-001, FX-OS-003) |
+| [005B](SPRINT-005B-fixture-loader-shape-assertions.md) | Fixture Loader & Shape Assertions | 🔄 Active | Offline static fixture shape assertions for Sprint 005A fixtures |
 
 ## Sprint Conventions
 
