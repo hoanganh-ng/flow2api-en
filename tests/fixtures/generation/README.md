@@ -79,10 +79,88 @@ All fixtures are synthetic and sanitized. No real upstream responses are include
 
 ## What Is Not Yet Included
 
-- Gemini endpoint fixtures (planned for future sprint)
-- Media generation fixtures (images, videos)
 - Error response fixtures
 - Request conversion fixtures
 - Runtime-captured fixtures from live upstream
+- Video result formatting fixtures
+- Gemini streaming fixtures
 
 See `docs/GENERATION_FIXTURE_MATRIX.md` for the complete fixture plan.
+
+---
+
+## Sprint 005C Additions
+
+> All fixtures added in Sprint 005C are synthetic and sanitized. No real upstream responses are included. No executable tests are added in Sprint 005C; assertions for these fixtures are planned for Sprint 005D.
+
+---
+
+### FX-ON-002: OpenAI Image Result Formatting
+
+**Files:**
+- `openai-non-streaming/image-result-request.json`
+- `openai-non-streaming/image-result-response.json`
+
+**Purpose:** Verifies that `POST /v1/chat/completions` with `stream: false` accepts an image-generation request shape and returns a structurally valid response containing an image result in the assistant message content.
+
+**What it verifies:**
+- Request accepts `model`, `messages`, `stream: false`
+- Response has `id`, `object`, `created`, `model`, `choices`, `usage`
+- Response `choices[0].message.content` contains a markdown image link pattern `![Generated Image](<url>)`
+
+**What it does not verify:**
+- Actual image generation behavior
+- Exact runtime image URL formatting (the representative markdown image link used here is synthetic; exact runtime formatting remains to be confirmed by later fixtures)
+- Model resolution or alias expansion for image models
+- Upstream API interaction
+- Whether an additive `url` field is present in the response
+
+**Runtime capture:** Not required. Static fixture based on documented response shapes.
+
+---
+
+### FX-GN-001: Gemini Non-Streaming Request/Response
+
+**Files:**
+- `gemini-non-streaming/text-basic-request.json`
+- `gemini-non-streaming/text-basic-response.json`
+
+**Purpose:** Verifies that `POST /v1beta/models/{model}:generateContent` accepts a minimal Gemini-compatible request and returns a structurally valid response.
+
+**What it verifies:**
+- Request accepts `contents` with `role` and `parts` containing `text`
+- Optional `generationConfig` object is accepted
+- Response has `candidates` array with `content.role`, `content.parts`, `finishReason`, `index`
+- Response has `modelVersion`
+
+**What it does not verify:**
+- Actual text generation behavior or content correctness
+- Model resolution for Gemini path
+- Upstream API interaction
+- Media (image/video) result formatting in Gemini response
+- `inlineData` or `fileData` part types
+- `systemInstruction` passthrough behavior
+
+**Runtime capture:** Not required. Static fixture based on documented Gemini request/response shapes.
+
+---
+
+### FX-OS-002: OpenAI Streaming reasoning_content/progress Chunk
+
+**File:** `openai-streaming/reasoning-progress.sse.txt`
+
+**Purpose:** Verifies that OpenAI streaming endpoints emit intermediate progress chunks with `delta.reasoning_content` before the final content chunk.
+
+**What it verifies:**
+- SSE stream contains `data:` events with JSON chunk objects
+- Chunk objects have OpenAI-style structure: `id`, `object`, `created`, `model`, `choices`
+- `choices[0].delta.reasoning_content` is present with synthetic progress text
+- `finish_reason` is `null` on progress chunks
+
+**What it does not verify:**
+- Exact number or ordering of progress chunks
+- Final content chunk or `finish_reason: "stop"` behavior (covered by FX-OS-003 for `[DONE]` termination)
+- Stream termination with `data: [DONE]` (covered separately by FX-OS-003)
+- Upstream streaming behavior
+
+**Runtime capture:** Not required. Static fixture based on documented `reasoning_content` chunk shape.

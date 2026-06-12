@@ -1,10 +1,12 @@
 # Test Harness Plan
 
-> **Sprint 005B — Fixture Loader & Shape Assertions**
-> First static fixture shape assertion step. Sprint 005B adds an offline fixture loader
+> **Sprint 005C — Additional Static Generation Fixtures**
+> First static fixture shape assertion step. Sprint 005B added an offline fixture loader
 > (`tests/compatibility/helpers/fixture_loader.py`), shallow shape assertion helpers
 > (`tests/compatibility/helpers/shape_assertions.py`), and executable `unittest.TestCase` tests
 > (`tests/compatibility/test_static_generation_fixtures.py`) for FX-ML-001, FX-ON-001, and FX-OS-003.
+> Sprint 005C adds three additional static fixture files: FX-ON-002, FX-GN-001, FX-OS-002.
+> Assertions for these fixtures remain future work (planned for Sprint 005D).
 > Route-level tests and runtime application imports remain future work.
 
 ---
@@ -18,7 +20,9 @@ and the recommended first implementation slice.
 
 Sprint 005A created the first static fixture skeleton (fixture files only).
 Sprint 005B added the first executable offline shape assertion tests using
-a standard-library-only fixture loader. Route-level tests that import the
+a standard-library-only fixture loader.
+Sprint 005C adds three additional static fixture files (FX-ON-002, FX-GN-001, FX-OS-002)
+without adding any new tests or assertions. Route-level tests that import the
 runtime FastAPI application, mock handlers, or exercise HTTP routes remain
 deferred to a future sprint.
 

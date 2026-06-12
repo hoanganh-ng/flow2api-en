@@ -1,0 +1,10 @@
+{
+  "model": "gemini-2.0-flash-exp-image-generation",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Generate an image of a sunset over a calm ocean."
+    }
+  ],
+  "stream": false
+}

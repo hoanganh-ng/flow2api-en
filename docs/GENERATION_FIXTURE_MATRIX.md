@@ -1,9 +1,11 @@
 # Generation Fixture Matrix
 
-> **Sprint 005B — Fixture Loader & Shape Assertions**
+> **Sprint 005C — Additional Static Generation Fixtures**
 > Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
-> Sprint 005B adds offline static shape assertions for all three fixtures
+> Sprint 005B added offline static shape assertions for all three fixtures
 > (see `tests/compatibility/test_static_generation_fixtures.py`).
+> Sprint 005C adds three additional static fixture files: FX-ON-002, FX-GN-001, FX-OS-002.
+> Assertions for the Sprint 005C fixtures are not yet implemented (planned for Sprint 005D).
 > Route-level behavior is not yet tested. Remaining fixtures are planned but not yet implemented.
 
 ---
@@ -126,6 +128,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Method** | POST |
 | **Surface category** | OpenAI non-streaming |
 | **Fixture mode** | mocked-internal-response |
+| **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/openai-non-streaming/image-result-request.json`, `image-result-response.json`) |
+| **Tested status** | ⬜ Static shape assertions not yet added (planned for Sprint 005D) — route-level behavior not tested |
 | **Input shape to preserve** | `{ "model": "<image-model-id>", "messages": [{"role": "user", "content": "generate an image of ..."}], "stream": false }` |
 | **Output shape to verify** | Response `choices[0].message.content` contains `![Generated Image](<url>)` pattern. Additive `url` field may be present. |
 | **Compatibility risk** | high |
@@ -180,6 +184,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Method** | POST |
 | **Surface category** | OpenAI streaming |
 | **Fixture mode** | mocked-internal-response |
+| **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/openai-streaming/reasoning-progress.sse.txt`) |
+| **Tested status** | ⬜ Static shape assertions not yet added (planned for Sprint 005D) — route-level behavior not tested |
 | **Input shape to preserve** | Same as `FX-OS-001`; model triggers image/video generation |
 | **Output shape to verify** | Intermediate SSE chunks contain `delta.reasoning_content` (not `delta.content`) with progress/status text. `finish_reason` is `null` on these chunks. |
 | **Compatibility risk** | medium |
@@ -218,6 +224,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Method** | POST |
 | **Surface category** | Gemini non-streaming |
 | **Fixture mode** | mocked-internal-response |
+| **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/gemini-non-streaming/text-basic-request.json`, `text-basic-response.json`) |
+| **Tested status** | ⬜ Static shape assertions not yet added (planned for Sprint 005D) — route-level behavior not tested |
 | **Input shape to preserve** | `{ "contents": [{"role": "user", "parts": [{"text": "<prompt>"}]}], "generationConfig": {"imageConfig": {"aspectRatio": "16:9"}} }` |
 | **Output shape to verify** | `{ "candidates": [{ "content": {"role": "model", "parts": [...]}, "finishReason": "STOP", "index": 0 }], "modelVersion": "<model>" }` — parts contain `inlineData`, `fileData`, or `text` |
 | **Compatibility risk** | high |
@@ -418,6 +426,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 **Sprint 005A progress:** 3 skeleton fixtures created (FX-ML-001, FX-ON-001, FX-OS-003).
 
 **Sprint 005B progress:** Static shape assertions added for all 3 skeleton fixtures. Route-level behavior is not yet tested.
+
+**Sprint 005C progress:** 3 additional static fixture files created (FX-ON-002, FX-GN-001, FX-OS-002). Assertions not yet added.
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures
