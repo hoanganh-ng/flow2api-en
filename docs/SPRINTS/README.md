@@ -12,7 +12,8 @@ This directory contains sprint planning and retrospective documents for the flow
 | [001B](SPRINT-001B-safe-readme-translation.md) | Safe README Translation | ✅ Completed | English README created, original Chinese preserved as README.zh-CN.md |
 | [001C](SPRINT-001C-safe-translation-allowlist.md) | Safe Translation Allowlist | ✅ Completed | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
 | [002](SPRINT-002-api-surface-inventory.md) | API Surface Inventory | ✅ Completed | Documentation-only inventory of HTTP/WS API surface from source inspection |
-| [003](SPRINT-003-generation-contract-deep-dive.md) | Generation Contract Deep Dive | 🔄 Active | Documentation-only deep dive of generation contract from source inspection |
+| [003](SPRINT-003-generation-contract-deep-dive.md) | Generation Contract Deep Dive | ✅ Completed | Documentation-only deep dive of generation contract from source inspection |
+| [004](SPRINT-004-generation-fixture-plan.md) | Generation Fixture Plan | 🔄 Active | Documentation-only fixture plan for future generation compatibility tests |
 
 ## Sprint Conventions
 

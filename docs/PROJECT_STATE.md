@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 003 — Generation Contract Deep Dive |
+| **Current sprint** | Sprint 004 — Generation Fixture Plan |
 
 ## Purpose
 
@@ -64,6 +64,10 @@ This fork exists to:
 | docs/MODEL_COMPATIBILITY_MAP.md | Created (Sprint 003) — model naming, aliases, and resolution |
 | docs/REQUEST_RESPONSE_CONVERSION_MAP.md | Created (Sprint 003) — OpenAI/Gemini conversion boundaries |
 | docs/SPRINTS/SPRINT-003-generation-contract-deep-dive.md | Created (Sprint 003) |
+| docs/GENERATION_FIXTURE_PLAN.md | Created (Sprint 004) — fixture design, categories, priorities, risks |
+| docs/GENERATION_FIXTURE_MATRIX.md | Created (Sprint 004) — 19 planned fixtures with per-fixture detail |
+| docs/TEST_HARNESS_PLAN.md | Created (Sprint 004) — future test harness approach and strategy |
+| docs/SPRINTS/SPRINT-004-generation-fixture-plan.md | Created (Sprint 004) |
 
 ## What Is Not Yet Done
 
@@ -83,7 +87,8 @@ This fork exists to:
 | Sprint 001B — Safe README Translation | ✅ Completed | English README created, original Chinese preserved as README.zh-CN.md |
 | Sprint 001C — Safe Translation Allowlist | ✅ Completed | Translation allowlist/denylist created; classified all remaining Chinese surfaces |
 | Sprint 002 — API Surface Inventory | ✅ Completed | Documentation-only inventory of HTTP/WS API surface from source inspection |
-| Sprint 003 — Generation Contract Deep Dive | 🔄 Active | Documentation-only deep dive of generation contract from source inspection |
+| Sprint 003 — Generation Contract Deep Dive | ✅ Completed | Documentation-only deep dive of generation contract from source inspection |
+| Sprint 004 — Generation Fixture Plan | 🔄 Active | Documentation-only fixture plan for future generation compatibility tests |
 
 ## Next Steps
 
@@ -94,7 +99,8 @@ See [SPRINT-001A](SPRINTS/SPRINT-001A-english-surface-audit.md) for the complete
 See [SPRINT-001B](SPRINTS/SPRINT-001B-safe-readme-translation.md) for the completed README translation sprint.
 See [SPRINT-001C](SPRINTS/SPRINT-001C-safe-translation-allowlist.md) for the completed translation allowlist sprint.
 See [SPRINT-002](SPRINTS/SPRINT-002-api-surface-inventory.md) for the completed API surface inventory sprint.
-See [SPRINT-003](SPRINTS/SPRINT-003-generation-contract-deep-dive.md) for the current generation contract deep dive sprint.
+See [SPRINT-003](SPRINTS/SPRINT-003-generation-contract-deep-dive.md) for the completed generation contract deep dive sprint.
+See [SPRINT-004](SPRINTS/SPRINT-004-generation-fixture-plan.md) for the current generation fixture plan sprint.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
 See [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md) for the authoritative translation classification.
 See [API_SURFACE_INVENTORY.md](API_SURFACE_INVENTORY.md) for the detailed API surface inventory.
@@ -104,3 +110,6 @@ See [GENERATION_CONTRACT.md](GENERATION_CONTRACT.md) for the generation contract
 See [STREAMING_CONTRACT_NOTES.md](STREAMING_CONTRACT_NOTES.md) for streaming behavior observations.
 See [MODEL_COMPATIBILITY_MAP.md](MODEL_COMPATIBILITY_MAP.md) for model naming and resolution details.
 See [REQUEST_RESPONSE_CONVERSION_MAP.md](REQUEST_RESPONSE_CONVERSION_MAP.md) for OpenAI/Gemini conversion boundaries.
+See [GENERATION_FIXTURE_PLAN.md](GENERATION_FIXTURE_PLAN.md) for the fixture design and prioritization plan.
+See [GENERATION_FIXTURE_MATRIX.md](GENERATION_FIXTURE_MATRIX.md) for the per-fixture detail matrix.
+See [TEST_HARNESS_PLAN.md](TEST_HARNESS_PLAN.md) for the planned test harness approach.
