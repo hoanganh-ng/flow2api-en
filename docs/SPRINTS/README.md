@@ -17,7 +17,8 @@ This directory contains sprint planning and retrospective documents for the flow
 | [005A](SPRINT-005A-static-generation-fixture-skeleton.md) | Static Generation Fixture Skeleton | ✅ Completed | First sanitized static fixture skeleton (FX-ML-001, FX-ON-001, FX-OS-003) |
 | [005B](SPRINT-005B-fixture-loader-shape-assertions.md) | Fixture Loader & Shape Assertions | ✅ Completed | Offline static fixture shape assertions for Sprint 005A fixtures |
 | [005C](SPRINT-005C-additional-static-generation-fixtures.md) | Additional Static Generation Fixtures | ✅ Completed | Additional sanitized static fixture files (FX-ON-002, FX-GN-001, FX-OS-002) |
-| [005D](SPRINT-005D-additional-static-fixture-assertions.md) | Additional Static Fixture Assertions | 🔄 Active | Offline static shape assertions for Sprint 005C fixtures |
+| [005D](SPRINT-005D-additional-static-fixture-assertions.md) | Additional Static Fixture Assertions | ✅ Completed | Offline static shape assertions for Sprint 005C fixtures |
+| [006A](SPRINT-006A-route-test-seam-discovery.md) | Route Test Seam Discovery | 🔄 Active | Discovery-only analysis of safest route-level test seams |
 
 ## Sprint Conventions
 

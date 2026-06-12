@@ -1,13 +1,13 @@
 # Test Harness Plan
 
-> **Sprint 005D — Additional Static Fixture Assertions**
-> First static fixture shape assertion step. Sprint 005B added an offline fixture loader
-> (`tests/compatibility/helpers/fixture_loader.py`), shallow shape assertion helpers
-> (`tests/compatibility/helpers/shape_assertions.py`), and executable `unittest.TestCase` tests
-> (`tests/compatibility/test_static_generation_fixtures.py`) for FX-ML-001, FX-ON-001, and FX-OS-003.
-> Sprint 005C adds three additional static fixture files: FX-ON-002, FX-GN-001, FX-OS-002.
-> Sprint 005D adds offline static shape assertions for the Sprint 005C fixtures.
-> Route-level tests and runtime application imports remain future work.
+> **Sprint 006A — Route Test Seam Discovery**
+> Sprint 005D added offline static shape assertions for Sprint 005C fixtures
+> (FX-ON-002, FX-GN-001, FX-OS-002).
+> Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
+> See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) and
+> [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for the seam analysis
+> and proposed route-level test stages.
+> Route-level behavior tests remain future work (Sprint 006B or later).
 
 ---
 
@@ -21,12 +21,17 @@ and the recommended first implementation slice.
 Sprint 005A created the first static fixture skeleton (fixture files only).
 Sprint 005B added the first executable offline shape assertion tests using
 a standard-library-only fixture loader.
-Sprint 005C adds three additional static fixture files (FX-ON-002, FX-GN-001, FX-OS-002)
+Sprint 005C added three additional static fixture files (FX-ON-002, FX-GN-001, FX-OS-002)
 without adding any new tests or assertions.
-Sprint 005D adds offline static shape assertions for the Sprint 005C fixtures
-(FX-ON-002, FX-GN-001, FX-OS-002). Route-level tests that import the runtime
-FastAPI application, mock handlers, or exercise HTTP routes remain deferred to a
-future sprint.
+Sprint 005D added offline static shape assertions for the Sprint 005C fixtures
+(FX-ON-002, FX-GN-001, FX-OS-002).
+Sprint 006A discovered safe route-level test seams (conversion-layer pure functions,
+model listing handlers) and documented unsafe approaches (lifespan, singletons, upstream
+calls). See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the full
+seam analysis and [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for
+the proposed route-level test stages.
+Route-level behavior tests that import the runtime FastAPI application, mock handlers,
+or exercise HTTP routes remain deferred to Sprint 006B or later.
 
 ---
 

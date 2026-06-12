@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 005D — Additional Static Fixture Assertions |
+| **Current sprint** | Sprint 006A — Route Test Seam Discovery |
 
 ## Purpose
 
@@ -87,12 +87,15 @@ This fork exists to:
 | tests/fixtures/generation/openai-streaming/reasoning-progress.sse.txt | Created (Sprint 005C) — FX-OS-002 |
 | docs/SPRINTS/SPRINT-005C-additional-static-generation-fixtures.md | Created (Sprint 005C) |
 | docs/SPRINTS/SPRINT-005D-additional-static-fixture-assertions.md | Created (Sprint 005D) |
+| docs/ROUTE_TEST_SEAM_DISCOVERY.md | Created (Sprint 006A) — route test seam analysis |
+| docs/GENERATION_ROUTE_TEST_PLAN.md | Created (Sprint 006A) — proposed route-level test plan |
+| docs/SPRINTS/SPRINT-006A-route-test-seam-discovery.md | Created (Sprint 006A) |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C adds additional fixture files; Sprint 005D adds static shape assertions for Sprint 005C fixtures; route-level tests and runtime imports remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; route-level behavior tests and runtime imports remain future work
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -111,7 +114,8 @@ This fork exists to:
 | Sprint 005A — Static Generation Fixture Skeleton | ✅ Completed | First sanitized static fixture skeleton (FX-ML-001, FX-ON-001, FX-OS-003) |
 | Sprint 005B — Fixture Loader & Shape Assertions | ✅ Completed | Offline static fixture shape assertions for Sprint 005A fixtures |
 | Sprint 005C — Additional Static Generation Fixtures | ✅ Completed | Additional sanitized static fixture files (FX-ON-002, FX-GN-001, FX-OS-002) |
-| Sprint 005D — Additional Static Fixture Assertions | 🔄 Active | Offline static shape assertions for Sprint 005C fixtures |
+| Sprint 005D — Additional Static Fixture Assertions | ✅ Completed | Offline static shape assertions for Sprint 005C fixtures |
+| Sprint 006A — Route Test Seam Discovery | 🔄 Active | Discovery-only analysis of safest route-level test seams |
 
 ## Next Steps
 
@@ -127,7 +131,10 @@ See [SPRINT-004](SPRINTS/SPRINT-004-generation-fixture-plan.md) for the complete
 See [SPRINT-005A](SPRINTS/SPRINT-005A-static-generation-fixture-skeleton.md) for the completed static generation fixture skeleton sprint.
 See [SPRINT-005B](SPRINTS/SPRINT-005B-fixture-loader-shape-assertions.md) for the completed fixture loader and shape assertions sprint.
 See [SPRINT-005C](SPRINTS/SPRINT-005C-additional-static-generation-fixtures.md) for the completed additional static generation fixtures sprint.
-See [SPRINT-005D](SPRINTS/SPRINT-005D-additional-static-fixture-assertions.md) for the current additional static fixture assertions sprint.
+See [SPRINT-005D](SPRINTS/SPRINT-005D-additional-static-fixture-assertions.md) for the completed additional static fixture assertions sprint.
+See [SPRINT-006A](SPRINTS/SPRINT-006A-route-test-seam-discovery.md) for the current route test seam discovery sprint.
+See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the route test seam analysis.
+See [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for the proposed route-level test plan.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
 See [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md) for the authoritative translation classification.
 See [API_SURFACE_INVENTORY.md](API_SURFACE_INVENTORY.md) for the detailed API surface inventory.
