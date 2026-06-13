@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006E — Mocked Non-Streaming Generation Route Tests**
+> **Sprint 006F — Mocked OpenAI Image-Result Route Contract**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
@@ -13,15 +13,18 @@
 > Sprint 006E added 6 mocked non-streaming generation route tests covering
 > text success, handler-uninitialized, and handler-error conversion for both
 > OpenAI and Gemini routes.
+> Sprint 006F added 5 mocked OpenAI image-result route tests covering the
+> FX-ON-002 contract path with network/media helper guards.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
 > [GENERATION_ROUTE_MOCKING_PLAN.md](GENERATION_ROUTE_MOCKING_PLAN.md),
 > [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md),
 > [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md),
-> [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md), and
-> [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md) for details.
-> Streaming and media route tests remain future work.
+> [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md),
+> [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md), and
+> [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md) for details.
+> Streaming and Gemini media route tests remain future work.
 
 ---
 
@@ -64,7 +67,13 @@ behavior, and deterministic handler-error conversion. Tests use direct Python
 function calls with a fake handler; no FastAPI app, TestClient, HTTP transport,
 or network activity is involved. See
 [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md)
-for details. Streaming and media route tests remain deferred to a future sprint.
+for details.
+Sprint 006F added 5 mocked OpenAI image-result route tests covering the
+FX-ON-002 contract path. Tests confirm that the image-result route does not
+invoke network or media retrieval helpers (`retrieve_image_data`,
+`_load_image_bytes_from_uri`), which are patched to raise if called. See
+[SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md)
+for details. Streaming and Gemini media route tests remain deferred to a future sprint.
 
 ---
 
