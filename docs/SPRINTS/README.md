@@ -18,7 +18,8 @@ This directory contains sprint planning and retrospective documents for the flow
 | [005B](SPRINT-005B-fixture-loader-shape-assertions.md) | Fixture Loader & Shape Assertions | ✅ Completed | Offline static fixture shape assertions for Sprint 005A fixtures |
 | [005C](SPRINT-005C-additional-static-generation-fixtures.md) | Additional Static Generation Fixtures | ✅ Completed | Additional sanitized static fixture files (FX-ON-002, FX-GN-001, FX-OS-002) |
 | [005D](SPRINT-005D-additional-static-fixture-assertions.md) | Additional Static Fixture Assertions | ✅ Completed | Offline static shape assertions for Sprint 005C fixtures |
-| [006A](SPRINT-006A-route-test-seam-discovery.md) | Route Test Seam Discovery | 🔄 Active | Discovery-only analysis of safest route-level test seams |
+| [006A](SPRINT-006A-route-test-seam-discovery.md) | Route Test Seam Discovery | ✅ Completed | Discovery-only analysis of safest route-level test seams |
+| [006B](SPRINT-006B-conversion-layer-unit-tests.md) | Conversion-Layer Unit Tests | ✅ Completed | 67 unit tests for 7 pure conversion helpers in `src.api.routes` |
 
 ## Sprint Conventions
 

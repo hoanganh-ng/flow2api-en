@@ -1,13 +1,16 @@
 # Test Harness Plan
 
-> **Sprint 006A — Route Test Seam Discovery**
+> **Sprint 006B — Conversion-Layer Unit Tests**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
-> See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) and
-> [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for the seam analysis
-> and proposed route-level test stages.
-> Route-level behavior tests remain future work (Sprint 006B or later).
+> Sprint 006B added 67 unit tests for 7 pure conversion helpers in `src.api.routes`,
+> confirming the import is side-effect-free.
+> See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
+> [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md), and
+> [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md) for details.
+> Route-level behavior tests that import the FastAPI application or mock handlers
+> remain future work.
 
 ---
 
@@ -30,8 +33,11 @@ model listing handlers) and documented unsafe approaches (lifespan, singletons, 
 calls). See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the full
 seam analysis and [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for
 the proposed route-level test stages.
+Sprint 006B added the first runtime-importing unit tests: 67 offline tests covering
+7 pure conversion helpers in `src.api.routes`. Import safety was confirmed.
+See [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md) for details.
 Route-level behavior tests that import the runtime FastAPI application, mock handlers,
-or exercise HTTP routes remain deferred to Sprint 006B or later.
+or exercise HTTP routes remain deferred to a future sprint.
 
 ---
 

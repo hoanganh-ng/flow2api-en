@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 006A — Route Test Seam Discovery |
+| **Current sprint** | Sprint 006B — Conversion-Layer Unit Tests |
 
 ## Purpose
 
@@ -90,12 +90,14 @@ This fork exists to:
 | docs/ROUTE_TEST_SEAM_DISCOVERY.md | Created (Sprint 006A) — route test seam analysis |
 | docs/GENERATION_ROUTE_TEST_PLAN.md | Created (Sprint 006A) — proposed route-level test plan |
 | docs/SPRINTS/SPRINT-006A-route-test-seam-discovery.md | Created (Sprint 006A) |
+| tests/compatibility/test_route_conversion_helpers.py | Created (Sprint 006B) — 67 unit tests for 7 route conversion helpers |
+| docs/SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md | Created (Sprint 006B) |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; route-level behavior tests and runtime imports remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; route-level behavior tests and runtime handler mocking remain future work
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -115,7 +117,8 @@ This fork exists to:
 | Sprint 005B — Fixture Loader & Shape Assertions | ✅ Completed | Offline static fixture shape assertions for Sprint 005A fixtures |
 | Sprint 005C — Additional Static Generation Fixtures | ✅ Completed | Additional sanitized static fixture files (FX-ON-002, FX-GN-001, FX-OS-002) |
 | Sprint 005D — Additional Static Fixture Assertions | ✅ Completed | Offline static shape assertions for Sprint 005C fixtures |
-| Sprint 006A — Route Test Seam Discovery | 🔄 Active | Discovery-only analysis of safest route-level test seams |
+| Sprint 006A — Route Test Seam Discovery | ✅ Completed | Discovery-only analysis of safest route-level test seams |
+| Sprint 006B — Conversion-Layer Unit Tests | ✅ Completed | 67 unit tests for 7 pure conversion helpers in `src.api.routes` |
 
 ## Next Steps
 
@@ -132,7 +135,8 @@ See [SPRINT-005A](SPRINTS/SPRINT-005A-static-generation-fixture-skeleton.md) for
 See [SPRINT-005B](SPRINTS/SPRINT-005B-fixture-loader-shape-assertions.md) for the completed fixture loader and shape assertions sprint.
 See [SPRINT-005C](SPRINTS/SPRINT-005C-additional-static-generation-fixtures.md) for the completed additional static generation fixtures sprint.
 See [SPRINT-005D](SPRINTS/SPRINT-005D-additional-static-fixture-assertions.md) for the completed additional static fixture assertions sprint.
-See [SPRINT-006A](SPRINTS/SPRINT-006A-route-test-seam-discovery.md) for the current route test seam discovery sprint.
+See [SPRINT-006A](SPRINTS/SPRINT-006A-route-test-seam-discovery.md) for the completed route test seam discovery sprint.
+See [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md) for the completed conversion-layer unit tests sprint.
 See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the route test seam analysis.
 See [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for the proposed route-level test plan.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
