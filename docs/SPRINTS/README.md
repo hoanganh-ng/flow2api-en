@@ -22,6 +22,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [006B](SPRINT-006B-conversion-layer-unit-tests.md) | Conversion-Layer Unit Tests | ✅ Completed | 67 unit tests for 7 pure conversion helpers in `src.api.routes` |
 | [006C](SPRINT-006C-model-catalog-read-only-route-characterization.md) | Model Catalog & Read-Only Route Characterization | ✅ Completed | 95 unit tests for model catalog helpers and read-only model route functions |
 | [006D](SPRINT-006D-mocked-generation-route-seam-discovery.md) | Mocked Generation Route Seam Discovery | ✅ Completed | Discovery-only documentation of generation route dependencies and mocking plan |
+| [006E](SPRINT-006E-mocked-non-streaming-generation-route-tests.md) | Mocked Non-Streaming Generation Route Tests | ✅ Completed | 6 mocked non-streaming generation route tests with fake handler |
 
 ## Sprint Conventions
 

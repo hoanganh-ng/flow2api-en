@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006D — Mocked Generation Route Seam Discovery**
+> **Sprint 006E — Mocked Non-Streaming Generation Route Tests**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
@@ -10,15 +10,18 @@
 > route functions, confirming fully local behavior.
 > Sprint 006D documented generation route dependency chains, the fake-handler
 > interface, and a proposed test matrix for mocked generation route tests.
+> Sprint 006E added 6 mocked non-streaming generation route tests covering
+> text success, handler-uninitialized, and handler-error conversion for both
+> OpenAI and Gemini routes.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
 > [GENERATION_ROUTE_MOCKING_PLAN.md](GENERATION_ROUTE_MOCKING_PLAN.md),
 > [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md),
-> [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md), and
-> [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md) for details.
-> Route-level behavior tests that import the FastAPI application or mock handlers
-> remain future work.
+> [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md),
+> [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md), and
+> [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md) for details.
+> Streaming and media route tests remain future work.
 
 ---
 
@@ -55,8 +58,13 @@ fake-handler interface for `handle_generation`, specified request construction
 approaches, and defined a test matrix for future mocked generation route tests.
 See [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md) and
 [GENERATION_ROUTE_MOCKING_PLAN.md](GENERATION_ROUTE_MOCKING_PLAN.md) for details.
-Route-level behavior tests that import the runtime FastAPI application, mock handlers,
-or exercise HTTP routes remain deferred to a future sprint.
+Sprint 006E added the first mocked generation route tests: 6 offline tests
+covering OpenAI and Gemini non-streaming text success, handler-uninitialized
+behavior, and deterministic handler-error conversion. Tests use direct Python
+function calls with a fake handler; no FastAPI app, TestClient, HTTP transport,
+or network activity is involved. See
+[SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md)
+for details. Streaming and media route tests remain deferred to a future sprint.
 
 ---
 

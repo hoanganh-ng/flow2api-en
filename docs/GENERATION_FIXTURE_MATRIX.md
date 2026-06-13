@@ -1,6 +1,6 @@
 # Generation Fixture Matrix
 
-> **Sprint 006C — Model Catalog and Read-Only Route Characterization**
+> **Sprint 006E — Mocked Non-Streaming Generation Route Tests**
 > Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
 > Sprint 005B added offline static shape assertions for all three fixtures
 > (see `tests/compatibility/test_static_generation_fixtures.py`).
@@ -9,7 +9,10 @@
 > Sprint 006C adds model catalog and read-only route characterization tests
 > (see `tests/compatibility/test_model_catalog_routes.py`, 95 tests) covering the live route
 > functions for FX-ML-001, FX-ML-002, and FX-ML-003 contract shapes.
-> Route-level generation behavior is not yet tested. Remaining fixtures are planned but not yet implemented.
+> Route-level generation behavior is partially tested: Sprint 006E adds 6 mocked
+> non-streaming generation route tests covering text success, handler-uninitialized,
+> and handler-error conversion for OpenAI and Gemini routes. Streaming and media
+> route tests remain planned but not yet implemented.
 
 ---
 
@@ -114,7 +117,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI non-streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/openai-non-streaming/text-basic-request.json`, `text-basic-response.json`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006E adds mocked route-level behavior tests for non-streaming text success, handler-uninitialized, and handler-error conversion (`tests/compatibility/test_generation_routes_non_streaming.py`) |
 | **Input shape to preserve** | `{ "model": "<model-id>", "messages": [{"role": "user", "content": "<text>"}], "stream": false }` |
 | **Output shape to verify** | `{ "id": "chatcmpl-<ts>", "object": "chat.completion", "created": <int>, "model": "flow2api", "choices": [{ "index": 0, "message": {"role": "assistant", "content": "<text>"}, "finish_reason": "stop" }] }` |
 | **Compatibility risk** | high |
@@ -134,7 +137,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI non-streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/openai-non-streaming/image-result-request.json`, `image-result-response.json`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`) — route-level image-output behavior not yet tested; mocked route coverage deferred (Sprint 006E covers text-only paths only) |
 | **Input shape to preserve** | `{ "model": "<image-model-id>", "messages": [{"role": "user", "content": "generate an image of ..."}], "stream": false }` |
 | **Output shape to verify** | Response `choices[0].message.content` contains `![Generated Image](<url>)` pattern. Additive `url` field may be present. |
 | **Compatibility risk** | high |
@@ -210,7 +213,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/openai-streaming/done-termination.sse.txt`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006E adds mocked route-level behavior tests for non-streaming text success, handler-uninitialized, and handler-error conversion (`tests/compatibility/test_generation_routes_non_streaming.py`) |
 | **Input shape to preserve** | Same as `FX-OS-001` |
 | **Output shape to verify** | After all content chunks, the stream yields exactly `data: [DONE]\n\n` as the final SSE frame. No further data follows. |
 | **Compatibility risk** | high |
@@ -230,7 +233,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | Gemini non-streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/gemini-non-streaming/text-basic-request.json`, `text-basic-response.json`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006E adds mocked route-level behavior tests for Gemini non-streaming text success, handler-uninitialized, and handler-error conversion (`tests/compatibility/test_generation_routes_non_streaming.py`) |
 | **Input shape to preserve** | `{ "contents": [{"role": "user", "parts": [{"text": "<prompt>"}]}], "generationConfig": {"imageConfig": {"aspectRatio": "16:9"}} }` |
 | **Output shape to verify** | `{ "candidates": [{ "content": {"role": "model", "parts": [...]}, "finishReason": "STOP", "index": 0 }], "modelVersion": "<model>" }` — parts contain `inlineData`, `fileData`, or `text` |
 | **Compatibility risk** | high |
@@ -437,6 +440,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 **Sprint 005D progress:** Static shape assertions added for all 3 Sprint 005C fixtures. Route-level behavior is not yet tested.
 
 **Sprint 006C progress:** Model catalog and read-only route characterization tests added for FX-ML-001, FX-ML-002, and FX-ML-003 contract shapes via live route function calls (95 tests).
+
+**Sprint 006E progress:** 6 mocked non-streaming generation route tests added, covering FX-ON-001 and FX-GN-001 contract shapes via direct route-function calls with a fake handler.
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures
