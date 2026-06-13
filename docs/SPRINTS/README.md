@@ -20,6 +20,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [005D](SPRINT-005D-additional-static-fixture-assertions.md) | Additional Static Fixture Assertions | ✅ Completed | Offline static shape assertions for Sprint 005C fixtures |
 | [006A](SPRINT-006A-route-test-seam-discovery.md) | Route Test Seam Discovery | ✅ Completed | Discovery-only analysis of safest route-level test seams |
 | [006B](SPRINT-006B-conversion-layer-unit-tests.md) | Conversion-Layer Unit Tests | ✅ Completed | 67 unit tests for 7 pure conversion helpers in `src.api.routes` |
+| [006C](SPRINT-006C-model-catalog-read-only-route-characterization.md) | Model Catalog & Read-Only Route Characterization | ✅ Completed | 95 unit tests for model catalog helpers and read-only model route functions |
 
 ## Sprint Conventions
 

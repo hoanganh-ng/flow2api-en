@@ -1,14 +1,17 @@
 # Test Harness Plan
 
-> **Sprint 006B — Conversion-Layer Unit Tests**
+> **Sprint 006C — Model Catalog and Read-Only Route Characterization**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
 > Sprint 006B added 67 unit tests for 7 pure conversion helpers in `src.api.routes`,
 > confirming the import is side-effect-free.
+> Sprint 006C added 95 unit tests for model catalog helpers and 4 read-only model
+> route functions, confirming fully local behavior.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
-> [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md), and
-> [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md) for details.
+> [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
+> [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md), and
+> [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md) for details.
 > Route-level behavior tests that import the FastAPI application or mock handlers
 > remain future work.
 
@@ -36,6 +39,12 @@ the proposed route-level test stages.
 Sprint 006B added the first runtime-importing unit tests: 67 offline tests covering
 7 pure conversion helpers in `src.api.routes`. Import safety was confirmed.
 See [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md) for details.
+Sprint 006C added 95 offline tests covering 5 model catalog helpers and 4 read-only
+model route functions (`list_models`, `list_model_aliases`, `list_gemini_models`,
+`get_gemini_model`). All tested functions are fully local (no handler, upstream,
+database, or network dependencies). See
+[SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md)
+for details.
 Route-level behavior tests that import the runtime FastAPI application, mock handlers,
 or exercise HTTP routes remain deferred to a future sprint.
 

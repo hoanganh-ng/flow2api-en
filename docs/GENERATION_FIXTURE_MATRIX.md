@@ -1,12 +1,15 @@
 # Generation Fixture Matrix
 
-> **Sprint 005D — Additional Static Fixture Assertions**
+> **Sprint 006C — Model Catalog and Read-Only Route Characterization**
 > Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
 > Sprint 005B added offline static shape assertions for all three fixtures
 > (see `tests/compatibility/test_static_generation_fixtures.py`).
 > Sprint 005C adds three additional static fixture files: FX-ON-002, FX-GN-001, FX-OS-002.
 > Sprint 005D adds offline static shape assertions for the Sprint 005C fixtures.
-> Route-level behavior is not yet tested. Remaining fixtures are planned but not yet implemented.
+> Sprint 006C adds model catalog and read-only route characterization tests
+> (see `tests/compatibility/test_model_catalog_routes.py`, 95 tests) covering the live route
+> functions for FX-ML-001, FX-ML-002, and FX-ML-003 contract shapes.
+> Route-level generation behavior is not yet tested. Remaining fixtures are planned but not yet implemented.
 
 ---
 
@@ -53,12 +56,12 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | model listing |
 | **Fixture mode** | static-doc-example |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/model-list/openai-model-list.json`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006C adds live route function characterization tests (`tests/compatibility/test_model_catalog_routes.py`) — route-level generation behavior not tested |
 | **Input shape to preserve** | None (no request body); API key in auth header |
 | **Output shape to verify** | `{ "object": "list", "data": [{ "id": "<str>", "object": "model", "owned_by": "flow2api", "description": "<str>" }] }` |
 | **Compatibility risk** | high |
 | **Source references** | `API_SURFACE_INVENTORY.md` §GET /v1/models; `MODEL_COMPATIBILITY_MAP.md` §/v1/models response shape; `routes.py` L788–L801 |
-| **Sensitive data notes** | No sensitive data in response. API key placeholder required in auth header. |
+| **Sensitive data notes** | No sensitive data in response. API key placeholder required in auth header. FX-ML-001 includes a synthetic `created` field not emitted by the current route; `created` is fixture-only and not a required current-runtime field. No runtime change is proposed. |
 | **Test-harness priority** | 1 (first slice) |
 
 ---
@@ -72,6 +75,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Method** | GET |
 | **Surface category** | model aliases |
 | **Fixture mode** | static-doc-example |
+| **Tested status** | ✅ Sprint 006C adds live route function characterization tests for `list_model_aliases` (`tests/compatibility/test_model_catalog_routes.py`) — route-level generation behavior not tested |
 | **Input shape to preserve** | None (no request body); API key in auth header |
 | **Output shape to verify** | `{ "object": "list", "data": [{ "id": "<str>", "object": "model", "owned_by": "flow2api", "description": "<str>", "is_alias": true }] }` |
 | **Compatibility risk** | medium |
@@ -90,6 +94,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Method** | GET |
 | **Surface category** | model listing |
 | **Fixture mode** | static-doc-example |
+| **Tested status** | ✅ Sprint 006C adds live route function characterization tests for `list_gemini_models` and `get_gemini_model` (`tests/compatibility/test_model_catalog_routes.py`) — route-level generation behavior not tested |
 | **Input shape to preserve** | None (no request body); API key via `x-goog-api-key` header or `?key=` |
 | **Output shape to verify** | `{ "models": [{ "name": "models/{id}", "displayName": "<str>", "description": "<str>", "version": "flow2api", "inputTokenLimit": 0, "outputTokenLimit": 0, "supportedGenerationMethods": ["generateContent", "streamGenerateContent"] }] }` |
 | **Compatibility risk** | high |
@@ -430,6 +435,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 **Sprint 005C progress:** 3 additional static fixture files created (FX-ON-002, FX-GN-001, FX-OS-002).
 
 **Sprint 005D progress:** Static shape assertions added for all 3 Sprint 005C fixtures. Route-level behavior is not yet tested.
+
+**Sprint 006C progress:** Model catalog and read-only route characterization tests added for FX-ML-001, FX-ML-002, and FX-ML-003 contract shapes via live route function calls (95 tests).
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures
