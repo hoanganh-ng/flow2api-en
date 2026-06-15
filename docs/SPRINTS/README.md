@@ -24,6 +24,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [006D](SPRINT-006D-mocked-generation-route-seam-discovery.md) | Mocked Generation Route Seam Discovery | ✅ Completed | Discovery-only documentation of generation route dependencies and mocking plan |
 | [006E](SPRINT-006E-mocked-non-streaming-generation-route-tests.md) | Mocked Non-Streaming Generation Route Tests | ✅ Completed | 6 mocked non-streaming generation route tests with fake handler |
 | [006F](SPRINT-006F-mocked-openai-image-result-route-contract.md) | Mocked OpenAI Image-Result Route Contract | ✅ Completed | 5 mocked image-result route tests with network/media helper guards |
+| [006G](SPRINT-006G-mocked-openai-streaming-generator-contract.md) | Mocked OpenAI Streaming Generator Contract | ✅ Completed | 18 mocked OpenAI streaming generator tests covering SSE framing, reasoning_content, [DONE], ordering, empty stream, and handler-exception propagation |
 
 ## Sprint Conventions
 

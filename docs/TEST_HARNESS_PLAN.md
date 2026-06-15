@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006F — Mocked OpenAI Image-Result Route Contract**
+> **Sprint 006G — Mocked OpenAI Streaming Generator Contract**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
@@ -15,6 +15,13 @@
 > OpenAI and Gemini routes.
 > Sprint 006F added 5 mocked OpenAI image-result route tests covering the
 > FX-ON-002 contract path with network/media helper guards.
+> Sprint 006G added 18 mocked OpenAI streaming generator contract tests
+> covering SSE framing, reasoning_content progress, [DONE] termination,
+> multiple-chunk ordering, empty-stream behavior, mutable-state cleanup,
+> and direct handler-exception propagation (no SSE error synthesis,
+> no `[DONE]` emitted after failure).
+> Tests iterate the internal `_iterate_openai_stream` async generator directly
+> without StreamingResponse, TestClient, or HTTP transport.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
@@ -22,9 +29,10 @@
 > [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md),
 > [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md),
 > [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md),
-> [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md), and
-> [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md) for details.
-> Streaming and Gemini media route tests remain future work.
+> [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md),
+> [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md), and
+> [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md) for details.
+> Gemini streaming and HTTP-level streaming tests remain future work.
 
 ---
 
@@ -73,7 +81,23 @@ FX-ON-002 contract path. Tests confirm that the image-result route does not
 invoke network or media retrieval helpers (`retrieve_image_data`,
 `_load_image_bytes_from_uri`), which are patched to raise if called. See
 [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md)
-for details. Streaming and Gemini media route tests remain deferred to a future sprint.
+for details.
+Sprint 006G added 18 mocked OpenAI streaming generator contract tests
+covering the internal `_iterate_openai_stream` async generator. Tests
+characterize SSE framing (raw JSON wrapping and passthrough),
+`reasoning_content` preservation (consistent with FX-OS-002), exact
+`data: [DONE]\n\n` termination (consistent with FX-OS-003), multiple-chunk
+ordering, empty-stream behavior, mutable-state cleanup, and direct
+handler-exception propagation. The generator contains no local exception
+conversion: exceptions raised by the handler propagate directly to the
+caller and interrupt normal stream termination, so the generator does not
+emit its final `[DONE]` event. Client-visible HTTP/StreamingResponse
+handling of the propagated exception remains out of scope. Tests iterate
+the generator directly with `async for`; no `StreamingResponse`,
+`TestClient`, or HTTP transport is involved. See
+[SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md)
+for details. Gemini streaming and HTTP-level streaming tests remain deferred
+to a future sprint.
 
 ---
 

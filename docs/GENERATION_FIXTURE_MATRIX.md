@@ -1,6 +1,6 @@
 # Generation Fixture Matrix
 
-> **Sprint 006F — Mocked OpenAI Image-Result Route Contract**
+> **Sprint 006G — Mocked OpenAI Streaming Generator Contract**
 > Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
 > Sprint 005B added offline static shape assertions for all three fixtures
 > (see `tests/compatibility/test_static_generation_fixtures.py`).
@@ -13,8 +13,11 @@
 > non-streaming generation route tests covering text success, handler-uninitialized,
 > and handler-error conversion for OpenAI and Gemini routes. Sprint 006F adds 5
 > mocked OpenAI image-result route tests covering FX-ON-002 contract path with
-> network/media helper guards. Streaming and Gemini media route tests remain
-> planned but not yet implemented.
+> network/media helper guards. Sprint 006G adds 18 mocked OpenAI streaming
+> generator tests covering SSE framing, reasoning_content (FX-OS-002), [DONE]
+> termination (FX-OS-003), ordering, empty stream, mutable-state cleanup,
+> and direct handler-exception propagation via direct async-generator iteration.
+> Gemini streaming and HTTP-level streaming tests remain planned but not yet implemented.
 
 ---
 
@@ -195,7 +198,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Static fixture file created in Sprint 005C (`tests/fixtures/generation/openai-streaming/reasoning-progress.sse.txt`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`) — route-level behavior not tested |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005D (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006G adds direct async-generator characterization of reasoning_content preservation (`tests/compatibility/test_generation_stream_openai.py`) — not HTTP transport, not StreamingResponse, not cancellation or client-disconnect coverage |
 | **Input shape to preserve** | Same as `FX-OS-001`; model triggers image/video generation |
 | **Output shape to verify** | Intermediate SSE chunks contain `delta.reasoning_content` (not `delta.content`) with progress/status text. `finish_reason` is `null` on these chunks. |
 | **Compatibility risk** | medium |
@@ -215,7 +218,7 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 | **Surface category** | OpenAI streaming |
 | **Fixture mode** | mocked-internal-response |
 | **Skeleton status** | ✅ Skeleton created in Sprint 005A (`tests/fixtures/generation/openai-streaming/done-termination.sse.txt`) |
-| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006E adds mocked route-level behavior tests for non-streaming text success, handler-uninitialized, and handler-error conversion (`tests/compatibility/test_generation_routes_non_streaming.py`) |
+| **Tested status** | ✅ Static shape assertions added in Sprint 005B (`tests/compatibility/test_static_generation_fixtures.py`). Sprint 006E adds mocked route-level behavior tests for non-streaming text success, handler-uninitialized, and handler-error conversion (`tests/compatibility/test_generation_routes_non_streaming.py`). Sprint 006G adds direct async-generator characterization of exact `[DONE]` termination (`tests/compatibility/test_generation_stream_openai.py`) — not HTTP transport, not StreamingResponse, not cancellation or client-disconnect coverage |
 | **Input shape to preserve** | Same as `FX-OS-001` |
 | **Output shape to verify** | After all content chunks, the stream yields exactly `data: [DONE]\n\n` as the final SSE frame. No further data follows. |
 | **Compatibility risk** | high |
@@ -446,6 +449,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 **Sprint 006E progress:** 6 mocked non-streaming generation route tests added, covering FX-ON-001 and FX-GN-001 contract shapes via direct route-function calls with a fake handler.
 
 **Sprint 006F progress:** 5 mocked OpenAI image-result route tests added, covering FX-ON-002 contract path via direct route-function calls with a fake handler and network/media helper guards.
+
+**Sprint 006G progress:** 18 mocked OpenAI streaming generator tests added, covering SSE framing, reasoning_content (FX-OS-002), [DONE] termination (FX-OS-003), ordering, empty stream, mutable-state cleanup, and direct handler-exception propagation via direct async-generator iteration.
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures
