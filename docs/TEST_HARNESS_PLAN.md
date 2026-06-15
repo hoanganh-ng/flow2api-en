@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006H — Mocked Gemini Streaming Generator Contract**
+> **Sprint 006I — HTTP Streaming Transport Seam Discovery**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
@@ -28,17 +28,25 @@
 > no-`[DONE]` termination contract.
 > Tests iterate the internal `_iterate_gemini_stream` async generator directly
 > without StreamingResponse, TestClient, or HTTP transport.
+> Sprint 006I discovered streaming transport seams: StreamingResponse
+> construction does not start iteration, direct body_iterator consumption
+> is feasible and safe, authentication dependency can be bypassed via direct
+> call, and exception timing is well-defined relative to HTTP response start.
+> A test matrix of 15 streaming transport tests has been proposed.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
 > [GENERATION_ROUTE_MOCKING_PLAN.md](GENERATION_ROUTE_MOCKING_PLAN.md),
+> [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md),
+> [STREAMING_TRANSPORT_TEST_PLAN.md](STREAMING_TRANSPORT_TEST_PLAN.md),
 > [SPRINT-006B](SPRINTS/SPRINT-006B-conversion-layer-unit-tests.md),
 > [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md),
 > [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md),
 > [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md),
 > [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md),
-> [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md), and
-> [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md) for details.
+> [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md),
+> [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md), and
+> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md) for details.
 > HTTP-level streaming tests remain future work.
 
 ---
