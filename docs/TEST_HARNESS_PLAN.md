@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006G — Mocked OpenAI Streaming Generator Contract**
+> **Sprint 006H — Mocked Gemini Streaming Generator Contract**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
@@ -20,7 +20,13 @@
 > multiple-chunk ordering, empty-stream behavior, mutable-state cleanup,
 > and direct handler-exception propagation (no SSE error synthesis,
 > no `[DONE]` emitted after failure).
-> Tests iterate the internal `_iterate_openai_stream` async generator directly
+> Sprint 006H added 41 mocked Gemini streaming generator contract tests
+> covering Gemini event framing, text conversion, finish-reason mapping,
+> reasoning-content behavior, empty stream, non-emitting chunks, handler
+> error-payload conversion (with early termination via return), exception
+> propagation, argument forwarding, mutable-state cleanup, and the
+> no-`[DONE]` termination contract.
+> Tests iterate the internal `_iterate_gemini_stream` async generator directly
 > without StreamingResponse, TestClient, or HTTP transport.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
@@ -30,9 +36,10 @@
 > [SPRINT-006C](SPRINTS/SPRINT-006C-model-catalog-read-only-route-characterization.md),
 > [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md),
 > [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md),
-> [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md), and
-> [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md) for details.
-> Gemini streaming and HTTP-level streaming tests remain future work.
+> [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md),
+> [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md), and
+> [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md) for details.
+> HTTP-level streaming tests remain future work.
 
 ---
 
@@ -96,8 +103,27 @@ handling of the propagated exception remains out of scope. Tests iterate
 the generator directly with `async for`; no `StreamingResponse`,
 `TestClient`, or HTTP transport is involved. See
 [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md)
-for details. Gemini streaming and HTTP-level streaming tests remain deferred
-to a future sprint.
+for details.
+Sprint 006H added 41 mocked Gemini streaming generator contract tests
+covering the internal `_iterate_gemini_stream` async generator. Tests
+characterize Gemini event framing (raw JSON and `data:`-prefixed chunks
+converted through `_convert_openai_stream_chunk_to_gemini_event`), text
+preservation in Gemini `candidates[0].content.parts`, finish-reason
+mapping (stop→STOP, length→MAX_TOKENS, content_filter→SAFETY),
+`reasoning_content` appearing as Gemini text (preferred over `content`),
+empty-stream behavior (no events, no terminal sentinel), non-emitting
+chunk behavior (skipped silently), handler error-payload conversion
+(JSON `error` key triggers Gemini error event and early `return`),
+exception propagation (no try/except wrapping), argument forwarding
+(stream=True, images normalization, video_media_id, base_url_override),
+mutable-state cleanup, and the no-`[DONE]` termination contract. The
+generator explicitly converts handler error payloads to Gemini error
+events using `_build_gemini_error_payload` and terminates via `return`.
+Unlike `_iterate_openai_stream`, no terminal sentinel is emitted.
+Client-visible HTTP/StreamingResponse handling remains out of scope.
+See
+[SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md)
+for details. HTTP-level streaming tests remain deferred to a future sprint.
 
 ---
 

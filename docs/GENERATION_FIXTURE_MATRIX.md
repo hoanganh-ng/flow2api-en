@@ -1,6 +1,6 @@
 # Generation Fixture Matrix
 
-> **Sprint 006G — Mocked OpenAI Streaming Generator Contract**
+> **Sprint 006H — Mocked Gemini Streaming Generator Contract**
 > Three skeleton fixtures created in Sprint 005A: FX-ML-001, FX-ON-001, FX-OS-003.
 > Sprint 005B added offline static shape assertions for all three fixtures
 > (see `tests/compatibility/test_static_generation_fixtures.py`).
@@ -17,7 +17,12 @@
 > generator tests covering SSE framing, reasoning_content (FX-OS-002), [DONE]
 > termination (FX-OS-003), ordering, empty stream, mutable-state cleanup,
 > and direct handler-exception propagation via direct async-generator iteration.
-> Gemini streaming and HTTP-level streaming tests remain planned but not yet implemented.
+> Sprint 006H adds 41 mocked Gemini streaming generator tests covering Gemini
+> event framing, text conversion, finish-reason mapping, reasoning-content behavior,
+> empty stream, non-emitting chunks, handler error-payload conversion, exception
+> propagation, argument forwarding, and the no-[DONE] termination contract via
+> direct `_iterate_gemini_stream` async-generator iteration.
+> HTTP-level streaming tests remain planned but not yet implemented.
 
 ---
 
@@ -451,6 +456,8 @@ Fixture IDs follow the pattern: `FX-{CATEGORY}-{SEQ}`
 **Sprint 006F progress:** 5 mocked OpenAI image-result route tests added, covering FX-ON-002 contract path via direct route-function calls with a fake handler and network/media helper guards.
 
 **Sprint 006G progress:** 18 mocked OpenAI streaming generator tests added, covering SSE framing, reasoning_content (FX-OS-002), [DONE] termination (FX-OS-003), ordering, empty stream, mutable-state cleanup, and direct handler-exception propagation via direct async-generator iteration.
+
+**Sprint 006H progress:** 41 mocked Gemini streaming generator tests added, covering Gemini event framing (FX-GS-001), no-[DONE] termination (FX-GS-002), text conversion, finish-reason mapping, reasoning-content behavior, empty stream, non-emitting chunks, handler error-payload conversion, exception propagation, and argument forwarding via direct `_iterate_gemini_stream` async-generator iteration. No Gemini streaming static fixture file exists; coverage is generator-level only.
 
 **By priority:**
 - Priority 1 (first slice): 6 fixtures

@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 006G — Mocked OpenAI Streaming Generator Contract |
+| **Current sprint** | Sprint 006H — Mocked Gemini Streaming Generator Contract |
 
 ## Purpose
 
@@ -103,12 +103,14 @@ This fork exists to:
 | docs/SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md | Created (Sprint 006F) |
 | tests/compatibility/test_generation_stream_openai.py | Created (Sprint 006G) — 18 mocked OpenAI streaming generator contract tests (including 2 handler-exception propagation tests) |
 | docs/SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md | Created (Sprint 006G) |
+| tests/compatibility/test_generation_stream_gemini.py | Created (Sprint 006H) — 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation) |
+| docs/SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md | Created (Sprint 006H) |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Gemini streaming and HTTP-level streaming tests remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); HTTP-level streaming tests remain future work
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -135,6 +137,7 @@ This fork exists to:
 | Sprint 006E — Mocked Non-Streaming Generation Route Tests | ✅ Completed | 6 mocked non-streaming generation route tests with fake handler |
 | Sprint 006F — Mocked OpenAI Image-Result Route Contract | ✅ Completed | 5 mocked image-result route tests with network/media helper guards |
 | Sprint 006G — Mocked OpenAI Streaming Generator Contract | ✅ Completed | 18 mocked OpenAI streaming generator tests covering SSE framing, reasoning_content, [DONE] termination, ordering, empty stream, and handler-exception propagation |
+| Sprint 006H — Mocked Gemini Streaming Generator Contract | ✅ Completed | 41 mocked Gemini streaming generator tests covering Gemini event framing, text conversion, finish-reason mapping, reasoning content, empty/non-emitting chunks, handler error-payload conversion, exception propagation, argument forwarding, and no-[DONE] termination |
 
 ## Next Steps
 
@@ -158,6 +161,7 @@ See [SPRINT-006D](SPRINTS/SPRINT-006D-mocked-generation-route-seam-discovery.md)
 See [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md) for the completed mocked non-streaming generation route tests sprint.
 See [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md) for the completed mocked OpenAI image-result route contract sprint.
 See [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md) for the completed mocked OpenAI streaming generator contract sprint.
+See [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md) for the completed mocked Gemini streaming generator contract sprint.
 See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the route test seam analysis.
 See [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md) for the proposed route-level test plan.
 See [TRANSLATION_PLAN.md](TRANSLATION_PLAN.md) for the phased translation approach.
