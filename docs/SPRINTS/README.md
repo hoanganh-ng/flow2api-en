@@ -30,6 +30,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [006J](SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md) | StreamingResponse Wrapper & Body-Iterator Characterization | ✅ Completed | 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior |
 | [006K](SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md) | Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop tests covering response-start timing, header/byte encoding, body-message framing, [DONE] termination bytes, more_body flags, normal completion, and exception propagation |
 | [006K.1](SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md) | Strengthen ASGI Send-Loop Assertions & Correct Documentation | ✅ Completed | Strengthened Cases 1 and 2 with exact message sequences, exact Gemini body bytes, exact final-message dict equality, non-ASCII UTF-8 proof; corrected 299-test explanation and documentation overclaims |
+| [006L](SPRINT-006L-http-level-streaming-test-seam-discovery.md) | HTTP-Level Streaming Test Seam Discovery | ✅ Completed | Discovery-only analysis of HTTP-level streaming test seams comparing TestClient, ASGITransport, ASGI wrapper, src.main.app import, and live Uvicorn; recommended test-local FastAPI + routes.router + TestClient with dependency override and handler patch |
 
 ## Sprint Conventions
 

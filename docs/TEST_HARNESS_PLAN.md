@@ -52,7 +52,14 @@
 > HTTPX, or HTTP transport is involved. Sprint 006K.1 strengthened the
 > successful tests with exact ASGI message sequence, exact content-body byte
 > values, non-ASCII UTF-8 byte preservation, and Gemini event-payload order
-> verification.
+> verification. Sprint 006L discovered the HTTP-level streaming test seam,
+> comparing TestClient, ASGITransport, ASGI spec_version wrappers,
+> `src.main.app` import, and live Uvicorn. It recommended a test-local
+> FastAPI app with `routes.router`, dependency override for
+> `verify_api_key_flexible`, `generation_handler` patching, and TestClient
+> for complete-response HTTP contract assertions. Both TestClient and
+> ASGITransport fully buffer the response body before delivery; incremental
+> client-side streaming is not possible with either transport.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
@@ -65,9 +72,10 @@
 > [SPRINT-006E](SPRINTS/SPRINT-006E-mocked-non-streaming-generation-route-tests.md),
 > [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md),
 > [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md),
-> [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md), and
-> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md) for details.
-> HTTP-level TestClient/HTTPX streaming tests remain future work.
+> [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md),
+> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md), and
+> [SPRINT-006L](SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md) for details.
+> HTTP-level TestClient/HTTPX streaming tests are ready for implementation.
 
 ---
 
