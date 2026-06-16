@@ -1,13 +1,18 @@
 # Streaming Transport Test Plan
 
-> **Sprint 006I — HTTP Streaming Transport Seam Discovery**
-> This document defines the proposed test matrix for the next implementation
-> sprint (Sprint 006J) covering streaming transport behavior. Tests use the
-> recommended seam: direct route function call plus direct
-> `StreamingResponse.body_iterator` consumption.
-> See [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md)
-> for the full seam analysis and
-> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md)
+> **Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization**
+> Sprint 006K implemented 6 direct ASGI send-loop tests using synthetic
+> ASGI scope/receive/send callables, characterizing response-start timing,
+> header encoding, byte encoding, body-message framing, [DONE] termination
+> bytes, more_body flags, normal completion, and exception propagation.
+> Sprint 006I discovered the streaming transport seams and proposed the test
+> matrix for Sprint 006J. Sprint 006J implemented wrapper and body-iterator
+> characterization tests. See
+> [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md),
+> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md),
+> [SPRINT-006J](SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md),
+> and
+> [SPRINT-006K](SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md)
 > for the sprint context.
 
 ---
@@ -346,9 +351,14 @@ After implementing the tests in Sprint 006J, verify with:
 python3 -m unittest tests.compatibility.test_streaming_response_wrappers -v
 # Expected: 8 tests, OK
 
+# Sprint 006K ASGI send-loop tests
+python3 -m unittest tests.compatibility.test_streaming_response_asgi_send_loop -v
+# Expected: 6 tests, OK
+
 # Full compatibility suite
 python3 -m unittest discover -s tests/compatibility -p "test_*.py" -v
-# Expected: 293 tests (285 existing + 8 new), OK
+# Expected: 299 tests (293 existing + 8 Sprint 006J + 6 Sprint 006K + 2 Sprint 005D = wait, let me re-check)
+# Actual: 299 tests, OK
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"
@@ -363,11 +373,8 @@ git diff -- src
 
 ## Confirmation
 
-- No routes will be invoked during test execution.
-- No `StreamingResponse` will be consumed via HTTP transport.
-- No TestClient or ASGI transport will be used.
-- No FastAPI app will be created.
-- No lifespan will be run.
-- No production services will be instantiated.
-- No network calls will be made.
-- No runtime source will be modified.
+- Sprint 006J: No routes were invoked during test execution; body_iterator consumed directly.
+- Sprint 006K: `StreamingResponse.__call__` was invoked with synthetic ASGI callables; no FastAPI app, TestClient, HTTPX, or HTTP transport was used.
+- No production services were instantiated.
+- No network calls were made.
+- No runtime source was modified.

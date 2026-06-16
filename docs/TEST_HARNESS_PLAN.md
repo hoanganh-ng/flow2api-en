@@ -40,6 +40,14 @@
 > OpenAI and Gemini streaming routes. Tests use direct route function calls
 > with direct body_iterator consumption; no FastAPI app, TestClient, ASGI
 > transport, or HTTP transport is involved.
+> Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization
+> tests covering response-start timing, header encoding (latin-1 bytes),
+> byte encoding (utf-8 string-to-byte), body-message framing,
+> `data: [DONE]\n\n` termination bytes, `more_body` flags, normal completion
+> (final empty-body message), and exception propagation (response.start sent,
+> no final more_body=False). Tests invoke `StreamingResponse.__call__` directly
+> with synthetic ASGI scope (spec_version "2.4"), receive, and send callables;
+> no FastAPI app, TestClient, HTTPX, or HTTP transport is involved.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
@@ -54,7 +62,7 @@
 > [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md),
 > [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md), and
 > [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md) for details.
-> HTTP-level streaming tests remain future work.
+> HTTP-level TestClient/HTTPX streaming tests remain future work.
 
 ---
 
