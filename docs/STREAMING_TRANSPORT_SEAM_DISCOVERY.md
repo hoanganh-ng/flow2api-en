@@ -270,14 +270,14 @@ async def verify_api_key_flexible(
 - No database query during verification; comparison is in-memory.
 
 **Whether a test-local dependency override is safe:**
-Yes. FastAPI's `Depends` system supports `app.dependency_overrides[verify_api_key_flexible] = lambda: "test-key"`. This bypasses the security checks and returns a fixed key. The override is local to the test app instance and does not affect the production app or module-level state.
+Yes. FastAPI's `Depends` system supports `app.dependency_overrides[verify_api_key_flexible] = lambda: "test-key"`. This returns a fixed key without invoking the real security checks. The override is local to the test app instance and does not affect the production app or module-level state.
 
 **Direct-call behavior with explicit already-resolved api_key:**
 When calling the route function directly (not through FastAPI/TestClient), the `api_key` parameter can be passed as a plain string argument:
 ```python
 await create_chat_completion(request, raw_request, api_key="test-key")
 ```
-This bypasses the dependency injection entirely. The route does not use `api_key` beyond the dependency check; it is not forwarded to the handler or any service.
+This supplies the already-resolved dependency parameter explicitly without invoking dependency injection. Authentication behavior is not exercised. The route does not use `api_key` beyond the dependency check; it is not forwarded to the handler or any service.
 
 **Distinction between route characterization and authentication testing:**
 - Route characterization tests the conversion, framing, and response shape. Authentication is a precondition, not the subject under test.
@@ -411,7 +411,7 @@ async for chunk in response.body_iterator:
 
 **Application/lifespan risk:** None. The app is not created.
 
-**Dependency behavior:** Bypassed by passing `api_key` directly. No dependency injection.
+**Dependency behavior:** Direct route calls supply the already-resolved `api_key` dependency parameter explicitly. Authentication behavior is not exercised. No dependency injection is invoked.
 
 **Production-global initialization:** None. `generation_handler` is patched; no services are instantiated.
 
@@ -624,7 +624,7 @@ The following behaviors are explicitly deferred and not tested in the next sprin
 
 ```bash
 git status --short
-# Result: (no output — clean worktree)
+# Result: worktree contains only intended Sprint 006I changes and no unrelated changes
 
 git log -5 --oneline
 # Result:

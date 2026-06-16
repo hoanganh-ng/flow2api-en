@@ -42,9 +42,10 @@ no HTTP transport was exercised, and no runtime source was modified.
    status (200). The generators differ (OpenAI emits `[DONE]`, Gemini does
    not), but the transport seam is the same.
 
-4. **Authentication dependency can be bypassed safely.** Direct function call
-   with explicit `api_key` parameter bypasses dependency injection. The
-   route does not use `api_key` beyond the dependency check.
+4. **Authentication dependency is not exercised.** Direct route calls supply the
+   already-resolved `api_key` dependency parameter explicitly. Authentication
+   behavior is not exercised. The route does not use `api_key` beyond the
+   dependency check.
 
 5. **Exception timing is well-defined.** Exceptions before `StreamingResponse`
    construction occur before HTTP response start. Exceptions during iteration
@@ -115,7 +116,7 @@ exercised:
 
 - **Config/database/service reads:** Reads `config.api_key` (in-memory comparison)
 - **Test-local dependency override safety:** Yes (FastAPI supports `app.dependency_overrides`)
-- **Direct-call behavior:** Pass `api_key="test-key"` directly; bypasses dependency injection
+- **Direct-call behavior:** Pass `api_key="test-key"` directly; supplies the already-resolved dependency parameter explicitly. Authentication behavior is not exercised.
 - **Distinction:** Route characterization tests authentication as a precondition, not the subject
 
 ### 4. Exception Timing
@@ -145,7 +146,7 @@ exercised:
 
 - **Isolation:** High (no app, no lifespan, no TestClient)
 - **Application/lifespan risk:** None
-- **Dependency behavior:** Bypassed by passing `api_key` directly
+- **Dependency behavior:** Direct route calls supply the already-resolved `api_key` dependency parameter explicitly. Authentication behavior is not exercised.
 - **Production-global initialization:** None
 - **Coverage gained:** StreamingResponse construction, generator iteration, exception propagation, headers/media-type
 - **Cleanup and exception observability:** Direct
@@ -269,7 +270,7 @@ the detailed test matrix.
 ```bash
 # Baseline verification
 git status --short
-# Result: (no output — clean worktree)
+# Result: worktree contains only intended Sprint 006I sprint changes and no unrelated changes
 
 git log -5 --oneline
 # Result:

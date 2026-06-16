@@ -30,9 +30,16 @@
 > without StreamingResponse, TestClient, or HTTP transport.
 > Sprint 006I discovered streaming transport seams: StreamingResponse
 > construction does not start iteration, direct body_iterator consumption
-> is feasible and safe, authentication dependency can be bypassed via direct
-> call, and exception timing is well-defined relative to HTTP response start.
+> is feasible and safe, direct route calls supply the already-resolved api_key
+> dependency parameter explicitly (authentication behavior is not exercised),
+> and exception timing is well-defined relative to HTTP response start.
 > A test matrix of 15 streaming transport tests has been proposed.
+> Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization
+> tests covering deferred execution, SSE framing, [DONE] termination,
+> handler-unavailable timing, and partial-output exception behavior for both
+> OpenAI and Gemini streaming routes. Tests use direct route function calls
+> with direct body_iterator consumption; no FastAPI app, TestClient, ASGI
+> transport, or HTTP transport is involved.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),

@@ -342,13 +342,13 @@ The following behaviors are deferred to future sprints:
 After implementing the tests in Sprint 006J, verify with:
 
 ```bash
-# New test file
-python3 -m unittest tests.compatibility.test_streaming_transport -v
-# Expected: 15 tests, OK
+# New test file (Sprint 006J)
+python3 -m unittest tests.compatibility.test_streaming_response_wrappers -v
+# Expected: 8 tests, OK
 
 # Full compatibility suite
 python3 -m unittest discover -s tests/compatibility -p "test_*.py" -v
-# Expected: 300 tests (285 existing + 15 new), OK
+# Expected: 293 tests (285 existing + 8 new), OK
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"

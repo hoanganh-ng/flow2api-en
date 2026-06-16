@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 006I — HTTP Streaming Transport Seam Discovery |
+| **Current sprint** | Sprint 006J — StreamingResponse Wrapper and Body-Iterator Characterization |
 
 ## Purpose
 
@@ -107,13 +107,14 @@ This fork exists to:
 | docs/SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md | Created (Sprint 006H) |
 | docs/STREAMING_TRANSPORT_SEAM_DISCOVERY.md | Created (Sprint 006I) — streaming transport seam discovery and analysis |
 | docs/STREAMING_TRANSPORT_TEST_PLAN.md | Created (Sprint 006I) — proposed test matrix for Sprint 006J |
-| docs/SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md | Created (Sprint 006I) |
+| docs/SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md | Created (Sprint 006J) |
+| tests/compatibility/test_streaming_response_wrappers.py | Created (Sprint 006J) — 8 StreamingResponse wrapper and body-iterator characterization tests |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; HTTP-level streaming tests remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior; HTTP-level streaming tests remain future work
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -142,6 +143,7 @@ This fork exists to:
 | Sprint 006G — Mocked OpenAI Streaming Generator Contract | ✅ Completed | 18 mocked OpenAI streaming generator tests covering SSE framing, reasoning_content, [DONE] termination, ordering, empty stream, and handler-exception propagation |
 | Sprint 006H — Mocked Gemini Streaming Generator Contract | ✅ Completed | 41 mocked Gemini streaming generator tests covering Gemini event framing, text conversion, finish-reason mapping, reasoning content, empty/non-emitting chunks, handler error-payload conversion, exception propagation, argument forwarding, and no-[DONE] termination |
 | Sprint 006I — HTTP Streaming Transport Seam Discovery | ✅ Completed | Discovery-only analysis of streaming transport seams, StreamingResponse behavior, authentication dependencies, exception timing, and recommended test approach |
+| Sprint 006J — StreamingResponse Wrapper and Body-Iterator Characterization | ✅ Completed | 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior |
 
 ## Next Steps
 
@@ -167,6 +169,7 @@ See [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.
 See [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md) for the completed mocked OpenAI streaming generator contract sprint.
 See [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md) for the completed mocked Gemini streaming generator contract sprint.
 See [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md) for the completed HTTP streaming transport seam discovery sprint.
+See [SPRINT-006J](SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md) for the completed StreamingResponse wrapper and body-iterator characterization sprint.
 See [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md) for the streaming transport seam analysis.
 See [STREAMING_TRANSPORT_TEST_PLAN.md](STREAMING_TRANSPORT_TEST_PLAN.md) for the proposed streaming transport test matrix.
 See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the route test seam analysis.
