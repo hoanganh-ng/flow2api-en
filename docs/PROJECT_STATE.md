@@ -110,7 +110,8 @@ This fork exists to:
 | docs/SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md | Created (Sprint 006J) |
 | tests/compatibility/test_streaming_response_wrappers.py | Created (Sprint 006J) — 8 StreamingResponse wrapper and body-iterator characterization tests |
 | docs/SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md | Created (Sprint 006K) |
-| tests/compatibility/test_streaming_response_asgi_send_loop.py | Created (Sprint 006K), strengthened (Sprint 006K.1) — 6 direct ASGI StreamingResponse send-loop characterization tests with exact message sequence, byte values, and non-ASCII UTF-8 proof |
+| tests/compatibility/test_streaming_response_asgi_send_loop.py | Created (Sprint 006K) — 6 direct ASGI StreamingResponse send-loop characterization tests |
+| docs/SPRINTS/SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md | Created (Sprint 006K.1) |
 
 ## What Is Not Yet Done
 
@@ -146,7 +147,8 @@ This fork exists to:
 | Sprint 006H — Mocked Gemini Streaming Generator Contract | ✅ Completed | 41 mocked Gemini streaming generator tests covering Gemini event framing, text conversion, finish-reason mapping, reasoning content, empty/non-emitting chunks, handler error-payload conversion, exception propagation, argument forwarding, and no-[DONE] termination |
 | Sprint 006I — HTTP Streaming Transport Seam Discovery | ✅ Completed | Discovery-only analysis of streaming transport seams, StreamingResponse behavior, authentication dependencies, exception timing, and recommended test approach |
 | Sprint 006J — StreamingResponse Wrapper and Body-Iterator Characterization | ✅ Completed | 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior |
-| Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop characterization tests; Sprint 006K.1 strengthened assertions with exact message sequences, byte values, non-ASCII UTF-8 proof, and Gemini event ordering |
+| Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop characterization tests covering response-start timing, header encoding, byte encoding, body-message framing, [DONE] termination bytes, more_body flags, normal completion, and exception propagation |
+| Sprint 006K.1 — Strengthen ASGI Send-Loop Assertions and Correct Documentation | ✅ Completed | Strengthened Cases 1 and 2 with exact ASGI message sequences, exact Gemini body byte assertions, exact final-message dict equality, non-ASCII UTF-8 proof; corrected 299-test explanation and documentation overclaims |
 
 ## Next Steps
 
@@ -174,6 +176,7 @@ See [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract
 See [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md) for the completed HTTP streaming transport seam discovery sprint.
 See [SPRINT-006J](SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md) for the completed StreamingResponse wrapper and body-iterator characterization sprint.
 See [SPRINT-006K](SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md) for the completed direct ASGI StreamingResponse send-loop characterization sprint.
+See [SPRINT-006K.1](SPRINTS/SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md) for the completed ASGI send-loop assertion strengthening and documentation correction sprint.
 See [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md) for the streaming transport seam analysis.
 See [STREAMING_TRANSPORT_TEST_PLAN.md](STREAMING_TRANSPORT_TEST_PLAN.md) for the proposed streaming transport test matrix.
 See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md) for the route test seam analysis.

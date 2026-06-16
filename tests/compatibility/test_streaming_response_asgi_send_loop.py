@@ -389,12 +389,15 @@ class TestOpenAISuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(messages[3], content_bodies[2])
         self.assertEqual(messages[4], content_bodies[3])
 
-        # Final message: exactly {"type": "http.response.body",
-        #                         "body": b"", "more_body": False}
-        final = messages[-1]
-        self.assertEqual(final["type"], "http.response.body")
-        self.assertEqual(final["body"], b"")
-        self.assertIs(final["more_body"], False)
+        # Final message: exact dictionary equality
+        self.assertEqual(
+            messages[-1],
+            {
+                "type": "http.response.body",
+                "body": b"",
+                "more_body": False,
+            },
+        )
 
         # -- Overall ASGI message count: 1 start + 4 content + 1 final = 6 ---
         self.assertEqual(len(messages), 6)
@@ -507,6 +510,49 @@ class TestGeminiSuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
             "Non-ASCII UTF-8 bytes must appear in the first Gemini content body",
         )
 
+        # -- Build exact expected Gemini body byte sequences -----------------
+        # Replicate the Gemini conversion output for exact byte comparison.
+        # _convert_openai_stream_chunk_to_gemini_event produces these payloads.
+        expected_gemini_payloads = [
+            {
+                "candidates": [{
+                    "index": 0,
+                    "content": {
+                        "role": "model",
+                        "parts": [{"text": non_ascii_text}],
+                    },
+                }],
+                "modelVersion": KNOWN_MODEL,
+            },
+            {
+                "candidates": [{
+                    "index": 0,
+                    "content": {
+                        "role": "model",
+                        "parts": [{"text": " Gemini"}],
+                    },
+                }],
+                "modelVersion": KNOWN_MODEL,
+            },
+            {
+                "candidates": [{
+                    "index": 0,
+                    "finishReason": "STOP",
+                }],
+                "modelVersion": KNOWN_MODEL,
+            },
+        ]
+        expected_gemini_bodies = [
+            f"data: {json.dumps(p, ensure_ascii=False)}\n\n".encode("utf-8")
+            for p in expected_gemini_payloads
+        ]
+
+        # -- Assert exact content-body byte equality -------------------------
+        self.assertEqual(
+            [body["body"] for body in content_bodies],
+            expected_gemini_bodies,
+        )
+
         # -- Parse and verify Gemini event payloads in order -----------------
         def _parse_gemini_body(body_bytes: bytes) -> dict:
             text = body_bytes.decode("utf-8")
@@ -547,11 +593,15 @@ class TestGeminiSuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
                 "Gemini stream must not contain [DONE] sentinel",
             )
 
-        # -- Final message: exactly empty body with more_body=False ----------
-        final = messages[-1]
-        self.assertEqual(final["type"], "http.response.body")
-        self.assertEqual(final["body"], b"")
-        self.assertIs(final["more_body"], False)
+        # -- Final message: exact dictionary equality -------------------------
+        self.assertEqual(
+            messages[-1],
+            {
+                "type": "http.response.body",
+                "body": b"",
+                "more_body": False,
+            },
+        )
 
         # -- Overall ASGI message count: 1 start + 3 content + 1 final = 5 --
         self.assertEqual(len(messages), 5)

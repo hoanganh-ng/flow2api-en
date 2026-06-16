@@ -2,7 +2,7 @@
 
 ## Status
 
-✅ Completed (corrected in Sprint 006K.1)
+✅ Completed
 
 ## Scope
 
@@ -313,9 +313,11 @@ python3 -m unittest tests.compatibility.test_streaming_response_wrappers -v
 # Full compatibility suite
 python3 -m unittest discover -s tests/compatibility -p "test_*.py"
 # Result: Ran 299 tests — OK
-# 299 = Sprint 006B (67) + Sprint 006C (95) + Sprint 005B (8) + Sprint 005D (12)
+# 299 = Static fixture compatibility suite after Sprint 005D (53)
+#       + Sprint 006B (67) + Sprint 006C (95)
 #       + Sprint 006E (6) + Sprint 006F (5) + Sprint 006G (18) + Sprint 006H (41)
-#       + Sprint 006J (8) + Sprint 006K (6) + other earlier tests (33)
+#       + Sprint 006J (8) + Sprint 006K (6)
+# Calculation: 53 + 67 + 95 + 6 + 5 + 18 + 41 + 8 + 6 = 299
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"
@@ -397,43 +399,3 @@ The next sprint should consider:
 
 All tests are offline, deterministic, and consistent with the existing test
 patterns established in Sprint 006E–006J.
-
----
-
-## Sprint 006K.1 — Strengthened Assertions and Documentation Corrections
-
-Sprint 006K.1 is a narrow correction sprint that strengthens the successful
-OpenAI and Gemini ASGI send-loop tests and corrects documentation claims
-that exceeded what the original assertions directly proved.
-
-### Test Strengthening
-
-- **Case 1 (OpenAI):** Now uses non-ASCII text (`Xin chào — 世界`), asserts
-  exact ASGI message count (6), exact body message count (5), exact content-body
-  byte values, one body message per stream event, `[DONE]` as a separate body
-  message, header bytes type, and non-ASCII UTF-8 byte preservation.
-- **Case 2 (Gemini):** Now uses non-ASCII text, asserts exact ASGI message
-  count (5), exact body message count (4), parses and verifies Gemini event
-  payload order (2 text events + 1 finish-reason event), header bytes type,
-  and non-ASCII UTF-8 byte preservation.
-- **Cases 3–6 (exception tests):** Preserved unchanged.
-
-### Documentation Corrections
-
-- Header Encoding findings now distinguish route-level byte assertions from
-  the observed Starlette latin-1 implementation.
-- Byte Encoding findings now note non-ASCII UTF-8 assertion.
-- Body Message Framing now notes per-chunk separation is directly asserted.
-- Verification section: removed stale `git status --short` and
-  `git diff --stat` output; corrected 299-test explanation.
-- All claims now match the actual test assertions.
-
-### Files Modified by Sprint 006K.1
-
-| File | Change |
-|------|--------|
-| `tests/compatibility/test_streaming_response_asgi_send_loop.py` | Strengthened Cases 1 and 2 with exact message sequence, byte, and UTF-8 assertions |
-| `docs/SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md` | This document — corrected claims and added 006K.1 section |
-| `docs/STREAMING_TRANSPORT_TEST_PLAN.md` | Removed `wait, let me re-check` text and corrected 299-test explanation |
-| `docs/TEST_HARNESS_PLAN.md` | Corrected Sprint 006K description to reflect strengthened assertions |
-| `docs/PROJECT_STATE.md` | Updated Sprint 006K description in history and what-is-not-yet-done |

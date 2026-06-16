@@ -329,7 +329,7 @@ The following behaviors are explicitly not covered in this test matrix:
 - **Production services:** Database, token manager, flow client, etc.
 - **Network calls:** Upstream service interaction
 - **Media retrieval:** Image/video download and conversion
-- **Authentication:** Key acceptance/rejection (already tested implicitly)
+- **Authentication:** Not exercised. Direct route calls supply the already-resolved `api_key` dependency parameter explicitly.
 - **Request validation:** Pydantic validation (framework behavior)
 
 ---
@@ -362,9 +362,11 @@ python3 -m unittest tests.compatibility.test_streaming_response_asgi_send_loop -
 # Full compatibility suite
 python3 -m unittest discover -s tests/compatibility -p "test_*.py" -v
 # Expected: 299 tests
-# 299 = Sprint 006B (67) + Sprint 006C (95) + Sprint 005B (8) + Sprint 005D (12)
+# 299 = Static fixture compatibility suite after Sprint 005D (53)
+#       + Sprint 006B (67) + Sprint 006C (95)
 #       + Sprint 006E (6) + Sprint 006F (5) + Sprint 006G (18) + Sprint 006H (41)
-#       + Sprint 006J (8) + Sprint 006K (6) + other earlier tests (33)
+#       + Sprint 006J (8) + Sprint 006K (6)
+# Calculation: 53 + 67 + 95 + 6 + 5 + 18 + 41 + 8 + 6 = 299
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"
