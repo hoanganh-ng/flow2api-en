@@ -1,10 +1,14 @@
 # Streaming Transport Test Plan
 
-> **Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization**
+> **Sprint 006K.1 — Strengthened ASGI Send-Loop Assertions**
 > Sprint 006K implemented 6 direct ASGI send-loop tests using synthetic
 > ASGI scope/receive/send callables, characterizing response-start timing,
 > header encoding, byte encoding, body-message framing, [DONE] termination
 > bytes, more_body flags, normal completion, and exception propagation.
+> Sprint 006K.1 strengthened the successful OpenAI and Gemini tests with
+> exact ASGI message sequence, exact content-body byte values, non-ASCII
+> UTF-8 byte preservation (`Xin chào — 世界`), per-event body message
+> separation, and header byte-type assertions.
 > Sprint 006I discovered the streaming transport seams and proposed the test
 > matrix for Sprint 006J. Sprint 006J implemented wrapper and body-iterator
 > characterization tests. See
@@ -357,8 +361,10 @@ python3 -m unittest tests.compatibility.test_streaming_response_asgi_send_loop -
 
 # Full compatibility suite
 python3 -m unittest discover -s tests/compatibility -p "test_*.py" -v
-# Expected: 299 tests (293 existing + 8 Sprint 006J + 6 Sprint 006K + 2 Sprint 005D = wait, let me re-check)
-# Actual: 299 tests, OK
+# Expected: 299 tests
+# 299 = Sprint 006B (67) + Sprint 006C (95) + Sprint 005B (8) + Sprint 005D (12)
+#       + Sprint 006E (6) + Sprint 006F (5) + Sprint 006G (18) + Sprint 006H (41)
+#       + Sprint 006J (8) + Sprint 006K (6) + other earlier tests (33)
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"
@@ -374,7 +380,7 @@ git diff -- src
 ## Confirmation
 
 - Sprint 006J: No routes were invoked during test execution; body_iterator consumed directly.
-- Sprint 006K: `StreamingResponse.__call__` was invoked with synthetic ASGI callables; no FastAPI app, TestClient, HTTPX, or HTTP transport was used.
+- Sprint 006K: `StreamingResponse.__call__` was invoked with synthetic ASGI callables; no FastAPI app, TestClient, HTTPX, or HTTP transport was used. Sprint 006K.1 strengthened assertions to exact message sequences, byte values, and UTF-8 encoding proof.
 - No production services were instantiated.
 - No network calls were made.
 - No runtime source was modified.

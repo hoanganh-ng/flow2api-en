@@ -197,7 +197,11 @@ class FakeFailingHandler:
 # Helpers
 # ---------------------------------------------------------------------------
 def _make_text_delta_chunk(text: str = "Hello world") -> str:
-    """Build a raw JSON string matching a typical OpenAI text-delta chunk."""
+    """Build a raw JSON string matching a typical OpenAI text-delta chunk.
+
+    Uses ``ensure_ascii=False`` so that non-ASCII characters are preserved
+    as literal Unicode in the JSON string rather than being escaped.
+    """
     return json.dumps({
         "id": "chatcmpl-1700000000",
         "object": "chat.completion.chunk",
@@ -208,7 +212,7 @@ def _make_text_delta_chunk(text: str = "Hello world") -> str:
             "delta": {"content": text},
             "finish_reason": None,
         }],
-    })
+    }, ensure_ascii=False)
 
 
 def _make_final_chunk(text: str = "") -> str:
@@ -223,7 +227,7 @@ def _make_final_chunk(text: str = "") -> str:
             "delta": {"content": text},
             "finish_reason": "stop",
         }],
-    })
+    }, ensure_ascii=False)
 
 
 def _make_openai_request(
@@ -277,15 +281,21 @@ class TestOpenAISuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
     """OpenAI successful streaming via direct ASGI response invocation."""
 
     async def test_openai_successful_asgi_send_loop(self):
-        """Verify complete ASGI message sequence for a successful OpenAI stream.
+        """Verify exact ASGI message sequence for a successful OpenAI stream.
 
         Calls the route, then invokes the returned StreamingResponse directly
-        with synthetic ASGI callables. Asserts on response.start, headers,
-        byte encoding, body content, [DONE] termination, more_body flags,
-        and handler call count.
+        with synthetic ASGI callables. Asserts the exact ASGI message order,
+        exact content-body byte values with non-ASCII UTF-8 preservation,
+        one body message per emitted stream event, ``data: [DONE]\\n\\n``
+        as a separate body message, ``more_body`` flags, and the exact final
+        empty body message.
+
+        Non-ASCII value used: ``Xin chào — 世界``
+        (Vietnamese greeting with CJK characters — proves UTF-8 byte encoding).
         """
+        non_ascii_text = "Xin chào — 世界"
         chunks = [
-            _make_text_delta_chunk("Hello"),
+            _make_text_delta_chunk(non_ascii_text),
             _make_text_delta_chunk(" world"),
             _make_final_chunk(),
         ]
@@ -304,52 +314,92 @@ class TestOpenAISuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
 
             await response(scope, receive, send)
 
-        # Exactly one http.response.start
-        start = _get_start_message(messages)
+        # -- Message 0: exactly one http.response.start with status 200 ------
+        self.assertEqual(messages[0]["type"], "http.response.start")
+        start = messages[0]
         self.assertEqual(start["status"], 200)
 
-        # Headers are encoded bytes
-        headers = _headers_to_dict(start["headers"])
-        self.assertEqual(headers.get("content-type"), "text/event-stream; charset=utf-8")
-        self.assertEqual(headers.get("cache-control"), "no-cache")
-        self.assertEqual(headers.get("connection"), "keep-alive")
-        self.assertEqual(headers.get("x-accel-buffering"), "no")
+        # -- Header assertions: bytes type, lowercase keys, exact values -----
+        raw_headers = start["headers"]
+        for key, value in raw_headers:
+            self.assertIsInstance(key, bytes, f"Header key {key!r} is not bytes")
+            self.assertIsInstance(value, bytes, f"Header value {value!r} is not bytes")
 
-        # Body messages
+        header_keys = [k for k, _ in raw_headers]
+        self.assertIn(b"content-type", header_keys)
+        self.assertIn(b"cache-control", header_keys)
+        self.assertIn(b"connection", header_keys)
+        self.assertIn(b"x-accel-buffering", header_keys)
+
+        header_dict = {k: v for k, v in raw_headers}
+        self.assertEqual(
+            header_dict[b"content-type"],
+            b"text/event-stream; charset=utf-8",
+        )
+        self.assertEqual(header_dict[b"cache-control"], b"no-cache")
+        self.assertEqual(header_dict[b"connection"], b"keep-alive")
+        self.assertEqual(header_dict[b"x-accel-buffering"], b"no")
+
+        # -- Build expected body byte sequences ------------------------------
+        # _iterate_openai_stream parses each handler chunk and re-serializes
+        # with json.dumps(..., ensure_ascii=False), then wraps in SSE framing.
+        def _expected_openai_body(chunk_json: str) -> bytes:
+            payload = json.loads(chunk_json)
+            return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8")
+
+        expected_bodies = [
+            _expected_openai_body(chunks[0]),
+            _expected_openai_body(chunks[1]),
+            _expected_openai_body(chunks[2]),
+            b"data: [DONE]\n\n",
+        ]
+
+        # -- Verify non-ASCII bytes are present in first content body --------
+        non_ascii_bytes = non_ascii_text.encode("utf-8")
+        self.assertIn(
+            non_ascii_bytes,
+            expected_bodies[0],
+            "Non-ASCII UTF-8 bytes must appear in the first content body",
+        )
+
+        # -- Body messages: exactly 3 chunk bodies + 1 [DONE] body + 1 final -
         bodies = _get_body_messages(messages)
-        self.assertGreater(len(bodies), 0)
+        self.assertEqual(len(bodies), 5, "Expected 5 body messages total")
 
-        # All content bodies are bytes (Starlette encodes strings to utf-8)
-        for body_msg in bodies:
+        # Content bodies are messages[1] through messages[4]
+        content_bodies = bodies[:4]
+        for i, body_msg in enumerate(content_bodies):
+            self.assertEqual(
+                body_msg["type"], "http.response.body",
+                f"Message {i + 1} must be http.response.body",
+            )
+            self.assertIs(
+                body_msg["more_body"], True,
+                f"Content body {i} must have more_body=True",
+            )
             self.assertIsInstance(body_msg["body"], bytes)
-
-        # Content bodies (more_body=True) contain SSE data
-        content_bodies = [b for b in bodies if b.get("more_body") is True]
-        self.assertGreater(len(content_bodies), 0)
-
-        # Decode all content bodies to strings for content assertions
-        decoded = [b["body"].decode("utf-8") for b in content_bodies]
-
-        # Each content event starts with "data: "
-        for text in decoded[:-1]:  # Exclude [DONE]
-            self.assertTrue(
-                text.startswith("data: "),
-                f"Content body missing SSE prefix: {text!r}",
+            self.assertEqual(
+                body_msg["body"], expected_bodies[i],
+                f"Content body {i} byte mismatch",
             )
 
-        # Last content event is exactly "data: [DONE]\n\n"
-        self.assertEqual(decoded[-1], "data: [DONE]\n\n")
+        # Each content body is a separate ASGI message (proved by index check)
+        self.assertEqual(messages[1], content_bodies[0])
+        self.assertEqual(messages[2], content_bodies[1])
+        self.assertEqual(messages[3], content_bodies[2])
+        self.assertEqual(messages[4], content_bodies[3])
 
-        # [DONE] appears exactly once among content events
-        done_count = sum(1 for d in decoded if d == "data: [DONE]\n\n")
-        self.assertEqual(done_count, 1)
-
-        # Final message: more_body=False with empty body
-        final = bodies[-1]
-        self.assertFalse(final["more_body"])
+        # Final message: exactly {"type": "http.response.body",
+        #                         "body": b"", "more_body": False}
+        final = messages[-1]
+        self.assertEqual(final["type"], "http.response.body")
         self.assertEqual(final["body"], b"")
+        self.assertIs(final["more_body"], False)
 
-        # Handler called exactly once
+        # -- Overall ASGI message count: 1 start + 4 content + 1 final = 6 ---
+        self.assertEqual(len(messages), 6)
+
+        # -- Handler called exactly once -------------------------------------
         self.assertEqual(len(fake_handler.calls), 1)
 
 
@@ -360,13 +410,20 @@ class TestGeminiSuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
     """Gemini successful streaming via direct ASGI response invocation."""
 
     async def test_gemini_successful_asgi_send_loop(self):
-        """Verify complete ASGI message sequence for a successful Gemini stream.
+        """Verify exact ASGI message sequence for a successful Gemini stream.
 
-        Asserts one response.start, correct status/headers, Gemini SSE bytes,
-        no OpenAI [DONE] sentinel, final more_body=False, and handler call count.
+        Asserts one ``http.response.start``, exactly one body message per
+        emitted Gemini event (3 handler chunks → 3 content bodies),
+        no ``[DONE]`` body, exact content-body byte values with non-ASCII
+        UTF-8 preservation, event-payload order verification, ``more_body``
+        flags, and the exact final empty body message.
+
+        Non-ASCII value used: ``Xin chào — 世界``
+        (Vietnamese greeting with CJK characters — proves UTF-8 byte encoding).
         """
+        non_ascii_text = "Xin chào — 世界"
         chunks = [
-            _make_text_delta_chunk("Hello"),
+            _make_text_delta_chunk(non_ascii_text),
             _make_text_delta_chunk(" Gemini"),
             _make_final_chunk(),
         ]
@@ -393,48 +450,113 @@ class TestGeminiSuccessfulASGISendLoop(unittest.IsolatedAsyncioTestCase):
 
             await response(scope, receive, send)
 
-        # Exactly one http.response.start
-        start = _get_start_message(messages)
+        # -- Message 0: exactly one http.response.start with status 200 ------
+        self.assertEqual(messages[0]["type"], "http.response.start")
+        start = messages[0]
         self.assertEqual(start["status"], 200)
 
-        # Headers
-        headers = _headers_to_dict(start["headers"])
-        self.assertEqual(headers.get("content-type"), "text/event-stream; charset=utf-8")
-        self.assertEqual(headers.get("cache-control"), "no-cache")
-        self.assertEqual(headers.get("connection"), "keep-alive")
-        self.assertEqual(headers.get("x-accel-buffering"), "no")
+        # -- Header assertions: bytes type, lowercase keys, exact values -----
+        raw_headers = start["headers"]
+        for key, value in raw_headers:
+            self.assertIsInstance(key, bytes, f"Header key {key!r} is not bytes")
+            self.assertIsInstance(value, bytes, f"Header value {value!r} is not bytes")
 
-        # Body messages
+        header_keys = [k for k, _ in raw_headers]
+        self.assertIn(b"content-type", header_keys)
+        self.assertIn(b"cache-control", header_keys)
+        self.assertIn(b"connection", header_keys)
+        self.assertIn(b"x-accel-buffering", header_keys)
+
+        header_dict = {k: v for k, v in raw_headers}
+        self.assertEqual(
+            header_dict[b"content-type"],
+            b"text/event-stream; charset=utf-8",
+        )
+        self.assertEqual(header_dict[b"cache-control"], b"no-cache")
+        self.assertEqual(header_dict[b"connection"], b"keep-alive")
+        self.assertEqual(header_dict[b"x-accel-buffering"], b"no")
+
+        # -- Body messages: 3 Gemini events + 1 final empty body = 4 --------
         bodies = _get_body_messages(messages)
-        self.assertGreater(len(bodies), 0)
+        self.assertEqual(len(bodies), 4, "Expected 4 body messages total")
 
-        # All body messages contain bytes
-        for body_msg in bodies:
+        content_bodies = bodies[:3]
+
+        # All content bodies have more_body=True and bytes body
+        for i, body_msg in enumerate(content_bodies):
+            self.assertEqual(
+                body_msg["type"], "http.response.body",
+                f"Message {i + 1} must be http.response.body",
+            )
+            self.assertIs(
+                body_msg["more_body"], True,
+                f"Content body {i} must have more_body=True",
+            )
             self.assertIsInstance(body_msg["body"], bytes)
 
-        # Content bodies (more_body=True)
-        content_bodies = [b for b in bodies if b.get("more_body") is True]
-        self.assertGreater(len(content_bodies), 0)
+        # Each content body is a separate ASGI message (proved by index check)
+        self.assertEqual(messages[1], content_bodies[0])
+        self.assertEqual(messages[2], content_bodies[1])
+        self.assertEqual(messages[3], content_bodies[2])
 
-        decoded = [b["body"].decode("utf-8") for b in content_bodies]
+        # -- Verify non-ASCII UTF-8 bytes in first content body --------------
+        non_ascii_bytes = non_ascii_text.encode("utf-8")
+        self.assertIn(
+            non_ascii_bytes,
+            content_bodies[0]["body"],
+            "Non-ASCII UTF-8 bytes must appear in the first Gemini content body",
+        )
 
-        # Each content event starts with "data: "
-        for text in decoded:
-            self.assertTrue(
-                text.startswith("data: "),
-                f"Gemini content body missing SSE prefix: {text!r}",
+        # -- Parse and verify Gemini event payloads in order -----------------
+        def _parse_gemini_body(body_bytes: bytes) -> dict:
+            text = body_bytes.decode("utf-8")
+            self.assertTrue(text.startswith("data: "), f"Missing SSE prefix: {text!r}")
+            self.assertTrue(text.endswith("\n\n"), f"Missing SSE suffix: {text!r}")
+            return json.loads(text[6:].strip())
+
+        # Event 1: first text event (non-ASCII content, no finishReason)
+        event_1 = _parse_gemini_body(content_bodies[0]["body"])
+        self.assertIn("candidates", event_1)
+        candidate_1 = event_1["candidates"][0]
+        self.assertEqual(candidate_1["content"]["role"], "model")
+        self.assertEqual(
+            candidate_1["content"]["parts"][0]["text"], non_ascii_text,
+        )
+        self.assertNotIn("finishReason", candidate_1)
+        self.assertEqual(event_1["modelVersion"], KNOWN_MODEL)
+
+        # Event 2: second text event
+        event_2 = _parse_gemini_body(content_bodies[1]["body"])
+        candidate_2 = event_2["candidates"][0]
+        self.assertEqual(candidate_2["content"]["role"], "model")
+        self.assertEqual(candidate_2["content"]["parts"][0]["text"], " Gemini")
+        self.assertNotIn("finishReason", candidate_2)
+        self.assertEqual(event_2["modelVersion"], KNOWN_MODEL)
+
+        # Event 3: finish-reason event (no content, finishReason=STOP)
+        event_3 = _parse_gemini_body(content_bodies[2]["body"])
+        candidate_3 = event_3["candidates"][0]
+        self.assertNotIn("content", candidate_3)
+        self.assertEqual(candidate_3["finishReason"], "STOP")
+        self.assertEqual(event_3["modelVersion"], KNOWN_MODEL)
+
+        # -- No OpenAI [DONE] sentinel in any body message -------------------
+        for body_msg in bodies:
+            self.assertNotIn(
+                b"[DONE]", body_msg["body"],
+                "Gemini stream must not contain [DONE] sentinel",
             )
 
-        # No OpenAI [DONE] sentinel
-        for text in decoded:
-            self.assertNotIn("[DONE]", text)
-
-        # Final message: more_body=False with empty body
-        final = bodies[-1]
-        self.assertFalse(final["more_body"])
+        # -- Final message: exactly empty body with more_body=False ----------
+        final = messages[-1]
+        self.assertEqual(final["type"], "http.response.body")
         self.assertEqual(final["body"], b"")
+        self.assertIs(final["more_body"], False)
 
-        # Handler called exactly once
+        # -- Overall ASGI message count: 1 start + 3 content + 1 final = 5 --
+        self.assertEqual(len(messages), 5)
+
+        # -- Handler called exactly once -------------------------------------
         self.assertEqual(len(fake_handler.calls), 1)
 
 

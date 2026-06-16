@@ -41,13 +41,18 @@
 > with direct body_iterator consumption; no FastAPI app, TestClient, ASGI
 > transport, or HTTP transport is involved.
 > Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization
-> tests covering response-start timing, header encoding (latin-1 bytes),
-> byte encoding (utf-8 string-to-byte), body-message framing,
-> `data: [DONE]\n\n` termination bytes, `more_body` flags, normal completion
-> (final empty-body message), and exception propagation (response.start sent,
-> no final more_body=False). Tests invoke `StreamingResponse.__call__` directly
-> with synthetic ASGI scope (spec_version "2.4"), receive, and send callables;
-> no FastAPI app, TestClient, HTTPX, or HTTP transport is involved.
+> tests covering response-start timing, header byte-type and value assertions,
+> byte encoding proved via non-ASCII UTF-8 payloads (`Xin chào — 世界`),
+> body-message framing with exact per-event message counts,
+> `data: [DONE]\n\n` termination as a separate ASGI body message, `more_body`
+> flags, normal completion (final empty-body message), and exception propagation
+> (response.start sent, no final more_body=False). Tests invoke
+> `StreamingResponse.__call__` directly with synthetic ASGI scope
+> (spec_version "2.4"), receive, and send callables; no FastAPI app, TestClient,
+> HTTPX, or HTTP transport is involved. Sprint 006K.1 strengthened the
+> successful tests with exact ASGI message sequence, exact content-body byte
+> values, non-ASCII UTF-8 byte preservation, and Gemini event-payload order
+> verification.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),

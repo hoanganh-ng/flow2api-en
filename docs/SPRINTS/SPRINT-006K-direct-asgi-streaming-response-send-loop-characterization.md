@@ -2,7 +2,7 @@
 
 ## Status
 
-✅ Completed
+✅ Completed (corrected in Sprint 006K.1)
 
 ## Scope
 
@@ -82,23 +82,40 @@ the content-type header.
 ### Test Cases
 
 1. **test_openai_successful_asgi_send_loop** (Case 1)
-   - Calls `create_chat_completion` with `stream=True`.
+   - Calls `create_chat_completion` with `stream=True` and a non-ASCII text
+     payload (`Xin chào — 世界`) to prove UTF-8 byte encoding.
    - Invokes returned response with synthetic ASGI callables.
-   - Asserts exactly one `http.response.start` with status 200.
-   - Asserts encoded headers: content-type `text/event-stream; charset=utf-8`,
-     cache-control `no-cache`, connection `keep-alive`, x-accel-buffering `no`.
-   - Asserts all body messages contain bytes (string-to-byte encoding).
-   - Asserts content body events (more_body=True) contain SSE data.
-   - Asserts `data: [DONE]\n\n` bytes appear once and last among content events.
-   - Asserts final message is `more_body=False` with empty body `b""`.
+   - Asserts message 0 is `http.response.start` with status 200.
+   - Asserts all raw header keys and values are `bytes` objects.
+   - Asserts expected header keys present in lowercase byte form:
+     `b"content-type"`, `b"cache-control"`, `b"connection"`, `b"x-accel-buffering"`.
+   - Asserts `content-type` is exactly `b"text/event-stream; charset=utf-8"`.
+   - Asserts exactly 5 body messages: 3 chunk bodies + 1 `[DONE]` body + 1 final.
+   - Asserts each content body has `more_body=True` and exact byte values
+     computed from the expected JSON with `ensure_ascii=False` and UTF-8 encoding.
+   - Asserts `data: [DONE]\n\n` is a separate ASGI body message (message 4).
+   - Asserts non-ASCII UTF-8 bytes appear in the first content body.
+   - Asserts final message is exactly `http.response.body` with `body=b""`,
+     `more_body=False`.
+   - Asserts overall message count is 6 (1 start + 4 content + 1 final).
    - Asserts handler called once.
 
 2. **test_gemini_successful_asgi_send_loop** (Case 2)
-   - Calls `stream_generate_content` with Gemini request.
-   - Asserts one response.start with status 200 and correct headers.
-   - Asserts Gemini SSE bytes in body messages.
-   - Asserts no OpenAI `[DONE]` sentinel in any body message.
-   - Asserts final `more_body=False` with empty body.
+   - Calls `stream_generate_content` with Gemini request and a non-ASCII
+     text payload (`Xin chào — 世界`) to prove UTF-8 byte encoding.
+   - Asserts message 0 is `http.response.start` with status 200.
+   - Asserts header byte type, lowercase keys, and exact values.
+   - Asserts exactly 4 body messages: 3 Gemini event bodies + 1 final.
+   - Asserts each content body has `more_body=True`.
+   - Asserts non-ASCII UTF-8 bytes appear in the first content body.
+   - Parses Gemini event payloads and verifies order:
+     - Event 1: text event with non-ASCII content, no `finishReason`.
+     - Event 2: text event with `" Gemini"`, no `finishReason`.
+     - Event 3: finish-reason event with `finishReason=STOP`, no `content`.
+   - Asserts no `[DONE]` sentinel in any body message.
+   - Asserts final message is exactly `http.response.body` with `body=b""`,
+     `more_body=False`.
+   - Asserts overall message count is 5 (1 start + 3 content + 1 final).
    - Asserts handler called once.
 
 3. **test_openai_exception_before_first_chunk** (Case 3)
@@ -190,11 +207,23 @@ already been sent.
 
 ### Header Encoding
 
-- All header keys are lowercased and encoded as `latin-1` bytes.
-- All header values are encoded as `latin-1` bytes.
-- Content-type for `text/event-stream` includes `; charset=utf-8` suffix.
-- Explicit headers (`Cache-Control`, `Connection`, `X-Accel-Buffering`) are
-  present with lowercased keys.
+The route tests directly assert:
+
+- Every raw header key and value is a `bytes` object.
+- Expected header keys are present in lowercase byte form
+  (`b"content-type"`, `b"cache-control"`, `b"connection"`, `b"x-accel-buffering"`).
+- Content-type is exactly `b"text/event-stream; charset=utf-8"`.
+- Cache-control is `b"no-cache"`, connection is `b"keep-alive"`,
+  x-accel-buffering is `b"no"`.
+
+**Starlette implementation observation (not directly asserted by route tests):**
+Starlette 0.48.0 encodes header keys and values using `latin-1` during
+`raw_headers` initialization. Since the route header used in these tests
+contain only ASCII characters, the latin-1 encoding is observationally
+equivalent to ASCII/UTF-8 for these values. The route assertions prove
+that headers are `bytes` with the expected values; they do not independently
+prove latin-1 encoding. Non-ASCII header values would be needed to
+distinguish latin-1 from other encodings.
 
 ### Byte Encoding
 
@@ -203,10 +232,20 @@ All body chunks yielded by the body_iterator are strings. Starlette's
 The recorded body messages contain `bytes` objects with the UTF-8 encoded
 SSE frames.
 
+**Directly asserted by route tests:** Both successful tests use a non-ASCII
+text value (`Xin chào — 世界`) containing Vietnamese diacritics and CJK
+characters. The tests assert that the exact UTF-8 byte sequence for this
+value appears in the first content body message, proving that Starlette
+encodes string chunks as UTF-8 bytes rather than escaping non-ASCII
+characters.
+
 ### Body Message Framing
 
 - Each content chunk is sent as a separate `http.response.body` message
-  with `more_body=True`.
+  with `more_body=True`. This is directly asserted by verifying exact body
+  message counts (4 for OpenAI, 3 for Gemini) and positional message indices.
+- The `[DONE]` sentinel (OpenAI only) is a separate body message, not
+  coalesced with the preceding chunk.
 - The final message has `body=b""` and `more_body=False`.
 - No batching or coalescing occurs.
 
@@ -263,17 +302,20 @@ Authentication behavior is not exercised.
 ## Verification
 
 ```bash
-# New test file
+# Test file
 python3 -m unittest tests.compatibility.test_streaming_response_asgi_send_loop -v
-# Result: Ran 6 tests in 0.006s — OK
+# Result: Ran 6 tests — OK
 
 # Existing wrapper tests (Sprint 006J)
 python3 -m unittest tests.compatibility.test_streaming_response_wrappers -v
-# Result: Ran 8 tests in 0.007s — OK
+# Result: Ran 8 tests — OK
 
 # Full compatibility suite
-python3 -m unittest discover -s tests/compatibility -p "test_*.py" -v
-# Result: Ran 299 tests in 0.087s — OK (293 existing + 6 new)
+python3 -m unittest discover -s tests/compatibility -p "test_*.py"
+# Result: Ran 299 tests — OK
+# 299 = Sprint 006B (67) + Sprint 006C (95) + Sprint 005B (8) + Sprint 005D (12)
+#       + Sprint 006E (6) + Sprint 006F (5) + Sprint 006G (18) + Sprint 006H (41)
+#       + Sprint 006J (8) + Sprint 006K (6) + other earlier tests (33)
 
 # Import safety
 python3 -c "import src.api.routes; print('src.api.routes import: OK')"
@@ -286,13 +328,6 @@ git diff -- src
 # No whitespace errors
 git diff --check
 # Result: (no output)
-
-# Final status
-git status --short
-# Result: ?? tests/compatibility/test_streaming_response_asgi_send_loop.py (only intended new file)
-
-git diff --stat
-# Result: (no output — all changes are new untracked files)
 ```
 
 ## Confirmation
@@ -362,3 +397,43 @@ The next sprint should consider:
 
 All tests are offline, deterministic, and consistent with the existing test
 patterns established in Sprint 006E–006J.
+
+---
+
+## Sprint 006K.1 — Strengthened Assertions and Documentation Corrections
+
+Sprint 006K.1 is a narrow correction sprint that strengthens the successful
+OpenAI and Gemini ASGI send-loop tests and corrects documentation claims
+that exceeded what the original assertions directly proved.
+
+### Test Strengthening
+
+- **Case 1 (OpenAI):** Now uses non-ASCII text (`Xin chào — 世界`), asserts
+  exact ASGI message count (6), exact body message count (5), exact content-body
+  byte values, one body message per stream event, `[DONE]` as a separate body
+  message, header bytes type, and non-ASCII UTF-8 byte preservation.
+- **Case 2 (Gemini):** Now uses non-ASCII text, asserts exact ASGI message
+  count (5), exact body message count (4), parses and verifies Gemini event
+  payload order (2 text events + 1 finish-reason event), header bytes type,
+  and non-ASCII UTF-8 byte preservation.
+- **Cases 3–6 (exception tests):** Preserved unchanged.
+
+### Documentation Corrections
+
+- Header Encoding findings now distinguish route-level byte assertions from
+  the observed Starlette latin-1 implementation.
+- Byte Encoding findings now note non-ASCII UTF-8 assertion.
+- Body Message Framing now notes per-chunk separation is directly asserted.
+- Verification section: removed stale `git status --short` and
+  `git diff --stat` output; corrected 299-test explanation.
+- All claims now match the actual test assertions.
+
+### Files Modified by Sprint 006K.1
+
+| File | Change |
+|------|--------|
+| `tests/compatibility/test_streaming_response_asgi_send_loop.py` | Strengthened Cases 1 and 2 with exact message sequence, byte, and UTF-8 assertions |
+| `docs/SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md` | This document — corrected claims and added 006K.1 section |
+| `docs/STREAMING_TRANSPORT_TEST_PLAN.md` | Removed `wait, let me re-check` text and corrected 299-test explanation |
+| `docs/TEST_HARNESS_PLAN.md` | Corrected Sprint 006K description to reflect strengthened assertions |
+| `docs/PROJECT_STATE.md` | Updated Sprint 006K description in history and what-is-not-yet-done |

@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization |
+| **Current sprint** | Sprint 006K.1 — Strengthen ASGI Send-Loop Assertions and Correct Documentation |
 
 ## Purpose
 
@@ -110,13 +110,13 @@ This fork exists to:
 | docs/SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-characterization.md | Created (Sprint 006J) |
 | tests/compatibility/test_streaming_response_wrappers.py | Created (Sprint 006J) — 8 StreamingResponse wrapper and body-iterator characterization tests |
 | docs/SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md | Created (Sprint 006K) |
-| tests/compatibility/test_streaming_response_asgi_send_loop.py | Created (Sprint 006K) — 6 direct ASGI StreamingResponse send-loop characterization tests |
+| tests/compatibility/test_streaming_response_asgi_send_loop.py | Created (Sprint 006K), strengthened (Sprint 006K.1) — 6 direct ASGI StreamingResponse send-loop characterization tests with exact message sequence, byte values, and non-ASCII UTF-8 proof |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior; Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization tests covering response-start timing, header encoding, byte encoding, body-message framing, [DONE] termination bytes, more_body flags, normal completion, and exception propagation; HTTP-level TestClient/HTTPX streaming tests remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior; Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization tests; Sprint 006K.1 strengthened the successful tests with exact ASGI message sequence, byte values, non-ASCII UTF-8 proof, and Gemini event-payload order verification; HTTP-level TestClient/HTTPX streaming tests remain future work
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -146,7 +146,7 @@ This fork exists to:
 | Sprint 006H — Mocked Gemini Streaming Generator Contract | ✅ Completed | 41 mocked Gemini streaming generator tests covering Gemini event framing, text conversion, finish-reason mapping, reasoning content, empty/non-emitting chunks, handler error-payload conversion, exception propagation, argument forwarding, and no-[DONE] termination |
 | Sprint 006I — HTTP Streaming Transport Seam Discovery | ✅ Completed | Discovery-only analysis of streaming transport seams, StreamingResponse behavior, authentication dependencies, exception timing, and recommended test approach |
 | Sprint 006J — StreamingResponse Wrapper and Body-Iterator Characterization | ✅ Completed | 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior |
-| Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop characterization tests covering response-start timing, header encoding, byte encoding, body-message framing, [DONE] termination bytes, more_body flags, normal completion, and exception propagation |
+| Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop characterization tests; Sprint 006K.1 strengthened assertions with exact message sequences, byte values, non-ASCII UTF-8 proof, and Gemini event ordering |
 
 ## Next Steps
 
