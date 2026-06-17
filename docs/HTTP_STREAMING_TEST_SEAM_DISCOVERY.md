@@ -152,10 +152,10 @@ exception behavior with `raise_app_exceptions`.
 **Assessment:** This is a supplementary technique, not a standalone seam. It
 can be combined with A or B to control which `StreamingResponse.__call__`
 code path is exercised. However, the default `spec_version` "2.0" path (task
-group with disconnect listener) is what production Uvicorn also uses (Uvicorn
-sets `spec_version` to "2.1" or "2.2" by default, both below 2.4). Adding a
-spec_version wrapper tests an alternative code path that does not match
-production, reducing the test's fidelity.
+group with disconnect listener) is the path exercised when neither transport
+sets `asgi.spec_version`. Adding a spec_version wrapper tests an alternative
+code path, reducing the test's fidelity relative to the default transport
+behavior.
 
 ### Candidate D — Importing src.main.app
 
@@ -214,8 +214,9 @@ because SSE clients parse the full stream sequentially anyway.
 ## 8. Effective ASGI Spec Behavior
 
 Both `TestClient` and `ASGITransport` result in `spec_version` defaulting to
-`"2.0"` (neither sets `asgi.spec_version` in the scope). This means
-`StreamingResponse.__call__` uses the `else` branch:
+`"2.0"` (neither sets `asgi.spec_version` in the scope). Starlette 0.48.0
+therefore applies its default, and `StreamingResponse.__call__` uses the
+`else` branch:
 
 ```python
 with collapse_excgroups():
@@ -227,9 +228,11 @@ with collapse_excgroups():
         await wrap(partial(self.listen_for_disconnect, receive))
 ```
 
-This matches production Uvicorn behavior (which typically sets `spec_version`
-to "2.1" or "2.2", also below "2.4"). The disconnect-listener task group
-path is exercised, providing realistic concurrency behavior.
+This observation does not prove equivalence with a deployed Uvicorn server's
+streaming, disconnect, cancellation, scheduling, or socket behavior. The
+installed Uvicorn source has not been inspected for this sprint, and no
+claims are made about the `spec_version` value that a production Uvicorn
+supplies.
 
 ---
 
@@ -287,14 +290,16 @@ test infrastructure.
   - `modelVersion` matches the request model
   - No `data: [DONE]` sentinel at end (Gemini contract)
 
-### Test 3 (optional): Dependency override / validation test
+These two tests are sufficient for the first HTTP-level streaming
+implementation slice. The successful-path tests already prove that the
+test-local `dependency_overrides[verify_api_key_flexible]` is wired
+correctly and that the patched `generation_handler` is invoked through the
+full FastAPI routing and Pydantic validation chain.
 
-- **Endpoint:** `POST /v1/chat/completions` without valid auth or with
-  invalid request body
-- **Assertions:**
-  - 401 or 422 status code as appropriate
-  - Error response body has expected shape
-- **Only if this adds new coverage** not already present in existing tests.
+A 401 (authentication failure) test belongs to a separate authentication
+characterization sprint. A 422 (request validation failure) test primarily
+characterizes generic FastAPI/Pydantic validation behavior and is not needed
+for the first HTTP-level streaming implementation slice.
 
 ---
 
@@ -312,3 +317,5 @@ The following are out of scope for the next implementation sprint:
 - Production lifespan behavior
 - `spec_version` manipulation (Candidate C)
 - Async client testing (Candidate B)
+- Authentication characterization (401 path)
+- Request-validation characterization (422 path)

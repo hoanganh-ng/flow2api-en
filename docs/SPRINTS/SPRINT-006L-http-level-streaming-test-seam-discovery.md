@@ -104,10 +104,13 @@ the already-buffered body.
 ### 4.4 ASGI spec_version defaults to "2.0" in both transports
 
 Neither `TestClient` nor `ASGITransport` sets `asgi.spec_version` in the
-scope. The `StreamingResponse.__call__` method defaults to `"2.0"`, which
-triggers the `anyio.create_task_group()` path with the disconnect-listener
-task. This matches production Uvicorn behavior (typically `spec_version`
-"2.1" or "2.2", also below "2.4").
+scope. Starlette 0.48.0 therefore applies its default value of `"2.0"`,
+which enters `StreamingResponse`'s pre-2.4 implementation path: the
+`anyio.create_task_group()` branch with the disconnect-listener task.
+
+This observation does not prove equivalence with a deployed Uvicorn server's
+streaming, disconnect, cancellation, scheduling, or socket behavior. The
+installed Uvicorn source has not been inspected for this sprint.
 
 ### 4.5 Authentication override is clean
 
@@ -182,10 +185,14 @@ class TestHTTPStreaming(unittest.TestCase):
 - Assert: status 200, `content-type: text/event-stream`, Gemini event format
   (`candidates[0].content.role == "model"`, `modelVersion`), no `[DONE]` sentinel
 
-### Test 3 (optional): Dependency override or validation error
-
-- Missing/invalid auth → 401, or invalid request body → 422
-- Only if this adds coverage not already present in existing tests
+These two tests are sufficient for the first HTTP-level streaming
+implementation slice. The successful-path tests already prove that the
+test-local `dependency_overrides[verify_api_key_flexible]` is wired
+correctly and that the patched `generation_handler` is invoked through the
+full FastAPI routing and Pydantic validation chain. A 401 test belongs to
+separate authentication characterization. A 422 test primarily characterizes
+generic FastAPI/Pydantic request validation and is not needed for the first
+HTTP-level streaming implementation slice.
 
 ---
 
@@ -199,8 +206,10 @@ class TestHTTPStreaming(unittest.TestCase):
 - Proxy buffering
 - TCP or transfer-encoding behavior
 - Production lifespan behavior
-- spec_version manipulation
-- Async client testing
+- `spec_version` manipulation (Candidate C)
+- Async client testing (Candidate B)
+- Authentication characterization (401 path)
+- Request-validation characterization (422 path)
 
 ---
 
