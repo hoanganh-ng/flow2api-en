@@ -18,6 +18,15 @@
 > and
 > [SPRINT-006K](SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md)
 > for the sprint context.
+> Sprint 006N discovered the streaming disconnect and cancellation seam,
+> compared six candidate approaches, confirmed determinism of coordinated
+> receive-side design with gated handlers, and recommended direct
+> StreamingResponse invocation with ASGI spec 2.0 for the next
+> implementation sprint. See
+> [STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md](STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md)
+> and
+> [SPRINT-006N](SPRINTS/SPRINT-006N-streaming-disconnect-cancellation-seam-discovery.md)
+> for details.
 
 ---
 
@@ -324,7 +333,8 @@ The following behaviors are explicitly not covered in this test matrix:
 - **TestClient integration:** Full HTTP request/response cycle
 - **Proxy buffering:** nginx, Cloudflare, and other proxy behavior
 - **Backpressure:** Flow control and buffer management
-- **Client disconnect:** Detection and propagation
+- **Client disconnect:** Detection and propagation — Sprint 006N discovered
+  the disconnect seam and recommended an approach for the next sprint
 - **Lifespan behavior:** Startup/shutdown handlers
 - **Production services:** Database, token manager, flow client, etc.
 - **Network calls:** Upstream service interaction
@@ -340,7 +350,10 @@ The following behaviors are deferred to future sprints:
 
 - **Full HTTP transport tests** using TestClient or ASGI transport
 - **Proxy and buffering behavior** with real or mocked proxies
-- **Client disconnect handling** and cancellation
+- **Client disconnect handling** and cancellation — Sprint 006N discovered
+  the seam and recommended direct StreamingResponse invocation with ASGI
+  spec 2.0 and gated handlers. See
+  [STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md](STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md)
 - **Backpressure and flow control** under load
 - **Production integration tests** with lifespan and services
 

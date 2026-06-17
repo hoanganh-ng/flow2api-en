@@ -32,6 +32,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [006K.1](SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md) | Strengthen ASGI Send-Loop Assertions & Correct Documentation | ✅ Completed | Strengthened Cases 1 and 2 with exact message sequences, exact Gemini body bytes, exact final-message dict equality, non-ASCII UTF-8 proof; corrected 299-test explanation and documentation overclaims |
 | [006L](SPRINT-006L-http-level-streaming-test-seam-discovery.md) | HTTP-Level Streaming Test Seam Discovery | ✅ Completed | Discovery-only analysis of HTTP-level streaming test seams comparing TestClient, ASGITransport, ASGI wrapper, src.main.app import, and live Uvicorn; recommended test-local FastAPI + routes.router + TestClient with dependency override and handler patch |
 | [006M](SPRINT-006M-http-level-streaming-route-characterization.md) | HTTP-Level Streaming Route Characterization | ✅ Completed | 2 HTTP-level streaming route characterization tests using test-local FastAPI + routes.router + TestClient with dependency override and handler patch, covering OpenAI and Gemini streaming endpoints with full HTTP contract assertions |
+| [006N](SPRINT-006N-streaming-disconnect-cancellation-seam-discovery.md) | Streaming Disconnect & Cancellation Seam Discovery | ✅ Completed | Discovery-only analysis of Starlette disconnect paths, six candidate approaches, coordinated receive-side determinism, cancellation-driven unwinding; recommended one seam with exactly one test |
 
 ## Sprint Conventions
 

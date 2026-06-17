@@ -1,6 +1,6 @@
 # Test Harness Plan
 
-> **Sprint 006M — HTTP-Level Streaming Route Characterization**
+> **Sprint 006N — Streaming Disconnect and Cancellation Seam Discovery**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006M added 2 HTTP-level streaming route characterization tests.
@@ -85,7 +85,15 @@
 > [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md),
 > [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md),
 > [SPRINT-006L](SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md), and
-> [SPRINT-006M](SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md) for details.
+> [SPRINT-006M](SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md),
+> and
+> [SPRINT-006N](SPRINTS/SPRINT-006N-streaming-disconnect-cancellation-seam-discovery.md) for details.
+> Sprint 006N discovered the streaming disconnect and cancellation seam,
+> compared six candidate approaches (A–F), confirmed determinism of a
+> coordinated receive-side design with gated handlers, and recommended
+> direct StreamingResponse invocation with ASGI spec 2.0 for the next
+> implementation sprint. Exactly one disconnect test is recommended
+> (OpenAI route; Gemini shares the same StreamingResponse cancellation path).
 
 ---
 
