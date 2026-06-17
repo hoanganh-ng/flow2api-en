@@ -8,7 +8,7 @@
 | **Upstream** | [TheSmallHanCat/flow2api](https://github.com/TheSmallHanCat/flow2api) |
 | **Upstream license** | MIT (Copyright © 2025 TheSmallHanCat) |
 | **Fork status** | Unofficial — not endorsed by upstream author |
-| **Current sprint** | Sprint 006L — HTTP-Level Streaming Test Seam Discovery |
+| **Current sprint** | Sprint 006M — HTTP-Level Streaming Route Characterization |
 
 ## Purpose
 
@@ -114,12 +114,14 @@ This fork exists to:
 | docs/SPRINTS/SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md | Created (Sprint 006K.1) |
 | docs/HTTP_STREAMING_TEST_SEAM_DISCOVERY.md | Created (Sprint 006L) — HTTP-level streaming test seam analysis |
 | docs/SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md | Created (Sprint 006L) |
+| tests/compatibility/test_http_streaming_routes.py | Created (Sprint 006M) — 2 HTTP-level streaming route characterization tests |
+| docs/SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md | Created (Sprint 006M) |
 
 ## What Is Not Yet Done
 
 - Source-level module documentation (inline English comments)
 - API contract specification with full request/response schemas (Sprint 002 inventory is path-level only)
-- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior; Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization tests; Sprint 006K.1 strengthened the successful tests with exact ASGI message sequence, byte values, non-ASCII UTF-8 proof, and Gemini event-payload order verification; Sprint 006L discovered the HTTP-level streaming test seam and recommended TestClient with routes.router for the next implementation sprint; HTTP-level TestClient/HTTPX streaming tests remain future work
+- Executable test harness / fixture loader / assertion utilities — Sprint 005B added first offline static shape assertions; Sprint 005C added additional fixture files; Sprint 005D added static shape assertions for Sprint 005C fixtures; Sprint 006A discovered safe route-level test seams; Sprint 006B added 67 conversion-layer unit tests importing `src.api.routes`; Sprint 006C added 95 model catalog and read-only route characterization tests; Sprint 006D documented generation route dependency maps and mocking plan; Sprint 006E added 6 mocked non-streaming generation route tests with fake handler; Sprint 006F added 5 mocked image-result route tests; Sprint 006G added 18 mocked OpenAI streaming generator contract tests (including handler-exception propagation); Sprint 006H added 41 mocked Gemini streaming generator contract tests (including handler error-payload conversion and exception propagation); Sprint 006I discovered streaming transport seams and proposed a test matrix; Sprint 006J added 8 StreamingResponse wrapper and body-iterator characterization tests covering deferred execution, SSE framing, [DONE] termination, handler-unavailable timing, and partial-output exception behavior; Sprint 006K added 6 direct ASGI StreamingResponse send-loop characterization tests; Sprint 006K.1 strengthened the successful tests with exact ASGI message sequence, byte values, non-ASCII UTF-8 proof, and Gemini event-payload order verification; Sprint 006L discovered the HTTP-level streaming test seam and recommended TestClient with routes.router for the next implementation sprint; Sprint 006M added 2 HTTP-level streaming route characterization tests using test-local FastAPI + routes.router + TestClient with dependency override and handler patch
 - Rewrite scaffolding
 - Runtime strings, UI text, log messages, error strings — not yet translated; classified in [TRANSLATION_ALLOWLIST.md](TRANSLATION_ALLOWLIST.md)
 
@@ -152,6 +154,7 @@ This fork exists to:
 | Sprint 006K — Direct ASGI StreamingResponse Send-Loop Characterization | ✅ Completed | 6 direct ASGI StreamingResponse send-loop characterization tests covering response-start timing, header encoding, byte encoding, body-message framing, [DONE] termination bytes, more_body flags, normal completion, and exception propagation |
 | Sprint 006K.1 — Strengthen ASGI Send-Loop Assertions and Correct Documentation | ✅ Completed | Strengthened Cases 1 and 2 with exact ASGI message sequences, exact Gemini body byte assertions, exact final-message dict equality, non-ASCII UTF-8 proof; corrected 299-test explanation and documentation overclaims |
 | Sprint 006L — HTTP-Level Streaming Test Seam Discovery | ✅ Completed | Discovery-only analysis of HTTP-level streaming test seams comparing TestClient, ASGITransport, ASGI wrapper, src.main.app import, and live Uvicorn; recommended test-local FastAPI + routes.router + TestClient with dependency override and handler patch |
+| Sprint 006M — HTTP-Level Streaming Route Characterization | ✅ Completed | 2 HTTP-level streaming route characterization tests using test-local FastAPI + routes.router + TestClient with dependency override and handler patch, covering OpenAI and Gemini streaming endpoints with full HTTP contract assertions |
 
 ## Next Steps
 
@@ -181,6 +184,7 @@ See [SPRINT-006J](SPRINTS/SPRINT-006J-streaming-response-wrapper-body-iterator-c
 See [SPRINT-006K](SPRINTS/SPRINT-006K-direct-asgi-streaming-response-send-loop-characterization.md) for the completed direct ASGI StreamingResponse send-loop characterization sprint.
 See [SPRINT-006K.1](SPRINTS/SPRINT-006K.1-strengthen-asgi-send-loop-assertions.md) for the completed ASGI send-loop assertion strengthening and documentation correction sprint.
 See [SPRINT-006L](SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md) for the completed HTTP-level streaming test seam discovery sprint.
+See [SPRINT-006M](SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md) for the completed HTTP-level streaming route characterization sprint.
 See [HTTP_STREAMING_TEST_SEAM_DISCOVERY.md](HTTP_STREAMING_TEST_SEAM_DISCOVERY.md) for the HTTP-level streaming test seam analysis.
 See [STREAMING_TRANSPORT_SEAM_DISCOVERY.md](STREAMING_TRANSPORT_SEAM_DISCOVERY.md) for the streaming transport seam analysis.
 See [STREAMING_TRANSPORT_TEST_PLAN.md](STREAMING_TRANSPORT_TEST_PLAN.md) for the proposed streaming transport test matrix.

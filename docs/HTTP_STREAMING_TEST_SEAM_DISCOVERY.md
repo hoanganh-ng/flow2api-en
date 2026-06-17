@@ -1,10 +1,16 @@
 # HTTP-Level Streaming Test Seam Discovery
 
 > **Sprint 006L — HTTP-Level Streaming Test Seam Discovery**
+> **Sprint 006M — HTTP-Level Streaming Route Characterization (Implementation)**
 > This document analyzes candidate seams for exercising streaming generation
 > routes through a full HTTP request path (FastAPI routing, Pydantic validation,
 > dependency injection, and an in-process HTTP client) while remaining fully
 > offline and deterministic.
+>
+> Sprint 006M implemented the recommended seam (Candidate A) with 2 HTTP-level
+> streaming route characterization tests. See
+> [SPRINT-006M](SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md)
+> and `tests/compatibility/test_http_streaming_routes.py` for details.
 
 ---
 

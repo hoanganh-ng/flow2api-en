@@ -1,8 +1,9 @@
 # Test Harness Plan
 
-> **Sprint 006I — HTTP Streaming Transport Seam Discovery**
+> **Sprint 006M — HTTP-Level Streaming Route Characterization**
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
+> Sprint 006M added 2 HTTP-level streaming route characterization tests.
 > Sprint 006A discovered safe route-level test seams and documented unsafe approaches.
 > Sprint 006B added 67 unit tests for 7 pure conversion helpers in `src.api.routes`,
 > confirming the import is side-effect-free.
@@ -60,6 +61,15 @@
 > for complete-response HTTP contract assertions. Both TestClient and
 > ASGITransport fully buffer the response body before delivery; incremental
 > client-side streaming is not possible with either transport.
+> Sprint 006M added 2 HTTP-level streaming route characterization tests
+> using the recommended test-local FastAPI + `routes.router` + TestClient
+> seam. Tests exercise POST /v1/chat/completions (OpenAI) and
+> POST /v1beta/models/{model}:streamGenerateContent (Gemini) through the
+> full HTTP request path with dependency override and handler patch.
+> Assertions cover status codes, SSE headers, fully buffered SSE body
+> content, event ordering, [DONE] termination (OpenAI), no-[DONE] (Gemini),
+> and handler call arguments. Non-ASCII content (`Xin chào — 世界`) is
+> included in both tests.
 > See [ROUTE_TEST_SEAM_DISCOVERY.md](ROUTE_TEST_SEAM_DISCOVERY.md),
 > [GENERATION_ROUTE_TEST_PLAN.md](GENERATION_ROUTE_TEST_PLAN.md),
 > [GENERATION_ROUTE_DEPENDENCY_MAP.md](GENERATION_ROUTE_DEPENDENCY_MAP.md),
@@ -73,9 +83,9 @@
 > [SPRINT-006F](SPRINTS/SPRINT-006F-mocked-openai-image-result-route-contract.md),
 > [SPRINT-006G](SPRINTS/SPRINT-006G-mocked-openai-streaming-generator-contract.md),
 > [SPRINT-006H](SPRINTS/SPRINT-006H-mocked-gemini-streaming-generator-contract.md),
-> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md), and
-> [SPRINT-006L](SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md) for details.
-> HTTP-level TestClient/HTTPX streaming tests are ready for implementation.
+> [SPRINT-006I](SPRINTS/SPRINT-006I-http-streaming-transport-seam-discovery.md),
+> [SPRINT-006L](SPRINTS/SPRINT-006L-http-level-streaming-test-seam-discovery.md), and
+> [SPRINT-006M](SPRINTS/SPRINT-006M-http-level-streaming-route-characterization.md) for details.
 
 ---
 
