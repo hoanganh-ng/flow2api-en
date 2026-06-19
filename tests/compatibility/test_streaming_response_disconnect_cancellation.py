@@ -133,12 +133,10 @@ class GatedFakeStreamingHandler:
     def __init__(
         self,
         first_chunk: str,
-        first_body_sent: asyncio.Event,
         handler_waiting_for_next: asyncio.Event,
         handler_continue: asyncio.Event,
     ):
         self._first_chunk = first_chunk
-        self._first_body_sent = first_body_sent
         self._handler_waiting_for_next = handler_waiting_for_next
         self._handler_continue = handler_continue
         self.calls: list[dict] = []
@@ -237,7 +235,6 @@ class TestOpenAIReceiveSideDisconnectAfterFirstBody(
         # -- Create gated fake handler -------------------------------------
         fake_handler = GatedFakeStreamingHandler(
             first_chunk=first_chunk_json,
-            first_body_sent=first_body_sent,
             handler_waiting_for_next=handler_waiting_for_next,
             handler_continue=handler_continue,
         )
@@ -363,8 +360,12 @@ class TestOpenAIReceiveSideDisconnectAfterFirstBody(
         self.assertIs(call["stream"], True)
         self.assertIsNone(call["images"])
         # base_url_override is derived from _get_request_base_url;
-        # it should be a string (not None) for our synthetic request
-        self.assertIsNotNone(call["base_url_override"])
+        # the synthetic request with host header "test.local" yields
+        # exactly "http://test.local"
+        self.assertEqual(
+            call["base_url_override"],
+            "http://test.local",
+        )
         self.assertIsNone(call["video_media_id"])
 
 

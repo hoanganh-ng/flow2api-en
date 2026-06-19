@@ -93,10 +93,11 @@ Three `asyncio.Event` instances coordinate the test deterministically:
 
 1. The fake handler yields one deterministic OpenAI JSON chunk
    containing `Xin chào — 世界`.
-2. `_iterate_openai_stream` processes the chunk and yields SSE-framed
-   bytes.
-3. `StreamingResponse.stream_response` sends `http.response.start`
-   (headers), then sends the SSE content body via `send()`.
+2. `_iterate_openai_stream` parses the handler result, re-serializes
+   it with `ensure_ascii=False`, and yields an SSE-framed Python string.
+3. `StreamingResponse.stream_response` encodes that string using
+   UTF-8 before passing the `http.response.body` message to `send()`.
+   The recorded ASGI body is therefore bytes.
 4. `send()` records the message and signals `first_body_sent`.
 5. `stream_response` asks the body iterator for another value.
 6. The body iterator asks the handler for its next yield.
@@ -168,7 +169,7 @@ proves the route re-serializes with `ensure_ascii=False`.
 | Handler call `prompt` | Expected prompt |
 | Handler call `stream` | `True` |
 | Handler call `images` | `None` |
-| Handler call `base_url_override` | Not `None` (derived from request) |
+| Handler call `base_url_override` | `"http://test.local"` (derived from request) |
 | Handler call `video_media_id` | `None` |
 
 ---

@@ -717,8 +717,11 @@ new information about disconnect behavior.
 - Exactly one content body sent (the first SSE-framed chunk).
 - `more_body=False` NOT sent (no final empty body message).
 - No `[DONE]` in any sent message.
-- Route generator finalized (proved via try/finally marker).
-- Handler generator finalized (proved via try/finally marker).
+- Gated fake handler directly records `asyncio.CancelledError`.
+- Fake handler's test-only `finally` marker is directly asserted.
+- Route body iterator proved terminated behaviorally (post-call `__anext__()` raises `StopAsyncIteration`).
+- Production `_iterate_openai_stream` generator has no try/finally cleanup block.
+- No production resource cleanup is claimed.
 - `listen_for_disconnect` processed the `http.disconnect` message.
 - Handler called exactly once.
 - `__call__` returns normally (cancel scope suppresses cancellation).
