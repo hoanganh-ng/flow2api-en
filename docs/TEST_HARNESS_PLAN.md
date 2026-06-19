@@ -1,6 +1,13 @@
 # Test Harness Plan
 
-> **Sprint 006N — Streaming Disconnect and Cancellation Seam Discovery**
+> **Sprint 006O — Receive-Side Streaming Disconnect Characterization**
+> Sprint 006O added 1 receive-side streaming disconnect characterization
+> test proving exactly one body sent before disconnect, CancelledError
+> observed in handler, finally block ran, route iterator terminated,
+> no [DONE] or more_body=False emitted.
+> See
+> [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
+> for details.
 > Sprint 005D added offline static shape assertions for Sprint 005C fixtures
 > (FX-ON-002, FX-GN-001, FX-OS-002).
 > Sprint 006M added 2 HTTP-level streaming route characterization tests.

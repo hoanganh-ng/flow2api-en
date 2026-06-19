@@ -1,10 +1,16 @@
 # Streaming Disconnect and Cancellation Seam Discovery
 
-> **Sprint 006N — Streaming Disconnect and Cancellation Seam Discovery**
+> **Sprint 006O — Receive-Side Streaming Disconnect Characterization**
 > This document maps the Starlette disconnect and cancellation paths,
 > compares six candidate test approaches, analyzes determinism of a
 > coordinated receive-side design, and recommends exactly one seam for
 > the next implementation sprint.
+>
+> **Sprint 006O implemented the recommended test.** See
+> [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
+> and
+> [test_streaming_response_disconnect_cancellation.py](../tests/compatibility/test_streaming_response_disconnect_cancellation.py)
+> for the implementation.
 
 ---
 

@@ -1,6 +1,6 @@
 # Streaming Transport Test Plan
 
-> **Sprint 006K.1 — Strengthened ASGI Send-Loop Assertions**
+> **Sprint 006O — Receive-Side Streaming Disconnect Characterization**
 > Sprint 006K implemented 6 direct ASGI send-loop tests using synthetic
 > ASGI scope/receive/send callables, characterizing response-start timing,
 > header encoding, byte encoding, body-message framing, [DONE] termination
@@ -27,6 +27,15 @@
 > and
 > [SPRINT-006N](SPRINTS/SPRINT-006N-streaming-disconnect-cancellation-seam-discovery.md)
 > for details.
+> Sprint 006O implemented the recommended disconnect test: 1 OpenAI
+> receive-side disconnect characterization test proving exactly one body
+> sent before disconnect, CancelledError observed in handler, finally
+> block ran, route iterator terminated, no [DONE] or more_body=False
+> emitted. See
+> [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
+> and
+> [test_streaming_response_disconnect_cancellation.py](../tests/compatibility/test_streaming_response_disconnect_cancellation.py)
+> for the implementation.
 
 ---
 
@@ -334,7 +343,10 @@ The following behaviors are explicitly not covered in this test matrix:
 - **Proxy buffering:** nginx, Cloudflare, and other proxy behavior
 - **Backpressure:** Flow control and buffer management
 - **Client disconnect:** Detection and propagation — Sprint 006N discovered
-  the disconnect seam and recommended an approach for the next sprint
+  the disconnect seam and recommended an approach for the next sprint.
+  Sprint 006O implemented 1 receive-side disconnect characterization test.
+  See
+  [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
 - **Lifespan behavior:** Startup/shutdown handlers
 - **Production services:** Database, token manager, flow client, etc.
 - **Network calls:** Upstream service interaction
@@ -352,8 +364,11 @@ The following behaviors are deferred to future sprints:
 - **Proxy and buffering behavior** with real or mocked proxies
 - **Client disconnect handling** and cancellation — Sprint 006N discovered
   the seam and recommended direct StreamingResponse invocation with ASGI
-  spec 2.0 and gated handlers. See
+  spec 2.0 and gated handlers. Sprint 006O implemented the recommended
+  test. See
   [STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md](STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md)
+  and
+  [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
 - **Backpressure and flow control** under load
 - **Production integration tests** with lifespan and services
 
