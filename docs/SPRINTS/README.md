@@ -34,6 +34,7 @@ This directory contains sprint planning and retrospective documents for the flow
 | [006M](SPRINT-006M-http-level-streaming-route-characterization.md) | HTTP-Level Streaming Route Characterization | ✅ Completed | 2 HTTP-level streaming route characterization tests using test-local FastAPI + routes.router + TestClient with dependency override and handler patch, covering OpenAI and Gemini streaming endpoints with full HTTP contract assertions |
 | [006N](SPRINT-006N-streaming-disconnect-cancellation-seam-discovery.md) | Streaming Disconnect & Cancellation Seam Discovery | ✅ Completed | Discovery-only analysis of Starlette disconnect paths, six candidate approaches, coordinated receive-side determinism, cancellation-driven unwinding; recommended one seam with exactly one test |
 | [006O](SPRINT-006O-receive-side-streaming-disconnect-characterization.md) | Receive-Side Streaming Disconnect Characterization | ✅ Completed | 1 receive-side streaming disconnect characterization test proving cancellation-driven stream termination for Starlette 0.48.0 pre-2.4 path |
+| [006P](SPRINT-006P-asgi-send-await-backpressure-seam-discovery.md) | ASGI Send-Await Backpressure Seam Discovery | ✅ Completed | Discovery-only analysis of ASGI send-await flow control, six candidate approaches, synchronized probe confirming blocked send() prevents handler advancement; recommended one seam with exactly one test |
 
 ## Sprint Conventions
 

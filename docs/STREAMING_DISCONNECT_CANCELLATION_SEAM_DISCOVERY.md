@@ -739,7 +739,11 @@ new information about disconnect behavior.
 The following are explicitly out of scope for the next implementation sprint:
 
 - **Backpressure and flow control:** Separate concern, deferred per sprint
-  mandate.
+  mandate. See
+  [STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md](STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md)
+  and
+  [SPRINT-006P](SPRINTS/SPRINT-006P-asgi-send-await-backpressure-seam-discovery.md)
+  for the ASGI send-await backpressure seam discovery.
 - **Proxy buffering:** nginx, Cloudflare, and other proxy behavior.
 - **TCP behavior:** Socket-level disconnect, half-close, RST packets.
 - **Live server behavior:** Uvicorn, Gunicorn, or other ASGI server

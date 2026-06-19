@@ -1,6 +1,15 @@
 # Test Harness Plan
 
-> **Sprint 006O — Receive-Side Streaming Disconnect Characterization**
+> **Sprint 006P — ASGI Send-Await Backpressure Seam Discovery**
+> Sprint 006P discovered the ASGI send-await backpressure seam,
+> compared six candidate approaches, confirmed via disposable probe
+> that blocked send() deterministically prevents handler advancement,
+> and recommended direct StreamingResponse invocation with ASGI
+> spec_version "2.4" for the next implementation sprint. See
+> [STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md](STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md)
+> and
+> [SPRINT-006P](SPRINTS/SPRINT-006P-asgi-send-await-backpressure-seam-discovery.md)
+> for details.
 > Sprint 006O added 1 receive-side streaming disconnect characterization
 > test proving exactly one body sent before disconnect, CancelledError
 > observed in handler, finally block ran, route iterator terminated,

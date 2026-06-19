@@ -1,6 +1,15 @@
 # Streaming Transport Test Plan
 
-> **Sprint 006O — Receive-Side Streaming Disconnect Characterization**
+> **Sprint 006P — ASGI Send-Await Backpressure Seam Discovery**
+> Sprint 006P discovered the ASGI send-await backpressure seam,
+> compared six candidate approaches, confirmed via disposable probe
+> that blocked send() deterministically prevents handler advancement,
+> and recommended direct StreamingResponse invocation with ASGI
+> spec_version "2.4" for the next implementation sprint. See
+> [STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md](STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md)
+> and
+> [SPRINT-006P](SPRINTS/SPRINT-006P-asgi-send-await-backpressure-seam-discovery.md)
+> for details.
 > Sprint 006K implemented 6 direct ASGI send-loop tests using synthetic
 > ASGI scope/receive/send callables, characterizing response-start timing,
 > header encoding, byte encoding, body-message framing, [DONE] termination
@@ -369,7 +378,13 @@ The following behaviors are deferred to future sprints:
   [STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md](STREAMING_DISCONNECT_CANCELLATION_SEAM_DISCOVERY.md)
   and
   [SPRINT-006O](SPRINTS/SPRINT-006O-receive-side-streaming-disconnect-characterization.md)
-- **Backpressure and flow control** under load
+- **Backpressure and flow control** — Sprint 006P discovered the ASGI
+  send-await backpressure seam and recommended direct StreamingResponse
+  invocation with ASGI spec_version "2.4" for the next implementation
+  sprint. See
+  [STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md](STREAMING_BACKPRESSURE_SEAM_DISCOVERY.md)
+  and
+  [SPRINT-006P](SPRINTS/SPRINT-006P-asgi-send-await-backpressure-seam-discovery.md)
 - **Production integration tests** with lifespan and services
 
 ---
