@@ -21,7 +21,7 @@ from .file_cache import FileCache
 
 # Model configuration
 MODEL_CONFIG = {
-    # 图片生成 - GEM_PIX_2 (Gemini 3.0 Pro)
+    # Image generation - GEM_PIX_2 (Gemini 3.0 Pro)
     "gemini-3.0-pro-image-landscape": {
         "type": "image",
         "model_name": "GEM_PIX_2",
@@ -48,7 +48,7 @@ MODEL_CONFIG = {
         "aspect_ratio": "IMAGE_ASPECT_RATIO_PORTRAIT_THREE_FOUR"
     },
 
-    # 图片生成 - GEM_PIX_2 (Gemini 3.0 Pro) 2K 放大版
+    # Image generation - GEM_PIX_2 (Gemini 3.0 Pro) 2K upscaled version
     "gemini-3.0-pro-image-landscape-2k": {
         "type": "image",
         "model_name": "GEM_PIX_2",
@@ -80,7 +80,7 @@ MODEL_CONFIG = {
         "upsample": "UPSAMPLE_IMAGE_RESOLUTION_2K"
     },
 
-    # 图片生成 - GEM_PIX_2 (Gemini 3.0 Pro) 4K 放大版
+    # Image generation - GEM_PIX_2 (Gemini 3.0 Pro) 4K upscaled version
     "gemini-3.0-pro-image-landscape-4k": {
         "type": "image",
         "model_name": "GEM_PIX_2",
@@ -112,7 +112,7 @@ MODEL_CONFIG = {
         "upsample": "UPSAMPLE_IMAGE_RESOLUTION_4K"
     },
 
-    # 图片生成 - IMAGEN_3_5 (Imagen 4.0)
+    # Image generation - IMAGEN_3_5 (Imagen 4.0)
     "imagen-4.0-generate-preview-landscape": {
         "type": "image",
         "model_name": "IMAGEN_3_5",
@@ -124,7 +124,7 @@ MODEL_CONFIG = {
         "aspect_ratio": "IMAGE_ASPECT_RATIO_PORTRAIT"
     },
 
-    # 图片生成 - NARWHAL (新版)
+    # Image generation - NARWHAL (new version)
     "gemini-3.1-flash-image-landscape": {
         "type": "image",
         "model_name": "NARWHAL",
@@ -211,11 +211,11 @@ MODEL_CONFIG = {
         "upsample": "UPSAMPLE_IMAGE_RESOLUTION_4K"
     },
 
-    # ========== 文生视频 (T2V - Text to Video) ==========
-    # 不支持上传图片，只使用文本提示词生成
+    # ========== Text-to-Video (T2V - Text to Video) ==========
+    # Does not support image upload, only uses text prompts to generate
 
-    # veo_3_1_t2v_fast_portrait (竖屏)
-    # 上游模型名: veo_3_1_t2v_fast_portrait
+    # veo_3_1_t2v_fast_portrait (portrait)
+    # Upstream model name: veo_3_1_t2v_fast_portrait
     "veo_3_1_t2v_fast_portrait": {
         "type": "video",
         "video_type": "t2v",
@@ -224,8 +224,8 @@ MODEL_CONFIG = {
         "supports_images": False,
         "use_v2_model_config": True,
     },
-    # veo_3_1_t2v_fast_landscape (横屏)
-    # 上游模型名: veo_3_1_t2v_fast
+    # veo_3_1_t2v_fast_landscape (landscape)
+    # Upstream model name: veo_3_1_t2v_fast
     "veo_3_1_t2v_fast_landscape": {
         "type": "video",
         "video_type": "t2v",
@@ -235,7 +235,7 @@ MODEL_CONFIG = {
         "use_v2_model_config": True,
     },
 
-    # veo_3_1_t2v_fast_ultra (横竖屏)
+    # veo_3_1_t2v_fast_ultra (landscape and portrait)
     "veo_3_1_t2v_fast_portrait_ultra": {
         "type": "video",
         "video_type": "t2v",
@@ -253,7 +253,7 @@ MODEL_CONFIG = {
         "use_v2_model_config": True,
     },
 
-    # veo_3_1_t2v_fast_ultra_relaxed (横竖屏)
+    # veo_3_1_t2v_fast_ultra_relaxed (landscape and portrait)
     "veo_3_1_t2v_fast_portrait_ultra_relaxed": {
         "type": "video",
         "video_type": "t2v",
@@ -271,7 +271,7 @@ MODEL_CONFIG = {
         "use_v2_model_config": True,
     },
 
-    # veo_3_1_t2v (横竖屏)
+    # veo_3_1_t2v (landscape and portrait)
     "veo_3_1_t2v_portrait": {
         "type": "video",
         "video_type": "t2v",
@@ -288,7 +288,7 @@ MODEL_CONFIG = {
         "supports_images": False,
         "use_v2_model_config": True,
     },
-    # veo_3_1_t2v_lite (横竖屏，来自 labs.google.har)
+    # veo_3_1_t2v_lite (landscape and portrait, from labs.google.har)
     "veo_3_1_t2v_lite_portrait": {
         "type": "video",
         "video_type": "t2v",
@@ -308,10 +308,10 @@ MODEL_CONFIG = {
         "allow_tier_upgrade": False
     },
 
-    # ========== 首尾帧模型 (I2V - Image to Video) ==========
-    # 支持1-2张图片：1张作为首帧，2张作为首尾帧
+    # ========== First/Last Frame Model (I2V - Image to Video) ==========
+    # Supports 1-2 images: 1 as first frame, 2 as first and last frames
 
-    # veo_3_1_i2v_s_fast_fl (需要新增横竖屏)
+    # veo_3_1_i2v_s_fast_fl (needs to add landscape and portrait variants)
     "veo_3_1_i2v_s_fast_portrait_fl": {
         "type": "video",
         "video_type": "i2v",
@@ -331,7 +331,7 @@ MODEL_CONFIG = {
         "max_images": 2
     },
 
-    # veo_3_1_i2v_s_fast_ultra (横竖屏)
+    # veo_3_1_i2v_s_fast_ultra (landscape and portrait)
     "veo_3_1_i2v_s_fast_portrait_ultra_fl": {
         "type": "video",
         "video_type": "i2v",
@@ -351,7 +351,7 @@ MODEL_CONFIG = {
         "max_images": 2
     },
 
-    # veo_3_1_i2v_s_fast_ultra_relaxed (需要新增横竖屏)
+    # veo_3_1_i2v_s_fast_ultra_relaxed (needs to add landscape and portrait variants)
     "veo_3_1_i2v_s_fast_portrait_ultra_relaxed": {
         "type": "video",
         "video_type": "i2v",
@@ -371,7 +371,7 @@ MODEL_CONFIG = {
         "max_images": 2
     },
 
-    # veo_3_1_i2v_s (需要新增横竖屏)
+    # veo_3_1_i2v_s (needs to add landscape and portrait variants)
     "veo_3_1_i2v_s_portrait": {
         "type": "video",
         "video_type": "i2v",
@@ -390,7 +390,7 @@ MODEL_CONFIG = {
         "min_images": 1,
         "max_images": 2
     },
-    # veo_3_1_i2v_lite (横竖屏，仅首帧，来自 labs.google.har)
+    # veo_3_1_i2v_lite (landscape and portrait, first frame only, from labs.google.har)
     "veo_3_1_i2v_lite_portrait": {
         "type": "video",
         "video_type": "i2v",
@@ -413,7 +413,7 @@ MODEL_CONFIG = {
         "use_v2_model_config": True,
         "allow_tier_upgrade": False
     },
-    # veo_3_1_interpolation_lite (横竖屏，首尾帧，来自 labs.google.har)
+    # veo_3_1_interpolation_lite (landscape and portrait, first/last frame, from labs.google.har)
     "veo_3_1_interpolation_lite_portrait": {
         "type": "video",
         "video_type": "i2v",
@@ -437,10 +437,10 @@ MODEL_CONFIG = {
         "allow_tier_upgrade": False
     },
 
-    # ========== 多图生成 (R2V - Reference Images to Video) ==========
-    # 当前上游协议最多支持 3 张参考图
+    # ========== Multi-Image Generation (R2V - Reference Images to Video) ==========
+    # The current upstream protocol supports up to 3 reference images
 
-    # veo_3_1_r2v_fast (横竖屏)
+    # veo_3_1_r2v_fast (landscape and portrait)
     "veo_3_1_r2v_fast_portrait": {
         "type": "video",
         "video_type": "r2v",
@@ -460,7 +460,7 @@ MODEL_CONFIG = {
         "max_images": 3
     },
 
-    # veo_3_1_r2v_fast_ultra (横竖屏)
+    # veo_3_1_r2v_fast_ultra (landscape and portrait)
     "veo_3_1_r2v_fast_portrait_ultra": {
         "type": "video",
         "video_type": "r2v",
@@ -480,7 +480,7 @@ MODEL_CONFIG = {
         "max_images": 3
     },
 
-    # veo_3_1_r2v_fast_ultra_relaxed (横竖屏)
+    # veo_3_1_r2v_fast_ultra_relaxed (landscape and portrait)
     "veo_3_1_r2v_fast_portrait_ultra_relaxed": {
         "type": "video",
         "video_type": "r2v",
@@ -500,10 +500,10 @@ MODEL_CONFIG = {
         "max_images": 3
     },
 
-    # ========== 视频放大 (Video Upsampler) ==========
-    # 仅 3.1 支持，需要先生成视频后再放大，可能需要 30 分钟
+    # ========== Video Upsampler ==========
+    # Only 3.1 supports this; requires generating the video first then upscaling, may take up to 30 minutes
 
-    # T2V 4K 放大版
+    # T2V 4K upscaled version
     "veo_3_1_t2v_fast_portrait_4k": {
         "type": "video",
         "video_type": "t2v",
@@ -537,7 +537,7 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_4K", "model_key": "veo_3_1_upsampler_4k"}
     },
 
-    # T2V 1080P 放大版
+    # T2V 1080P upscaled version
     "veo_3_1_t2v_fast_portrait_1080p": {
         "type": "video",
         "video_type": "t2v",
@@ -571,7 +571,7 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_1080P", "model_key": "veo_3_1_upsampler_1080p"}
     },
 
-    # I2V 4K 放大版
+    # I2V 4K upscaled version
     "veo_3_1_i2v_s_fast_portrait_ultra_fl_4k": {
         "type": "video",
         "video_type": "i2v",
@@ -593,7 +593,7 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_4K", "model_key": "veo_3_1_upsampler_4k"}
     },
 
-    # I2V 1080P 放大版
+    # I2V 1080P upscaled version
     "veo_3_1_i2v_s_fast_portrait_ultra_fl_1080p": {
         "type": "video",
         "video_type": "i2v",
@@ -615,7 +615,7 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_1080P", "model_key": "veo_3_1_upsampler_1080p"}
     },
 
-    # R2V 4K 放大版
+    # R2V 4K upscaled version
     "veo_3_1_r2v_fast_portrait_ultra_4k": {
         "type": "video",
         "video_type": "r2v",
@@ -637,7 +637,7 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_4K", "model_key": "veo_3_1_upsampler_4k"}
     },
 
-    # R2V 1080P 放大版
+    # R2V 1080P upscaled version
     "veo_3_1_r2v_fast_portrait_ultra_1080p": {
         "type": "video",
         "video_type": "r2v",
@@ -659,11 +659,11 @@ MODEL_CONFIG = {
         "upsample": {"resolution": "VIDEO_RESOLUTION_1080P", "model_key": "veo_3_1_upsampler_1080p"}
     },
 
-    # ========== 视频续写 (Extend - Video Continuation) ==========
-    # 基于已生成的视频续写7秒，最多续写20次（最长148秒）
-    # 需要提供源视频的 mediaGenerationId
+    # ========== Video Continuation (Extend) ==========
+    # Extend an existing generated video by 7 seconds, up to 20 times (max 148 seconds)
+    # Requires the source video's mediaGenerationId
 
-    # VEO 3.1 Extend (横竖屏)
+    # VEO 3.1 Extend (landscape and portrait)
     "veo_3_1_extend_portrait": {
         "type": "video",
         "video_type": "extend",
@@ -681,9 +681,9 @@ MODEL_CONFIG = {
         "requires_video_id": True,
     },
     # ========== Gemini Omni Flash ==========
-    # 2026-05-26 实测上游真实请求：
-    # - 纯文本 -> video:batchAsyncGenerateVideoText, videoModelKey=abra_t2v_8s
-    # - 参考图 -> video:batchAsyncGenerateVideoReferenceImages, videoModelKey=abra_r2v_8s
+    # 2026-05-26 verified upstream real request:
+    # - Plain text -> video:batchAsyncGenerateVideoText, videoModelKey=abra_t2v_8s
+    # - Reference images -> video:batchAsyncGenerateVideoReferenceImages, videoModelKey=abra_r2v_8s
     "omni": {
         "type": "video",
         "video_type": "omni",
@@ -1068,7 +1068,7 @@ def _resolve_tier_two_model_key(model_key: str) -> str:
 
 
 class GenerationHandler:
-    """统一生成处理器"""
+    """Unified generation handler"""
 
     def __init__(self, flow_client, token_manager, load_balancer, db, concurrency_manager, proxy_manager):
         cache_dir = Path(__file__).resolve().parents[2] / "tmp"
@@ -1085,11 +1085,11 @@ class GenerationHandler:
         )
 
     def _create_generation_result(self) -> Dict[str, Any]:
-        """????????????????"""
+        """Initialize generation result state"""
         return dict(success=False, error_message=None, error_emitted=False)
 
     def _create_response_state(self) -> Dict[str, Any]:
-        """为单次请求创建独立的响应状态，避免并发请求互相污染。"""
+        """Create independent response state for each request, avoiding cross-contamination between concurrent requests."""
         return {
             "url": None,
             "generated_assets": None,
@@ -1097,14 +1097,14 @@ class GenerationHandler:
         }
 
     def _mark_generation_failed(self, generation_result: Optional[Dict[str, Any]], error_message: str):
-        """????????????????????"""
+        """Create independent response state for each request to avoid cross-contamination"""
         if isinstance(generation_result, dict):
             generation_result["success"] = False
             generation_result["error_message"] = error_message
             generation_result["error_emitted"] = True
 
     def _mark_generation_succeeded(self, generation_result: Optional[Dict[str, Any]]):
-        """???????"""
+        """Mark generation as succeeded"""
         if isinstance(generation_result, dict):
             generation_result["success"] = True
             generation_result["error_message"] = None
@@ -1115,7 +1115,7 @@ class GenerationHandler:
         token,
         operation: Dict[str, Any],
     ) -> Dict[str, Any]:
-        """按当前上游逻辑解析视频资产：状态由 media 决定，URL 通过 redirect 二段获取。"""
+        """Parse video assets per current upstream logic: status is determined by media, URL is obtained via two-step redirect."""
         metadata = (operation.get("operation") or {}).get("metadata", {}) or {}
         video_info = metadata.get("video", {}) if isinstance(metadata.get("video"), dict) else {}
         media_name = (
@@ -1154,14 +1154,14 @@ class GenerationHandler:
         }
 
     def _normalize_error_message(self, error_message: Any, max_length: int = 1000) -> str:
-        """归一化错误文本，避免写入超长内容。"""
-        text = str(error_message or "").strip() or "未知错误"
+        """Normalize error text to avoid writing overly long content."""
+        text = str(error_message or "").strip() or "Unknown error"
         if len(text) <= max_length:
             return text
         return f"{text[:max_length - 3]}..."
 
     def _resolve_video_model_key_for_tier(self, model_config: Dict[str, Any], user_tier: str) -> tuple[str, Optional[str]]:
-        """根据账号层级调整视频模型 key。"""
+        """Adjust video model key based on account tier."""
         model_key = model_config["model_key"]
         allow_tier_upgrade = bool(model_config.get("allow_tier_upgrade", True))
 
@@ -1169,17 +1169,17 @@ class GenerationHandler:
             if allow_tier_upgrade and "ultra" not in model_key:
                 upgraded_model_key = _resolve_tier_two_model_key(model_key)
                 if upgraded_model_key != model_key:
-                    return upgraded_model_key, f"TIER_TWO 账号自动切换到 ultra 模型: {upgraded_model_key}"
+                    return upgraded_model_key, f"TIER_TWO account auto-switched to ultra model: {upgraded_model_key}"
             return model_key, None
 
         if user_tier == "PAYGATE_TIER_ONE" and "ultra" in model_key:
             model_key = model_key.replace("_ultra_fl", "_fl").replace("_ultra", "")
-            return model_key, f"TIER_ONE 账号自动切换到标准模型: {model_key}"
+            return model_key, f"TIER_ONE account auto-switched to standard model: {model_key}"
 
         return model_key, None
 
     async def _fail_video_task(self, operations: Optional[List[Dict[str, Any]]], error_message: str):
-        """将视频任务收口到失败态，避免残留 processing。"""
+        """Force video task to a failed state to avoid lingering processing status."""
         if not operations:
             return
 
@@ -1196,17 +1196,17 @@ class GenerationHandler:
                 completed_at=time.time()
             )
         except Exception as exc:
-            debug_logger.log_error(f"[VIDEO] 更新任务失败状态失败: {exc}")
+            debug_logger.log_error(f"[VIDEO] Failed to update task to failed status: {exc}")
 
     async def check_token_availability(self, is_image: bool, is_video: bool) -> bool:
-        """检查Token可用性
+        """Check token availability
 
         Args:
-            is_image: 是否检查图片生成Token
-            is_video: 是否检查视频生成Token
+            is_image: Whether to check image generation tokens
+            is_video: Whether to check video generation tokens
 
         Returns:
-            True表示有可用Token, False表示无可用Token
+            True means tokens are available, False means no tokens available
         """
         token_obj = await self.load_balancer.select_token(
             for_image_generation=is_image,
@@ -1223,13 +1223,13 @@ class GenerationHandler:
         base_url_override: Optional[str] = None,
         video_media_id: Optional[str] = None,
     ) -> AsyncGenerator:
-        """统一生成入口
+        """Unified generation entry point
 
         Args:
-            model: 模型名称
-            prompt: 提示词
-            images: 图片列表 (bytes格式)
-            stream: 是否流式输出
+            model: Model name
+            prompt: Prompt text
+            images: List of images (bytes format)
+            stream: Whether to use streaming output
         """
         start_time = time.time()
         token = None
@@ -1246,13 +1246,13 @@ class GenerationHandler:
         response_state["base_url"] = (base_url_override or "").strip().rstrip("/") or None
         request_log_state: Dict[str, Any] = {"id": None, "progress": 0}
 
-        # 防止并发链路复用到上一次请求的指纹上下文
+        # Prevent concurrent flows from reusing the previous request's fingerprint context
         if hasattr(self.flow_client, "clear_request_fingerprint"):
             self.flow_client.clear_request_fingerprint()
 
-        # 1. 验证模型
+        # 1. Validate model
         if model not in MODEL_CONFIG:
-            error_msg = f"不支持的模型: {model}"
+            error_msg = f"Unsupported model: {model}"
             debug_logger.log_error(error_msg)
             record_generation_result("unknown", "invalid", time.time() - start_time)
             yield self._create_error_response(error_msg, status_code=400)
@@ -1268,12 +1268,12 @@ class GenerationHandler:
             "prompt": prompt_for_log,
             "has_images": images is not None and len(images) > 0,
         }
-        debug_logger.log_info(f"[GENERATION] 开始生成 - 模型: {model}, 类型: {generation_type}, Prompt: {prompt[:50]}...")
+        debug_logger.log_info(f"[GENERATION] Starting generation - Model: {model}, Type: {generation_type}, Prompt: {prompt[:50]}...")
 
-        # 向用户展示开始信息
+        # Show start info to user
         if stream:
             yield self._create_stream_chunk(
-                f"✨ {'视频' if generation_type == 'video' else '图片'}生成任务已启动\n",
+                f"✨ {'Video' if generation_type == 'video' else 'Image'} generation task started\n",
                 role="assistant"
             )
             request_log_state["id"] = await self._log_request(
@@ -1287,8 +1287,8 @@ class GenerationHandler:
                 progress=0,
             )
 
-        # 2. 选择Token
-        debug_logger.log_info(f"[GENERATION] 正在选择可用Token...")
+        # 2. Select Token
+        debug_logger.log_info(f"[GENERATION] Selecting available Token...")
         token_select_started_at = time.time()
 
         if generation_type == "image":
@@ -1333,11 +1333,11 @@ class GenerationHandler:
                 progress=request_log_state.get("progress", 0),
             )
             if stream:
-                yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                yield self._create_stream_chunk(f"Error: {error_msg}\n")
             yield self._create_error_response(error_msg, status_code=503)
             return
 
-        debug_logger.log_info(f"[GENERATION] 已选择Token: {token.id} ({token.email})")
+        debug_logger.log_info(f"[GENERATION] Token selected: {token.id} ({token.email})")
         pending_token_state["active"] = True
         await self._update_request_log_progress(
             request_log_state,
@@ -1348,10 +1348,10 @@ class GenerationHandler:
         )
 
         try:
-            # 3. 确保AT有效
-            debug_logger.log_info(f"[GENERATION] 检查Token AT有效性...")
+            # 3. Ensure AT is valid
+            debug_logger.log_info(f"[GENERATION] Checking Token AT validity...")
             if stream:
-                yield self._create_stream_chunk("初始化生成环境...\n")
+                yield self._create_stream_chunk("Initializing generation environment...\n")
 
             await self._update_request_log_progress(
                 request_log_state,
@@ -1363,24 +1363,24 @@ class GenerationHandler:
             token = await self.token_manager.ensure_valid_token(token)
             perf_trace["ensure_at_ms"] = int((time.time() - ensure_at_started_at) * 1000)
             if not token:
-                error_msg = "Token AT无效或刷新失败"
+                error_msg = "Token AT invalid or refresh failed"
                 debug_logger.log_error(f"[GENERATION] {error_msg}")
                 record_generation_result(generation_type, "failed", time.time() - start_time)
                 if stream:
-                    yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                    yield self._create_stream_chunk(f"Error: {error_msg}\n")
                 yield self._create_error_response(error_msg, status_code=503)
                 return
 
-            # 4. 确保Project存在
-            debug_logger.log_info(f"[GENERATION] 检查/创建Project...")
+            # 4. Ensure Project exists
+            debug_logger.log_info(f"[GENERATION] Checking/creating Project...")
 
             if not supports_model_for_tier(model, token.user_paygate_tier):
                 required_tier = get_required_paygate_tier_for_model(model)
-                error_msg = "当前模型需要 " + get_paygate_tier_label(required_tier) + " 账号: " + model
+                error_msg = "Current model requires " + get_paygate_tier_label(required_tier) + " account: " + model
                 debug_logger.log_error(f"[GENERATION] {error_msg}")
                 record_generation_result(generation_type, "failed", time.time() - start_time)
                 if stream:
-                    yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                    yield self._create_stream_chunk(f"Error: {error_msg}\n")
                 yield self._create_error_response(error_msg, status_code=403)
                 return
 
@@ -1402,10 +1402,10 @@ class GenerationHandler:
                 token_id=token.id,
             )
 
-            # 5. 根据类型处理
+            # 5. Process by type
             generation_pipeline_started_at = time.time()
             if generation_type == "image":
-                debug_logger.log_info(f"[GENERATION] 开始图片生成流程...")
+                debug_logger.log_info(f"[GENERATION] Starting image generation flow...")
                 async for chunk in self._handle_image_generation(
                     token, project_id, model_config, prompt, images, stream,
                     perf_trace=perf_trace,
@@ -1416,7 +1416,7 @@ class GenerationHandler:
                 ):
                     yield chunk
             else:  # video
-                debug_logger.log_info(f"[GENERATION] 开始视频生成流程...")
+                debug_logger.log_info(f"[GENERATION] Starting video generation flow...")
                 async for chunk in self._handle_video_generation(
                     token, project_id, model_config, prompt, images, stream,
                     perf_trace=perf_trace,
@@ -1429,10 +1429,10 @@ class GenerationHandler:
                     yield chunk
             perf_trace["generation_pipeline_ms"] = int((time.time() - generation_pipeline_started_at) * 1000)
 
-            # 6. 记录使用
+            # 6. Record usage
             if not generation_result.get("success"):
-                error_msg = generation_result.get("error_message") or "生成未成功完成"
-                debug_logger.log_warning(f"[GENERATION] 生成未成功，不扣次数: {error_msg}")
+                error_msg = generation_result.get("error_message") or "Generation did not complete successfully"
+                debug_logger.log_warning(f"[GENERATION] Generation not successful, quota not deducted: {error_msg}")
                 if token:
                     await self.token_manager.record_error(token.id)
                 duration = time.time() - start_time
@@ -1454,27 +1454,27 @@ class GenerationHandler:
                 )
                 if not generation_result.get("error_emitted"):
                     if stream:
-                        yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                        yield self._create_stream_chunk(f"Error: {error_msg}\n")
                     yield self._create_error_response(error_msg, status_code=500)
                 return
 
             is_video = (generation_type == "video")
             await self.token_manager.record_usage(token.id, is_video=is_video)
 
-            # 重置错误计数 (请求成功时清空连续错误计数)
+            # Reset error count (clear consecutive error count on successful request)
             await self.token_manager.record_success(token.id)
 
-            debug_logger.log_info(f"[GENERATION] ✅ 生成成功完成")
+            debug_logger.log_info(f"[GENERATION] ✅ Generation succeeded")
 
-            # 7. 记录成功日志
+            # 7. Record success log
             duration = time.time() - start_time
             record_generation_result(generation_type, "success", duration)
             perf_trace["status"] = "success"
             perf_trace["total_ms"] = int(duration * 1000)
-            # 日志中保留更完整的 prompt，避免管理页只看到过短内容
+            # Keep a more complete prompt in logs to avoid admin pages only seeing truncated content
             prompt_for_log = prompt if len(prompt) <= 2000 else f"{prompt[:2000]}...(truncated)"
 
-            # 构建响应数据，包含生成的URL
+            # Build response data, including generated URL
             response_data = {
                 "status": "success",
                 "model": model,
@@ -1482,7 +1482,7 @@ class GenerationHandler:
                 "performance": perf_trace
             }
 
-            # 添加生成的URL（如果有）
+            # Add generated URL (if any)
             if response_state.get("url"):
                 response_data["url"] = response_state["url"]
             if response_state.get("generated_assets"):
@@ -1514,7 +1514,7 @@ class GenerationHandler:
             )
 
         except asyncio.CancelledError:
-            error_msg = "生成已取消: 客户端连接已断开"
+            error_msg = "Generation canceled: client connection disconnected"
             debug_logger.log_warning(f"[GENERATION] ⚠️ {error_msg}")
             duration = time.time() - start_time
             record_generation_result(generation_type or "unknown", "cancelled", duration)
@@ -1535,17 +1535,17 @@ class GenerationHandler:
             )
             raise
         except Exception as e:
-            error_msg = f"生成失败: {str(e)}"
-            debug_logger.log_error(f"[GENERATION] 生成失败: {error_msg}")
+            error_msg = f"Generation failed: {str(e)}"
+            debug_logger.log_error(f"[GENERATION] Generation failed: {error_msg}")
             if token:
                 if self._should_count_token_error(e):
                     await self.token_manager.record_error(token.id)
                 else:
                     debug_logger.log_info(
-                        f"[GENERATION] 跳过 token 错误计数: token_id={token.id}, reason={str(e)[:200]}"
+                        f"[GENERATION] Skip token error count: token_id={token.id}, reason={str(e)[:200]}"
                     )
 
-            # 先将最终失败状态落库，再返回错误响应，避免日志停在 102。
+            # Write the final failed state to the database first, then return the error response to avoid logs stuck at 102.
             duration = time.time() - start_time
             record_generation_result(generation_type or "unknown", "failed", duration)
             perf_trace["status"] = "failed"
@@ -1564,7 +1564,7 @@ class GenerationHandler:
                 progress=request_log_state.get("progress", 0),
             )
             if stream:
-                yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                yield self._create_stream_chunk(f"Error: {error_msg}\n")
             yield self._create_error_response(error_msg, status_code=500)
         finally:
             if pending_token_state.get("active") and token and self.load_balancer:
@@ -1577,17 +1577,17 @@ class GenerationHandler:
 
 
     def _get_no_token_error_message(self, generation_type: str) -> str:
-        """获取无可用Token时的详细错误信息"""
+        """Get detailed error message when no Token is available"""
         if generation_type == "image":
-            return "没有可用的Token进行图片生成。所有Token都处于禁用、冷却、锁定或已过期状态。"
+            return "No Token available for image generation. All Tokens are in banned, cooldown, locked, or expired state."
         else:
-            return "没有可用的Token进行视频生成。所有Token都处于禁用、冷却、配额耗尽或已过期状态。"
+            return "No Token available for video generation. All Tokens are in banned, cooldown, quota exhausted, or expired state."
 
     def _should_count_token_error(self, error: Exception) -> bool:
-        """判断失败是否应计入 token 连续错误。
+        """Determine whether a failure should count toward token consecutive errors.
 
-        reCAPTCHA 获取失败、验证码供应商错误、打码资源不足等问题通常不是账号本身异常；
-        若将其纳入连续错误，会在回归测试或代理波动时把 token 自动打成 inactive。
+        reCAPTCHA fetch failures, captcha vendor errors, captcha resource shortages and similar issues are usually not account-level anomalies;
+        including them in consecutive errors would cause tokens to be auto-marked inactive during regression tests or proxy fluctuations.
         """
         error_text = str(error or "").strip().lower()
         if not error_text:
@@ -1596,13 +1596,13 @@ class GenerationHandler:
         non_token_fault_markers = (
             "failed to obtain recaptcha token",
             "recaptcha evaluation failed",
-            "recaptcha 验证失败",
-            "recaptcha 错误",
+            "recaptcha verification failed",
+            "recaptcha error",
             "public_error_unusual_activity",
             "too much traffic",
             "error_no_slot_available",
-            "打码服务资源不足",
-            "打码服务资源阻塞",
+            "captcha service resources insufficient",
+            "captcha service resources blocked",
             "yescaptcha",
             "capsolver",
             "capmonster",
@@ -1611,7 +1611,7 @@ class GenerationHandler:
         if any(marker in error_text for marker in non_token_fault_markers):
             return False
 
-        if "没有可用的token进行" in error_text:
+        if "no available token for" in error_text:
             return False
 
         return True
@@ -1630,7 +1630,7 @@ class GenerationHandler:
         request_log_state: Optional[Dict[str, Any]] = None,
         pending_token_state: Optional[Dict[str, bool]] = None
     ) -> AsyncGenerator:
-        """处理图片生成 (同步返回)"""
+        """Handle image generation (sync return)"""
 
         if response_state is None:
             response_state = self._create_response_state()
@@ -1640,7 +1640,7 @@ class GenerationHandler:
             image_trace = perf_trace.setdefault("image_generation", {})
             image_trace["input_image_count"] = len(images) if images else 0
 
-        # 不在本地等待图片硬并发槽位；请求一到就直接向上游提交。
+        # Do not wait locally for image hard-concurrency slots; submit to upstream as soon as the request arrives.
         normalized_tier = normalize_user_paygate_tier(token.user_paygate_tier)
 
         if image_trace is not None:
@@ -1652,14 +1652,14 @@ class GenerationHandler:
             await self._update_request_log_progress(request_log_state, token_id=token.id, status_text="submitting_image", progress=28)
 
         try:
-            # 上传图片 (如果有)
+            # Upload images (if any)
             upload_started_at = time.time()
             image_inputs = []
             if images and len(images) > 0:
                 if stream:
-                    yield self._create_stream_chunk(f"上传 {len(images)} 张参考图片...\n")
+                    yield self._create_stream_chunk(f"Uploading {len(images)} reference image(s)...\n")
 
-                # 支持多图输入
+                # Support multi-image input
                 for idx, image_bytes in enumerate(images):
                     media_id = await self.flow_client.upload_image(
                         token.at,
@@ -1672,16 +1672,16 @@ class GenerationHandler:
                         "imageInputType": "IMAGE_INPUT_TYPE_REFERENCE"
                     })
                     if stream:
-                        yield self._create_stream_chunk(f"已上传第 {idx + 1}/{len(images)} 张图片\n")
+                        yield self._create_stream_chunk(f"Uploaded image {idx + 1}/{len(images)}\n")
             if image_trace is not None:
                 image_trace["upload_images_ms"] = int((time.time() - upload_started_at) * 1000)
 
-            # 调用生成API
+            # Call generation API
             if stream:
                 if images and len(images) > 0:
-                    yield self._create_stream_chunk("参考图片上传完成，正在进行打码验证...\n")
+                    yield self._create_stream_chunk("Reference images uploaded, running captcha verification...\n")
                 else:
-                    yield self._create_stream_chunk("正在进行打码验证并提交图片生成请求...\n")
+                    yield self._create_stream_chunk("Running captcha verification and submitting image generation request...\n")
 
             async def _image_progress_callback(status_text: str, progress: int):
                 await self._update_request_log_progress(
@@ -1718,34 +1718,34 @@ class GenerationHandler:
                 progress=72,
             )
 
-            # 提取URL和mediaId
+            # Extract URL and mediaId
             media = result.get("media", [])
             if not media:
-                self._mark_generation_failed(generation_result, "\u751f\u6210\u7ed3\u679c\u4e3a\u7a7a")
-                yield self._create_error_response("生成结果为空", status_code=502)
+                self._mark_generation_failed(generation_result, "Generation result is empty")
+                yield self._create_error_response("Generation result is empty", status_code=502)
                 return
 
             image_url = media[0]["image"]["generatedImage"]["fifeUrl"]
-            media_id = media[0].get("name")  # 用于 upsample
+            media_id = media[0].get("name")  # used for upsample
             response_state["generated_assets"] = {
                 "type": "image",
                 "origin_image_url": image_url
             }
 
-            # 检查是否需要 upsample
+            # Check if upsample is needed
             upsample_resolution = model_config.get("upsample")
             if upsample_resolution and media_id:
                 upsample_started_at = time.time()
                 resolution_name = "4K" if "4K" in upsample_resolution else "2K"
                 await self._update_request_log_progress(request_log_state, token_id=token.id, status_text=f"upsampling_{resolution_name.lower()}", progress=82)
                 if stream:
-                    yield self._create_stream_chunk(f"正在放大图片到 {resolution_name}...\n")
+                    yield self._create_stream_chunk(f"Upscaling image to {resolution_name}...\n")
 
-                # 4K/2K 图片重试逻辑 - 使用配置的最大重试次数
+                # 4K/2K image retry logic - use configured max retries
                 max_retries = config.flow_max_retries
                 for retry_attempt in range(max_retries):
                     try:
-                        # 调用 upsample API
+                        # Call upsample API
                         encoded_image = await self.flow_client.upsample_image(
                             at=token.at,
                             project_id=project_id,
@@ -1757,12 +1757,12 @@ class GenerationHandler:
                         )
 
                         if encoded_image:
-                            debug_logger.log_info(f"[UPSAMPLE] 图片已放大到 {resolution_name}")
+                            debug_logger.log_info(f"[UPSAMPLE] Image upscaled to {resolution_name}")
 
                             if stream:
-                                yield self._create_stream_chunk(f"✅ 图片已放大到 {resolution_name}\n")
+                                yield self._create_stream_chunk(f"✅ Image upscaled to {resolution_name}\n")
 
-                            # 2K/4K 图片统一落盘为真实文件，日志里只保留链接。
+                            # 2K/4K images are uniformly persisted as real files; logs only keep the link.
                             response_state["generated_assets"] = {
                                 "type": "image",
                                 "origin_image_url": image_url,
@@ -1779,7 +1779,7 @@ class GenerationHandler:
                                     progress=90,
                                 )
                                 if stream:
-                                    yield self._create_stream_chunk(f"缓存 {resolution_name} 图片中...\n")
+                                    yield self._create_stream_chunk(f"Caching {resolution_name} image...\n")
                                 cached_filename = await self.file_cache.cache_base64_image(encoded_image, resolution_name)
                                 local_url = f"{self._get_base_url(response_state)}/tmp/{cached_filename}"
                                 response_state["url"] = local_url
@@ -1787,7 +1787,7 @@ class GenerationHandler:
                                 response_state["generated_assets"]["upscaled_image"]["url"] = local_url
                                 self._mark_generation_succeeded(generation_result)
                                 if stream:
-                                    yield self._create_stream_chunk(f"✅ {resolution_name} 图片缓存成功\n")
+                                    yield self._create_stream_chunk(f"✅ {resolution_name} image cached\n")
                                     yield self._create_stream_chunk(
                                         f"![Generated Image]({local_url})",
                                         finish_reason="stop"
@@ -1810,7 +1810,7 @@ class GenerationHandler:
                                 base64_url = f"data:image/jpeg;base64,{encoded_image}"
                                 if stream:
                                     cache_error = self._normalize_error_message(e, max_length=120)
-                                    yield self._create_stream_chunk(f"⚠️ 缓存失败: {cache_error}，返回内联图片...\n")
+                                    yield self._create_stream_chunk(f"⚠️ Cache failed: {cache_error}, returning inline image...\n")
                                     yield self._create_stream_chunk(
                                         f"![Generated Image]({base64_url})",
                                         finish_reason="stop"
@@ -1824,26 +1824,26 @@ class GenerationHandler:
                                     image_trace["upsample_ms"] = int((time.time() - upsample_started_at) * 1000)
                                 return
                         else:
-                            debug_logger.log_warning("[UPSAMPLE] 返回结果为空")
+                            debug_logger.log_warning("[UPSAMPLE] Returned result is empty")
                             if stream:
-                                yield self._create_stream_chunk(f"⚠️ 放大失败，返回原图...\n")
-                            break  # 空结果不重试
+                                yield self._create_stream_chunk(f"⚠️ Upscale failed, returning original image...\n")
+                            break  # empty result not retried
 
                     except Exception as e:
                         error_str = str(e)
-                        debug_logger.log_error(f"[UPSAMPLE] 放大失败 (尝试 {retry_attempt + 1}/{max_retries}): {error_str}")
+                        debug_logger.log_error(f"[UPSAMPLE] Upscale failed (attempt {retry_attempt + 1}/{max_retries}): {error_str}")
                         
-                        # 检查是否是可重试错误（403、reCAPTCHA、超时等）
+                        # Check whether it's a retryable error (403, reCAPTCHA, timeout, etc.)
                         retry_reason = self.flow_client._get_retry_reason(error_str)
                         if retry_reason and retry_attempt < max_retries - 1:
                             if stream:
-                                yield self._create_stream_chunk(f"⚠️ 放大遇到{retry_reason}，正在重试 ({retry_attempt + 2}/{max_retries})...\n")
-                            # 等待一小段时间后重试
+                                yield self._create_stream_chunk(f"⚠️ Upscale encountered {retry_reason}, retrying ({retry_attempt + 2}/{max_retries})...\n")
+                            # Wait a short while before retrying
                             await asyncio.sleep(1)
                             continue
                         else:
                             if stream:
-                                yield self._create_stream_chunk(f"⚠️ 放大失败: {error_str}，返回原图...\n")
+                                yield self._create_stream_chunk(f"⚠️ Upscale failed: {error_str}, returning original image...\n")
                             break
                 if image_trace is not None:
                     image_trace["upsample_ms"] = int((time.time() - upsample_started_at) * 1000)
@@ -1858,25 +1858,25 @@ class GenerationHandler:
                     progress=90,
                 )
                 if stream:
-                    yield self._create_stream_chunk("正在缓存 1K 图片文件...\n")
+                    yield self._create_stream_chunk("Caching 1K image file...\n")
                 try:
                     cached_filename = await self.file_cache.download_and_cache(image_url, "image")
                     local_url = f"{self._get_base_url(response_state)}/tmp/{cached_filename}"
                     if stream:
-                        yield self._create_stream_chunk("✅ 1K 图片缓存成功,准备返回缓存地址...\n")
+                        yield self._create_stream_chunk("✅ 1K image cached, preparing to return cached address...\n")
                 except Exception as e:
                     debug_logger.log_error(f"Failed to cache 1K image: {str(e)}")
                     local_url = image_url
                     if stream:
                         cache_error = self._normalize_error_message(e, max_length=120)
-                        yield self._create_stream_chunk(f"⚠️ 缓存失败: {cache_error}\n正在返回源链接...\n")
+                        yield self._create_stream_chunk(f"⚠️ Cache failed: {cache_error}\nReturning source link...\n")
             elif stream:
-                yield self._create_stream_chunk("缓存已关闭,正在返回官方图片链接...\n")
+                yield self._create_stream_chunk("Cache disabled, returning official image link...\n")
             if image_trace is not None:
                 image_trace["cache_image_ms"] = int((time.time() - cache_started_at) * 1000)
 
-            # 返回结果
-            # 存储URL用于日志记录
+            # Return result
+            # Store URL for logging
             response_state["url"] = local_url
             response_state["generated_assets"] = {
                 "type": "image",
@@ -1892,7 +1892,7 @@ class GenerationHandler:
                 )
             else:
                 yield self._create_completion_response(
-                    local_url,  # 直接传URL,让方法内部格式化
+                    local_url,  # pass URL directly, let the method format internally
                     media_type="image"
                 )
 
@@ -1914,7 +1914,7 @@ class GenerationHandler:
         pending_token_state: Optional[Dict[str, bool]] = None,
         video_media_id: Optional[str] = None,
     ) -> AsyncGenerator:
-        """处理视频生成 (异步轮询)"""
+        """Handle video generation (async polling)"""
 
         if response_state is None:
             response_state = self._create_response_state()
@@ -1924,7 +1924,7 @@ class GenerationHandler:
             video_trace = perf_trace.setdefault("video_generation", {})
             video_trace["input_image_count"] = len(images) if images else 0
 
-        # 不在本地等待视频硬并发槽位；请求一到就直接向上游提交。
+        # Do not wait locally for video hard-concurrency slots; submit to upstream as soon as the request arrives.
         normalized_tier = normalize_user_paygate_tier(token.user_paygate_tier)
 
         if video_trace is not None:
@@ -1933,14 +1933,14 @@ class GenerationHandler:
         await self._update_request_log_progress(request_log_state, token_id=token.id, status_text="preparing_video", progress=24)
 
         try:
-            # 获取模型类型和配置
+            # Fetch model type and config
             video_type = model_config.get("video_type")
             supports_images = model_config.get("supports_images", False)
             min_images = model_config.get("min_images", 0)
             max_images = model_config.get("max_images", 0)
             use_v2_model_config = bool(model_config.get("use_v2_model_config", False))
 
-            # 根据账号tier自动调整模型 key
+            # Auto-adjust model key based on account tier
             user_tier = normalized_tier
 
             original_model_key = model_config["model_key"]
@@ -1948,90 +1948,90 @@ class GenerationHandler:
             if tier_message:
                 if stream:
                     yield self._create_stream_chunk(f"{tier_message}\n")
-                debug_logger.log_info(f"[VIDEO] 账号层级模型调整: {original_model_key} -> {model_key}")
+                debug_logger.log_info(f"[VIDEO] Account tier model adjustment: {original_model_key} -> {model_key}")
             elif user_tier == "PAYGATE_TIER_TWO" and original_model_key == model_key:
-                debug_logger.log_info(f"[VIDEO] TIER_TWO 账号，未找到有效 ultra 变体，保持模型: {model_key}")
+                debug_logger.log_info(f"[VIDEO] TIER_TWO account, no valid ultra variant found, keeping model: {model_key}")
 
-            # 更新 model_config 中的 model_key
-            model_config = dict(model_config)  # 创建副本避免修改原配置
+            # Update model_key in model_config
+            model_config = dict(model_config)  # create a copy to avoid modifying the original config
             model_config["model_key"] = model_key
 
-            # 图片数量
+            # Image count
             image_count = len(images) if images else 0
 
-            # ========== 验证和处理图片 ==========
+            # ========== Validate and process images ==========
 
-            # T2V: 文生视频 - 不支持图片
+            # T2V: text-to-video - does not support images
             if video_type == "t2v":
                 if image_count > 0:
                     if stream:
-                        yield self._create_stream_chunk("⚠️ 文生视频模型不支持上传图片,将忽略图片仅使用文本提示词生成\n")
-                    debug_logger.log_warning(f"[T2V] 模型 {model_config['model_key']} 不支持图片,已忽略 {image_count} 张图片")
-                images = None  # 清空图片
+                        yield self._create_stream_chunk("⚠️ Text-to-video model does not support image upload, images will be ignored and only the text prompt will be used\n")
+                    debug_logger.log_warning(f"[T2V] Model {model_config['model_key']} does not support images, ignored {image_count} image(s)")
+                images = None  # clear images
                 image_count = 0
 
-            # Omni: 无图走 T2V，有图走当前上游 Reference Images 直连链路
+            # Omni: text-only path goes through T2V, with images goes through current upstream Reference Images direct path
             elif video_type == "omni":
                 if max_images is not None and image_count > max_images:
-                    error_msg = f"Omni 模型最多支持 {max_images} 张参考图，当前提供了 {image_count} 张"
+                    error_msg = f"Omni model supports at most {max_images} reference images, current request provides {image_count}"
                     if stream:
                         yield self._create_stream_chunk(f"{error_msg}\n")
                     self._mark_generation_failed(generation_result, error_msg)
                     yield self._create_error_response(error_msg, status_code=400)
                     return
 
-            # I2V: 首尾帧模型 - 需要1-2张图片
+            # I2V: first/last frame model - requires 1-2 images
             elif video_type == "i2v":
                 if image_count < min_images or image_count > max_images:
-                    error_msg = f"首尾帧模型需要 {min_images}-{max_images} 张图片，当前提供了 {image_count} 张"
+                    error_msg = f"First/last frame model requires {min_images}-{max_images} images, current request provides {image_count}"
                     if stream:
                         yield self._create_stream_chunk(f"{error_msg}\n")
                     self._mark_generation_failed(generation_result, error_msg)
                     yield self._create_error_response(error_msg, status_code=400)
                     return
 
-            # R2V: 多图生成 - 当前上游协议最多 3 张参考图
+            # R2V: multi-image generation - current upstream protocol supports at most 3 reference images
             elif video_type == "r2v":
                 if max_images is not None and image_count > max_images:
-                    error_msg = f"多图视频模型最多支持 {max_images} 张参考图，当前提供了 {image_count} 张"
+                    error_msg = f"Multi-image video model supports at most {max_images} reference images, current request provides {image_count}"
                     if stream:
                         yield self._create_stream_chunk(f"{error_msg}\n")
                     self._mark_generation_failed(generation_result, error_msg)
                     yield self._create_error_response(error_msg, status_code=400)
                     return
 
-            # ========== 上传图片 ==========
+            # ========== Upload images ==========
             start_media_id = None
             end_media_id = None
             reference_images = []
 
-            # I2V: 首尾帧处理
+            # I2V: first/last frame processing
             if video_type == "i2v" and images:
                 if image_count == 1:
-                    # 只有1张图: 仅作为首帧
+                    # Only 1 image: used as first frame only
                     if stream:
-                        yield self._create_stream_chunk("上传首帧图片...\n")
+                        yield self._create_stream_chunk("Uploading first frame image...\n")
                     start_media_id = await self.flow_client.upload_image(
                         token.at, images[0], model_config["aspect_ratio"], project_id=project_id
                     )
-                    debug_logger.log_info(f"[I2V] 仅上传首帧: {start_media_id}")
+                    debug_logger.log_info(f"[I2V] Only first frame uploaded: {start_media_id}")
 
                 elif image_count == 2:
-                    # 2张图: 首帧+尾帧
+                    # 2 images: first frame + last frame
                     if stream:
-                        yield self._create_stream_chunk("上传首帧和尾帧图片...\n")
+                        yield self._create_stream_chunk("Uploading first and last frame images...\n")
                     start_media_id = await self.flow_client.upload_image(
                         token.at, images[0], model_config["aspect_ratio"], project_id=project_id
                     )
                     end_media_id = await self.flow_client.upload_image(
                         token.at, images[1], model_config["aspect_ratio"], project_id=project_id
                     )
-                    debug_logger.log_info(f"[I2V] 上传首尾帧: {start_media_id}, {end_media_id}")
+                    debug_logger.log_info(f"[I2V] Uploaded first and last frames: {start_media_id}, {end_media_id}")
 
-            # R2V: 多图处理
+            # R2V: multi-image processing
             elif video_type == "r2v" and images:
                 if stream:
-                    yield self._create_stream_chunk(f"上传 {image_count} 张参考图片...\n")
+                    yield self._create_stream_chunk(f"Uploading {image_count} reference image(s)...\n")
 
                 for img in images:
                     media_id = await self.flow_client.upload_image(
@@ -2041,12 +2041,12 @@ class GenerationHandler:
                         "imageUsageType": "IMAGE_USAGE_TYPE_ASSET",
                         "mediaId": media_id
                     })
-                debug_logger.log_info(f"[R2V] 上传了 {len(reference_images)} 张参考图片")
+                debug_logger.log_info(f"[R2V] Uploaded {len(reference_images)} reference image(s)")
 
-            # Omni R2V: 参考图上传到 project，随后直接走 batchAsyncGenerateVideoReferenceImages
+            # Omni R2V: reference images are uploaded to project, then go directly through batchAsyncGenerateVideoReferenceImages
             elif video_type == "omni" and images:
                 if stream:
-                    yield self._create_stream_chunk(f"上传 {image_count} 张 Omni 参考图片...\n")
+                    yield self._create_stream_chunk(f"Uploading {image_count} Omni reference image(s)...\n")
 
                 for img in images:
                     media_id = await self.flow_client.upload_image(
@@ -2056,17 +2056,17 @@ class GenerationHandler:
                         "imageUsageType": "IMAGE_USAGE_TYPE_ASSET",
                         "mediaId": media_id
                     })
-                debug_logger.log_info(f"[VIDEO OMNI-R2V] 上传了 {len(reference_images)} 张参考图片")
+                debug_logger.log_info(f"[VIDEO OMNI-R2V] Uploaded {len(reference_images)} reference image(s)")
 
-            # ========== 调用生成API ==========
+            # ========== Call generation API ==========
             if stream:
-                yield self._create_stream_chunk("提交视频生成任务...\n")
+                yield self._create_stream_chunk("Submitting video generation task...\n")
             submit_started_at = time.time()
 
-            # I2V: 首尾帧生成
+            # I2V: first/last frame generation
             if video_type == "i2v" and start_media_id:
                 if end_media_id:
-                    # 有首尾帧
+                    # Has first and last frames
                     result = await self.flow_client.generate_video_start_end(
                         at=token.at,
                         project_id=project_id,
@@ -2081,13 +2081,13 @@ class GenerationHandler:
                         token_video_concurrency=token.video_concurrency,
                     )
                 else:
-                    # 只有首帧 - 需要去掉 model_key 中的 _fl
-                    # 情况1: _fl_ 在中间 (如 veo_3_1_i2v_s_fast_fl_ultra_relaxed -> veo_3_1_i2v_s_fast_ultra_relaxed)
-                    # 情况2: _fl 在结尾 (如 veo_3_1_i2v_s_fast_ultra_fl -> veo_3_1_i2v_s_fast_ultra)
+                    # First frame only - need to strip _fl from model_key
+                    # Case 1: _fl_ in the middle (e.g. veo_3_1_i2v_s_fast_fl_ultra_relaxed -> veo_3_1_i2v_s_fast_ultra_relaxed)
+                    # Case 2: _fl at the end (e.g. veo_3_1_i2v_s_fast_ultra_fl -> veo_3_1_i2v_s_fast_ultra)
                     actual_model_key = model_config["model_key"].replace("_fl_", "_")
                     if actual_model_key.endswith("_fl"):
                         actual_model_key = actual_model_key[:-3]
-                    debug_logger.log_info(f"[I2V] 单帧模式，model_key: {model_config['model_key']} -> {actual_model_key}")
+                    debug_logger.log_info(f"[I2V] Single-frame mode, model_key: {model_config['model_key']} -> {actual_model_key}")
                     result = await self.flow_client.generate_video_start_image(
                         at=token.at,
                         project_id=project_id,
@@ -2101,7 +2101,7 @@ class GenerationHandler:
                         token_video_concurrency=token.video_concurrency,
                     )
 
-            # R2V: 多图生成
+            # R2V: multi-image generation
             elif video_type == "r2v" and reference_images:
                 result = await self.flow_client.generate_video_reference_images(
                     at=token.at,
@@ -2115,10 +2115,10 @@ class GenerationHandler:
                     token_video_concurrency=token.video_concurrency,
                 )
 
-            # Omni: 有图走 Reference Images 直连链路，无图走纯文本链路
+            # Omni: with images go through Reference Images direct path, without images go through text-only path
             elif video_type == "omni" and reference_images:
                 if stream:
-                    yield self._create_stream_chunk("提交 Omni 参考图视频任务...\n")
+                    yield self._create_stream_chunk("Submitting Omni reference-image video task...\n")
                 result = await self.flow_client.generate_video_reference_images(
                     at=token.at,
                     project_id=project_id,
@@ -2131,19 +2131,19 @@ class GenerationHandler:
                     token_video_concurrency=token.video_concurrency,
                 )
 
-            # Extend: 视频续写
+            # Extend: video extension
             elif video_type == "extend":
                 if not video_media_id:
-                    error_msg = "视频续写需要提供源视频的 mediaGenerationId，请在 image_url 中传入 extend://VIDEO_MEDIA_ID"
+                    error_msg = "Video extension requires the source video's mediaGenerationId, please pass extend://VIDEO_MEDIA_ID in image_url"
                     if stream:
                         yield self._create_stream_chunk(f"{error_msg}\n")
                     self._mark_generation_failed(generation_result, error_msg)
                     yield self._create_error_response(error_msg, status_code=400)
                     return
 
-                debug_logger.log_info(f"[EXTEND] 续写视频: {video_media_id}")
+                debug_logger.log_info(f"[EXTEND] Extend video: {video_media_id}")
                 if stream:
-                    yield self._create_stream_chunk(f"视频续写任务提交中，源视频: {video_media_id[:8]}...\n")
+                    yield self._create_stream_chunk(f"Video extension task submitting, source video: {video_media_id[:8]}...\n")
                 result = await self.flow_client.generate_video_extend(
                     at=token.at,
                     project_id=project_id,
@@ -2156,7 +2156,7 @@ class GenerationHandler:
                     token_video_concurrency=token.video_concurrency,
                 )
 
-            # T2V 或 R2V无图: 纯文本生成
+            # T2V or R2V without images: text-only generation
             else:
                 result = await self.flow_client.generate_video_text(
                     at=token.at,
@@ -2172,18 +2172,18 @@ class GenerationHandler:
             if video_trace is not None:
                 video_trace["submit_generation_ms"] = int((time.time() - submit_started_at) * 1000)
 
-            # 获取task_id和operations
+            # Get task_id and operations
             operations = result.get("operations", [])
             if not operations:
                 self._mark_generation_failed(generation_result, "\u751f\u6210\u4efb\u52a1\u521b\u5efa\u5931\u8d25")
-                yield self._create_error_response("生成任务创建失败", status_code=502)
+                yield self._create_error_response("Generation task creation failed", status_code=502)
                 return
 
             operation = operations[0]
             task_id = operation["operation"]["name"]
             scene_id = operation.get("sceneId")
 
-            # 保存Task到数据库
+            # Save Task to database
             task = Task(
                 task_id=task_id,
                 token_id=token.id,
@@ -2201,14 +2201,14 @@ class GenerationHandler:
                 response_extra={"task_id": task_id, "scene_id": scene_id},
             )
 
-            # 轮询结果
+            # Poll result
             if stream:
-                yield self._create_stream_chunk(f"视频生成中...\n")
+                yield self._create_stream_chunk(f"Video generating...\n")
 
-            # 检查是否需要放大
+            # Check if upscaling is needed
             upsample_config = model_config.get("upsample")
 
-            # 如果是 extend，传入源视频 media_id 用于后续拼接
+            # If extend, pass source video media_id for subsequent concatenation
             extend_source_id = video_media_id if video_type == "extend" else None
             async for chunk in self._poll_video_result(
                 token,
@@ -2238,10 +2238,10 @@ class GenerationHandler:
         request_log_state: Optional[Dict[str, Any]] = None,
         extend_source_media_id: Optional[str] = None,
     ) -> AsyncGenerator:
-        """轮询视频生成结果
+        """Poll video generation result
         
         Args:
-            upsample_config: 放大配置 {"resolution": "VIDEO_RESOLUTION_4K", "model_key": "veo_3_1_upsampler_4k"}
+            upsample_config: upscale config {"resolution": "VIDEO_RESOLUTION_4K", "model_key": "veo_3_1_upsampler_4k"}
         """
 
         if response_state is None:
@@ -2250,9 +2250,9 @@ class GenerationHandler:
         max_attempts = config.max_poll_attempts
         poll_interval = config.poll_interval
         
-        # 如果需要放大，轮询次数加倍（放大可能需要 30 分钟）
+        # If upscaling is needed, double poll attempts (upscaling can take up to 30 minutes)
         if upsample_config:
-            max_attempts = max_attempts * 3  # 放大需要更长时间
+            max_attempts = max_attempts * 3  # upscaling takes longer
 
         consecutive_poll_errors = 0
         last_poll_error: Optional[Exception] = None
@@ -2273,14 +2273,14 @@ class GenerationHandler:
                 operation = checked_operations[0]
                 status = operation.get("status")
 
-                # 状态更新 - 每20秒报告一次 (poll_interval=3秒, 20秒约7次轮询)
-                progress_update_interval = 7  # 每7次轮询 = 21秒
-                if stream and attempt % progress_update_interval == 0:  # 每20秒报告一次
+                # Status update - report every 20 seconds (poll_interval=3s, ~7 polls per 20s)
+                progress_update_interval = 7  # every 7 polls = 21 seconds
+                if stream and attempt % progress_update_interval == 0:  # report every 20 seconds
                     progress = min(int((attempt / max_attempts) * 100), 95)
                     await self._update_request_log_progress(request_log_state, token_id=token.id, status_text="video_polling", progress=max(45, progress), response_extra={"upstream_status": status})
-                    yield self._create_stream_chunk(f"生成进度: {progress}%\n")
+                    yield self._create_stream_chunk(f"Generation progress: {progress}%\n")
 
-                # 检查状态
+                # Check status
                 if status == "MEDIA_GENERATION_STATUS_SUCCESSFUL":
                     try:
                         resolved_video = await self._resolve_video_asset(token, operation)
@@ -2290,9 +2290,9 @@ class GenerationHandler:
                             or operation.get("name")
                             or operation["operation"].get("name")
                         )
-                        error_msg = f"视频生成成功但获取媒体地址失败: {self._normalize_error_message(redirect_error)}"
+                        error_msg = f"Video generation succeeded but fetching media address failed: {self._normalize_error_message(redirect_error)}"
                         debug_logger.log_warning(
-                            f"[VIDEO POLL] 获取视频URL失败: media={media_name}, error={redirect_error}"
+                            f"[VIDEO POLL] Failed to fetch video URL: media={media_name}, error={redirect_error}"
                         )
                         await self._fail_video_task(checked_operations, error_msg)
                         self._mark_generation_failed(generation_result, error_msg)
@@ -2313,7 +2313,7 @@ class GenerationHandler:
                         )
                         if media_name_for_fetch:
                             if stream:
-                                yield self._create_stream_chunk("视频生成完成，正在下载视频文件...\n")
+                                yield self._create_stream_chunk("Video generation completed, downloading video file...\n")
                             try:
                                 media_result = await self.flow_client.get_media(
                                     token.at, media_name_for_fetch
@@ -2340,7 +2340,7 @@ class GenerationHandler:
                                 )
 
                     if not video_url:
-                        error_msg = "视频生成成功但未获取到媒体地址"
+                        error_msg = "Video generation succeeded but no media address was fetched"
                         await self._fail_video_task(checked_operations, error_msg)
                         self._mark_generation_failed(generation_result, error_msg)
                         yield self._create_error_response(error_msg, status_code=502)
@@ -2352,14 +2352,14 @@ class GenerationHandler:
                     metadata.setdefault("video", video_info)
                     operation["operation"]["metadata"] = metadata
 
-                    # ========== 视频放大处理 ==========
+                    # ========== Video upscaling ==========
                     if upsample_config and video_media_id:
                         if stream:
                             resolution_name = "4K" if "4K" in upsample_config["resolution"] else "1080P"
-                            yield self._create_stream_chunk(f"\n视频生成完成，开始 {resolution_name} 放大处理...（可能需要 30 分钟）\n")
+                            yield self._create_stream_chunk(f"\nVideo generation completed, starting {resolution_name} upscaling... (may take up to 30 minutes)\n")
                         
                         try:
-                            # 提交放大任务
+                            # Submit upscale task
                             upsample_result = await self.flow_client.upsample_video(
                                 at=token.at,
                                 project_id=project_id,
@@ -2375,9 +2375,9 @@ class GenerationHandler:
                             upsample_operations = upsample_result.get("operations", [])
                             if upsample_operations:
                                 if stream:
-                                    yield self._create_stream_chunk("放大任务已提交，继续轮询...\n")
+                                    yield self._create_stream_chunk("Upscale task submitted, continuing polling...\n")
                                 
-                                # 递归轮询放大结果（不再放大）
+                                # Recursively poll upscale result (no further upscale)
                                 async for chunk in self._poll_video_result(
                                     token,
                                     project_id,
@@ -2392,33 +2392,33 @@ class GenerationHandler:
                                 return
                             else:
                                 if stream:
-                                    yield self._create_stream_chunk("⚠️ 放大任务创建失败，返回原始视频\n")
+                                    yield self._create_stream_chunk("⚠️ Upscale task creation failed, returning original video\n")
                         except Exception as e:
                             debug_logger.log_error(f"Video upsample failed: {str(e)}")
                             if stream:
-                                yield self._create_stream_chunk(f"⚠️ 放大失败: {str(e)}，返回原始视频\n")
+                                yield self._create_stream_chunk(f"⚠️ Upscale failed: {str(e)}, returning original video\n")
 
-                    # ========== Extend 视频拼接 ==========
+                    # ========== Extend video concatenation ==========
                     if extend_source_media_id and video_media_id:
                         try:
                             if stream:
-                                yield self._create_stream_chunk("\n视频续写完成，正在拼接完整视频...\n")
-                            debug_logger.log_info(f"[CONCAT] 开始拼接: original={extend_source_media_id[:12]}..., extend={video_media_id[:12]}...")
+                                yield self._create_stream_chunk("\nVideo extension completed, concatenating full video...\n")
+                            debug_logger.log_info(f"[CONCAT] Start concatenation: original={extend_source_media_id[:12]}..., extend={video_media_id[:12]}...")
                             
-                            # 提交拼接任务
+                            # Submit concatenation task
                             concat_result = await self.flow_client.run_concatenation(
                                 at=token.at,
                                 original_media_id=extend_source_media_id,
                                 extend_media_id=video_media_id,
                             )
                             
-                            # 获取 operation name
+                            # Get operation name
                             concat_op = concat_result.get("operation", {}).get("operation", {}).get("name", "")
                             if concat_op:
                                 if stream:
-                                    yield self._create_stream_chunk("拼接任务已提交，等待完成...\n")
+                                    yield self._create_stream_chunk("Concatenation task submitted, waiting for completion...\n")
                                 
-                                # 轮询拼接状态
+                                # Poll concatenation status
                                 concat_status = await self.flow_client.poll_concatenation_status(
                                     at=token.at,
                                     operation_name=concat_op,
@@ -2428,55 +2428,55 @@ class GenerationHandler:
                                 
                                 concat_url = concat_status.get("outputUri", "")
                                 if concat_url:
-                                    # 如果是本地路径（/tmp/xxx.mp4），构造完整 URL
+                                    # If it's a local path (/tmp/xxx.mp4), build full URL
                                     if concat_url.startswith("/tmp/"):
                                         server_host = config.server_host or "0.0.0.0"
                                         server_port = config.server_port or 8000
-                                        # 对外使用 localhost
+                                        # Use localhost for external access
                                         host = "localhost" if server_host == "0.0.0.0" else server_host
                                         concat_url = f"http://{host}:{server_port}{concat_url}"
-                                    video_url = concat_url  # 替换为拼接后的完整视频 URL
+                                    video_url = concat_url  # replace with concatenated full video URL
                                     if stream:
-                                        yield self._create_stream_chunk("✅ 视频拼接完成！返回 16s 完整视频\n")
-                                    debug_logger.log_info(f"[CONCAT] 拼接成功: {concat_url[:80]}...")
+                                        yield self._create_stream_chunk("✅ Video concatenation completed! Returning 16s full video\n")
+                                    debug_logger.log_info(f"[CONCAT] Concatenation succeeded: {concat_url[:80]}...")
                                 else:
                                     if stream:
-                                        yield self._create_stream_chunk("⚠️ 拼接完成但无 URL，返回续写片段\n")
+                                        yield self._create_stream_chunk("⚠️ Concatenation completed but no URL, returning extension clip\n")
                             else:
-                                debug_logger.log_warning("[CONCAT] 拼接任务创建失败，返回续写片段")
+                                debug_logger.log_warning("[CONCAT] Concatenation task creation failed, returning extension clip")
                                 if stream:
-                                    yield self._create_stream_chunk("⚠️ 拼接任务创建失败，返回续写片段\n")
+                                    yield self._create_stream_chunk("⚠️ Concatenation task creation failed, returning extension clip\n")
                         except Exception as e:
                             import traceback
-                            debug_logger.log_error(f"[CONCAT] 拼接失败: {str(e)}")
+                            debug_logger.log_error(f"[CONCAT] Concatenation failed: {str(e)}")
                             debug_logger.log_error(f"[CONCAT] traceback: {traceback.format_exc()}")
                             if stream:
-                                yield self._create_stream_chunk(f"⚠️ 拼接失败: {str(e)}，返回续写片段\n")
-                            # 拼接失败不影响返回，继续使用 extend 片段的 URL
+                                yield self._create_stream_chunk(f"⚠️ Concatenation failed: {str(e)}, returning extension clip\n")
+                            # Concatenation failure does not affect the return; continue using the extend clip URL
 
-                    # 缓存视频 (如果启用)
+                    # Cache video (if enabled)
                     local_url = video_url
                     if config.cache_enabled:
                         await self._update_request_log_progress(request_log_state, token_id=token.id, status_text="caching_video", progress=92)
                         try:
                             if stream:
-                                yield self._create_stream_chunk("正在缓存视频文件...\n")
+                                yield self._create_stream_chunk("Caching video file...\n")
                             cached_filename = await self.file_cache.download_and_cache(video_url, "video")
                             local_url = f"{self._get_base_url(response_state)}/tmp/{cached_filename}"
                             if stream:
-                                yield self._create_stream_chunk("✅ 视频缓存成功,准备返回缓存地址...\n")
+                                yield self._create_stream_chunk("✅ Video cached, preparing to return cached address...\n")
                         except Exception as e:
                             debug_logger.log_error(f"Failed to cache video: {str(e)}")
-                            # 缓存失败不影响结果返回,使用原始URL
+                            # Cache failure does not affect result return, use original URL
                             local_url = video_url
                             if stream:
                                 cache_error = self._normalize_error_message(e, max_length=120)
-                                yield self._create_stream_chunk(f"⚠️ 缓存失败: {cache_error}\n正在返回源链接...\n")
+                                yield self._create_stream_chunk(f"⚠️ Cache failed: {cache_error}\nReturning source link...\n")
                     else:
                         if stream:
-                            yield self._create_stream_chunk("缓存已关闭,正在返回源链接...\n")
+                            yield self._create_stream_chunk("Cache disabled, returning source link...\n")
 
-                    # 更新数据库
+                    # Update database
                     task_id = operation["operation"]["name"]
                     await self.db.update_task(
                         task_id,
@@ -2486,7 +2486,7 @@ class GenerationHandler:
                         completed_at=time.time()
                     )
 
-                    # 存储URL用于日志记录
+                    # Store URL for logging
                     response_state["url"] = local_url
                     response_state["generated_assets"] = {
                         "type": "video",
@@ -2498,7 +2498,7 @@ class GenerationHandler:
                         "duration": resolved_video.get("duration"),
                     }
 
-                    # 返回结果
+                    # Return result
                     self._mark_generation_succeeded(generation_result)
 
                     if stream:
@@ -2509,46 +2509,46 @@ class GenerationHandler:
 
                     else:
                         yield self._create_completion_response(
-                            local_url,  # 直接传URL,让方法内部格式化
+                            local_url,  # pass URL directly, let the method format internally
                             media_type="video"
                         )
                     return
 
                 elif status == "MEDIA_GENERATION_STATUS_FAILED":
-                    # 生成失败 - 提取错误信息
+                    # Generation failed - extract error info
                     error_info = operation.get("operation", {}).get("error", {})
                     error_code = error_info.get("code", "unknown")
-                    error_message = error_info.get("message", "未知错误")
+                    error_message = error_info.get("message", "Unknown error")
                     
-                    # 更新数据库任务状态
+                    # Update database task status
                     await self._fail_video_task(
                         checked_operations,
                         f"{error_message} (code: {error_code})"
                     )
                     
-                    # 返回友好的错误消息，提示用户重试
-                    friendly_error = f"视频生成失败: {error_message}，请重试"
+                    # Return a friendly error message, prompting the user to retry
+                    friendly_error = f"Video generation failed: {error_message}, please retry"
                     self._mark_generation_failed(generation_result, friendly_error)
                     if stream:
-                        yield self._create_stream_chunk(f"错误: {friendly_error}\n")
+                        yield self._create_stream_chunk(f"Error: {friendly_error}\n")
                     yield self._create_error_response(friendly_error, status_code=502)
                     return
 
                 elif status.startswith("MEDIA_GENERATION_STATUS_ERROR"):
                     # ??????
-                    error_msg = f"视频生成失败: {status}"
+                    error_msg = f"Video generation failed: {status}"
                     await self._fail_video_task(checked_operations, error_msg)
                     self._mark_generation_failed(generation_result, error_msg)
                     yield self._create_error_response(error_msg, status_code=502)
                     return
                     
                 elif status == "MEDIA_GENERATION_STATUS_ACTIVE" and attempt > 80:
-                    # 如果持续4分钟（80次 * 3秒 = 240秒）依然是 ACTIVE 状态，则判定为卡死
-                    error_msg = "视频生成超时 (上游卡顿超过4分钟，已自动取消)"
+                    # If ACTIVE status persists for 4 minutes (80 polls * 3s = 240s), treat as stuck
+                    error_msg = "Video generation timeout (upstream stalled for more than 4 minutes, auto-canceled)"
                     await self._fail_video_task(checked_operations, error_msg)
                     self._mark_generation_failed(generation_result, error_msg)
                     if stream:
-                        yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                        yield self._create_stream_chunk(f"Error: {error_msg}\n")
                     yield self._create_error_response(error_msg, status_code=504)
                     return
 
@@ -2557,28 +2557,28 @@ class GenerationHandler:
                 consecutive_poll_errors += 1
                 debug_logger.log_error(f"Poll error: {str(e)}")
                 if consecutive_poll_errors >= max_consecutive_poll_errors:
-                    error_msg = f"视频状态查询失败: {self._normalize_error_message(e)}"
+                    error_msg = f"Video status query failed: {self._normalize_error_message(e)}"
                     await self._fail_video_task(operations, error_msg)
                     self._mark_generation_failed(generation_result, error_msg)
                     if stream:
-                        yield self._create_stream_chunk(f"错误: {error_msg}\n")
+                        yield self._create_stream_chunk(f"Error: {error_msg}\n")
                     yield self._create_error_response(error_msg, status_code=502)
                     return
                 continue
 
-        # 超时
+        # Timeout
         if last_poll_error is not None:
-            error_msg = f"视频状态查询持续失败: {self._normalize_error_message(last_poll_error)}"
+            error_msg = f"Video status query keeps failing: {self._normalize_error_message(last_poll_error)}"
         else:
-            error_msg = f"视频生成超时 (已轮询 {max_attempts} 次)"
+            error_msg = f"Video generation timeout (polled {max_attempts} times)"
         await self._fail_video_task(operations, error_msg)
         self._mark_generation_failed(generation_result, error_msg)
         yield self._create_error_response(error_msg, status_code=504)
 
-    # ========== 响应格式化 ==========
+    # ========== Response formatting ==========
 
     def _create_stream_chunk(self, content: str, role: str = None, finish_reason: str = None) -> str:
-        """创建流式响应chunk"""
+        """Create streaming response chunk"""
         import json
         import time
 
@@ -2605,24 +2605,24 @@ class GenerationHandler:
         return f"data: {json.dumps(chunk, ensure_ascii=False)}\n\n"
 
     def _create_completion_response(self, content: str, media_type: str = "image", is_availability_check: bool = False) -> str:
-        """创建非流式响应
+        """Create non-streaming response
 
         Args:
-            content: 媒体URL或纯文本消息
-            media_type: 媒体类型 ("image" 或 "video")
-            is_availability_check: 是否为可用性检查响应 (纯文本消息)
+            content: media URL or plain text message
+            media_type: media type ("image" or "video")
+            is_availability_check: whether it is an availability check response (plain text message)
 
         Returns:
-            JSON格式的响应
+            JSON-formatted response
         """
         import json
         import time
 
-        # 可用性检查: 返回纯文本消息
+        # Availability check: return plain text message
         if is_availability_check:
             formatted_content = content
         else:
-            # 媒体生成: 根据媒体类型格式化内容为Markdown
+            # Media generation: format content as Markdown based on media type
             if media_type == "video":
                 formatted_content = f"```html\n<video src='{content}' controls></video>\n```"
             else:  # image
@@ -2646,7 +2646,7 @@ class GenerationHandler:
         return json.dumps(response, ensure_ascii=False)
 
     def _create_error_response(self, error_message: str, status_code: int = 500) -> str:
-        """创建错误响应"""
+        """Create error response"""
         import json
 
         error = {
@@ -2661,8 +2661,8 @@ class GenerationHandler:
         return json.dumps(error, ensure_ascii=False)
 
     def _get_base_url(self, response_state: Optional[Dict[str, Any]] = None) -> str:
-        """获取基础URL用于缓存文件访问"""
-        # 已配置缓存访问域名时，始终优先使用它，避免被请求 Host/IP 覆盖。
+        """Get base URL for cached file access"""
+        # When cache access domain is configured, always prefer it to avoid being overridden by request Host/IP.
         if config.cache_base_url:
             return config.cache_base_url.rstrip("/")
 
@@ -2672,7 +2672,7 @@ class GenerationHandler:
         if request_base_url:
             return request_base_url
 
-        # 回退到服务地址，避免把监听地址 0.0.0.0 / :: 直接返回给客户端
+        # Fall back to service address to avoid returning listen address 0.0.0.0 / :: directly to client
         server_host = (config.server_host or "").strip()
         if server_host in {"", "0.0.0.0", "::", "[::]"}:
             server_host = "127.0.0.1"
@@ -2688,7 +2688,7 @@ class GenerationHandler:
         progress: int,
         response_extra: Optional[Dict[str, Any]] = None,
     ):
-        """?????????????"""
+        """Update request log progress"""
         if not isinstance(request_log_state, dict):
             return
         log_id = request_log_state.get("id")
@@ -2748,7 +2748,7 @@ class GenerationHandler:
         status_text: Optional[str] = None,
         progress: Optional[int] = None,
     ):
-        """???????????? log_id ????????"""
+        """Log request, support updating existing log_id"""
         try:
             effective_status_text = status_text or (
                 "completed" if status_code == 200 else "failed" if status_code >= 400 else "processing"
