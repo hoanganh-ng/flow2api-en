@@ -62,7 +62,9 @@ class _FakeAsyncSession:
 class ApiCaptchaFingerprintTests(unittest.IsolatedAsyncioTestCase):
     async def test_api_captcha_returns_token_and_user_agent(self):
         """_get_api_captcha_token must return a (token, userAgent) tuple."""
+        import contextvars
         flow = FlowClient.__new__(FlowClient)
+        flow._request_fingerprint_ctx = contextvars.ContextVar("fingerprint", default=None)
         flow.proxy_manager = _FakeProxyManager()
         fake_session = _FakeAsyncSession()
 
