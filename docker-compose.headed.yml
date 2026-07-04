@@ -11,9 +11,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./data:/app/data
-      - ./tmp:/app/tmp
-      - ./config/setting.toml:/app/config/setting.toml
+      - data:/app/data
+      - tmp:/app/tmp
     environment:
       - PYTHONUNBUFFERED=1
       - ALLOW_DOCKER_HEADED_CAPTCHA=true
@@ -21,3 +20,6 @@ services:
       - XVFB_SCREEN=1440x900x24
     shm_size: "2gb"
     restart: unless-stopped
+volumes:
+  data:
+  tmp:

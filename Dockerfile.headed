@@ -22,6 +22,8 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt \
     && python -m playwright install --with-deps chromium
+    
+COPY config/setting_example.toml /app/config/setting.toml
 
 COPY . .
 COPY docker/entrypoint.headed.sh /usr/local/bin/entrypoint.headed.sh
